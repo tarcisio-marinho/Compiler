@@ -11,14 +11,14 @@ void error(const string& message){
 
 int main(int argc, char * argv[]){
     if(argc < 2){
-        error("no input files\ncompilation terminated.");
+        string program_name = string(argv[0]) += ": no input files\ncompilation terminated.";
+        error(program_name);
 
     }else{
         FILE *f = fopen(argv[1], "r");
         if(f == NULL){
-            string name = argv[1];
-            name += ": No such file or directory";
-            error(name);
+            string file_name = string(argv[1]) += ": no such file or directory";
+            error(file_name);
         
         }
         
