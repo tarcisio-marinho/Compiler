@@ -11,7 +11,7 @@ public:
     std::regex letra = std::regex("[a-z]");
     std::regex digito = std::regex("[0-9]");
     std::regex inteiro = std::regex("[0-9]+");
-    std::regex ponto_flutuante = std::regex("[0-9]*.[0-9]+");
+    std::regex ponto_flutuante = std::regex("[0-9]*[\.][0-9]+");
     std::regex caracter = std::regex("([a-z]|[0-9])");
     std::regex identificador = std::regex("(_|[a-z])(_|[a-z]|[0-9])*");
 
