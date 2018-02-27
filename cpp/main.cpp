@@ -9,6 +9,7 @@ void error(const std::string& message){
 }
 
 int main(int argc, char * argv[]){
+    FILE *f;
     
     if(argc < 2){
         std::string program_name = std::string(argv[0]) += ": arquivo não especificado\nCompilação terminada.";
@@ -25,13 +26,14 @@ int main(int argc, char * argv[]){
             return 0; 
         }
 
-        FILE *f = fopen(argv[1], "r");
+        f = fopen(argv[1], "r");
         if(f == NULL){
             std::string file_name = std::string(argv[1]) += ": arquivo ou diretorio inexistente";
             error(file_name);
         
         }
-        
-    }
 
+        Scanner s(f);
+        s.scan();
+    }
 }

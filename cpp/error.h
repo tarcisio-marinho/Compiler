@@ -7,7 +7,6 @@
 
 class Error{
 public:
-    static void token_error(Scanner n, std::string lexema);
     static void float_error(int linha, int coluna, std::string lexema);
     static void char_error(int linha, int coluna, std::string lexema);
     static void comentario_error(int linha, int coluna, std::string lexema);

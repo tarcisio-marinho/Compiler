@@ -12,7 +12,13 @@ Scanner::Scanner(FILE * arq){
 Token Scanner::scan(){
     
     while(caracter_lido != EOF){
+        proximo_caracter();
+        std::cout << caracter_lido << std::endl;
 
+        
+    }
+    if(feof(arquivo)){
+        std::cout << "saindo";
     }
 }
 
