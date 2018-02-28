@@ -7,10 +7,9 @@
 
 class Token{
 public:
-    int codigo;
     std::string lexema;
-    Gramatica g;
-    Token(int cod, std::string lex);
+    Gramatica gramatica;
+    Token(Gramatica g, std::string lex);
 };
 
 #endif
