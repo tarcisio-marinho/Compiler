@@ -35,5 +35,6 @@ int main(int argc, char * argv[]){
 
         Scanner s(f);
         s.scan();
+        
     }
 }

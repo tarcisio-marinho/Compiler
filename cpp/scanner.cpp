@@ -3,23 +3,35 @@
 Scanner::Scanner(FILE * arq){
     n_linha = 1;
     n_coluna = 0;
-    caracter_lido = NULL;
+    caracter_lido = ' ';
     arquivo = arq;
+    Gramatica gra;
 
 }
 
 
 Token Scanner::scan(){
+    std::string lexema;
     
-    while(caracter_lido != EOF){
+
+    while(true){
+        if(feof(arquivo)){
+            std::cout << "EOF FIND" << std::endl;
+            break;
+        }
+
         proximo_caracter();
         std::cout << caracter_lido << std::endl;
 
         
     }
-    if(feof(arquivo)){
-        std::cout << "saindo";
-    }
+    
+    return Token(gra.ID, "eaemen kk");
+
+    std::cout << "CONSEGUI SAIR" << std::endl;
+    // if(feof(arquivo)){
+    //     std::cout << "saindo";
+    // }
 }
 
 

@@ -3,6 +3,7 @@
 
 #include "error.h"
 #include "token.h"
+#include "gramatica.h"
 #include <iostream>
 
 class Scanner{

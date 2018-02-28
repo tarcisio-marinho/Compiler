@@ -2,7 +2,7 @@
 #define __ENUM__    
 
 enum class Gramatica {
-	EOF,
+	EoF,
 	ID,
 	MAIN,
 	INT,
