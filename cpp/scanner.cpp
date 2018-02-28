@@ -10,28 +10,30 @@ Scanner::Scanner(FILE * arq){
 }
 
 
-Token Scanner::scan(){
+void Scanner::scan(){
     std::string lexema;
     
-
+  
     while(true){
-        if(feof(arquivo)){
+        if(caracter_lido == EOF){
             std::cout << "EOF FIND" << std::endl;
             break;
+        }else{
+            proximo_caracter();
+            std::cout << caracter_lido << std::endl;
+
         }
 
-        proximo_caracter();
-        std::cout << caracter_lido << std::endl;
-
+        
         
     }
-    
-    return Token(gra.ID, "eaemen kk");
 
-    std::cout << "CONSEGUI SAIR" << std::endl;
+    //return Token(ID, "eaemen kk");
     // if(feof(arquivo)){
     //     std::cout << "saindo";
     // }
+
+    
 }
 
 

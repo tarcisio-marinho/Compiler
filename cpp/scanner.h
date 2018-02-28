@@ -14,7 +14,7 @@ public:
 
 
     Scanner(FILE *arq);
-    Token scan();
+    void scan();
     void proximo_caracter();
     void incremento_l_c();
 };
