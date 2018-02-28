@@ -5,33 +5,34 @@ Scanner::Scanner(FILE * arq){
     n_coluna = 0;
     caracter_lido = ' ';
     arquivo = arq;
-    Gramatica gra;
-
 }
 
 
 Token Scanner::scan(){
     std::string lexema;
-    Gramatica g;
     
   
     while(true){
-        if(caracter_lido == EOF){
-            std::cout << "EOF FIND" << std::endl;
-            break;
-        }else{
-            proximo_caracter();// if(feof(arquivo)){
-    //     std::cout << "saindo";
-    // }
-            std::cout << caracter_lido << std::endl;
-
+        
+        while(isspace(caracter_lido)){
+            proximo_caracter();
         }
+        
+        if(caracter_lido == EOF){
+            return Token(gramatica.EoF, std::string("EOF"));
+        }
+
+        else if()
+
+
+
+        
+        
 
         
         
     }
-    g = ID;
-    return Token(g, std::string("eaemen kk"));
+    return Token(gramatica.ID, std::string("eaemen kk"));
 
     
 }

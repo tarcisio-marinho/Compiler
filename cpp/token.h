@@ -9,7 +9,7 @@ class Token{
 public:
     std::string lexema;
     int identificador;
-    Token(Gramatica g, std::string lex);
+    Token(int valor, std::string lex);
 };
 
 #endif
