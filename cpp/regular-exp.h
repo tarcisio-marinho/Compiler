@@ -9,18 +9,14 @@ class Reg{
 public:
 
     std::regex letra = std::regex("[a-z]");
+    std::regex caps = std::regex("[A-Z]");
     std::regex digito = std::regex("[0-9]");
-    std::regex inteiro = std::regex("[0-9]+");
-    std::regex ponto_flutuante = std::regex("[0-9]*[\.][0-9]+");
-    std::regex caracter = std::regex("([a-z]|[0-9])");
-    std::regex identificador = std::regex("(_|[a-z])(_|[a-z]|[0-9])*");
+    std::regex caracter = std::regex("([a-zA-Z]|[0-9]|_)");
 
     bool is_letra(std::string s);
+    bool is_caps(std::string s);
     bool is_digito(std::string s);
     bool is_caracter(std::string s);
-    bool is_ponto_flutuante(std::string s);
-    bool is_identificador(std::string s);
-    bool is_inteiro(std::string s);
 };
 
 

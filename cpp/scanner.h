@@ -5,7 +5,6 @@
 #include "token.h"
 #include "gramatica.h"
 #include "regular-exp.h"
-#include <ctype>
 #include <iostream>
 
 class Scanner{

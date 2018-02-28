@@ -22,7 +22,7 @@ Token Scanner::scan(){
             return Token(gramatica.EoF, std::string("EOF"));
         }
 
-        else if()
+        else if(regular_expression.)
 
 
 
