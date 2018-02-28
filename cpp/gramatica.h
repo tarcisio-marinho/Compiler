@@ -1,7 +1,7 @@
 #ifndef __ENUM__
 #define __ENUM__    
 
-enum class Gramatica {
+enum Gramatica {
 	EoF,
 	ID,
 	MAIN,

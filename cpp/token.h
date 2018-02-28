@@ -8,7 +8,7 @@
 class Token{
 public:
     std::string lexema;
-    Gramatica gramatica;
+    int identificador;
     Token(Gramatica g, std::string lex);
 };
 
