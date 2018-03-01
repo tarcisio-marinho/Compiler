@@ -9,16 +9,20 @@
 
 class Scanner{
 public:
-    int n_linha, n_coluna;
-    char caracter_lido; 
-    FILE * arquivo;
-    Gramatica gramatica;
-    Reg regular_expression;
 
+    Gramatica gramatica;
     Scanner(FILE *arq);
     Token scan();
+
+    
+private:
+    FILE * arquivo;
+    int n_linha, n_coluna;
+    char caracter_lido; 
+
     void proximo_caracter();
     void incremento_l_c();
+
 };
 
 
