@@ -1,6 +1,7 @@
 #include "scanner.h"
 #include <iostream>
 #include <string>
+#include "token.h"
 #include "regular-exp.h"
 
 void error(const std::string& message){
@@ -34,7 +35,14 @@ int main(int argc, char * argv[]){
         }
 
         Scanner s(f);
-        s.scan();
         
+        while(true){
+            Token t = s.scan();
+            std::cout << t.lexema << std::endl;
+
+            if(t.lexema == "EOF"){
+                break;
+            }
+        }
     }
 }
