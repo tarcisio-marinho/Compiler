@@ -20,12 +20,14 @@ Você pode compilar de três modos:
 
 
     cd cpp/
+    
     sh comp.sh
 
 - via makefile:
 
 
     cd cpp/
+    
     Make
 
 
