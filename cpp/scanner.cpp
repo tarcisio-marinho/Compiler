@@ -9,7 +9,7 @@ Scanner::Scanner(FILE * arq){
 
 
 Token Scanner::scan(){
-    std::string lexema;
+    std::string lexema = "";
     
   
     while(true){
@@ -22,13 +22,20 @@ Token Scanner::scan(){
             return Token(gramatica.EoF, std::string("EOF"));
         }
 
+        else if(Reg::is_letra(caracter_lido) || caracter_lido == '_'){
+            while(Reg::is_caracter(caracter_lido) || caracter_lido == '_'){
+                lexema.push_back(caracter_lido);
+                proximo_caracter();
+            }
+
+            return Token(gramatica.ID, lexema);
+        }
+
+        else if(Reg::is_digito(caracter_lido)){
+
+        }
 
 
-
-        
-        
-
-        
         
     }
     return Token(gramatica.ID, std::string("eaemen kk"));

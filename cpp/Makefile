@@ -2,26 +2,25 @@ CC=g++
 OUTPUT=main
 RM=rm
 TESTE=teste.c
-
+VERSION=-std=c++11
 	
 main: main.cpp 
-	$(CC) -c main.cpp -o bin/main.o
+	$(CC) -c main.cpp -o bin/main.o $(VERSION)
 
 regular-exp: regular-exp.cpp regular-exp.h
-	$(CC) -c regular-exp.cpp -o bin/regular-exp.o
+	$(CC) -c regular-exp.cpp -o bin/regular-exp.o $(VERSION)
 
 scanner: scanner.cpp scanner.h 
-	$(CC) -c scanner.cpp -o bin/scanner.o
+	$(CC) -c scanner.cpp -o bin/scanner.o $(VERSION)
 
 token: token.cpp token.h
-	$(CC) -c token.cpp -o bin/token.o
+	$(CC) -c token.cpp -o bin/token.o $(VERSION)
 
 error: error.cpp error.h
-	$(CC) -c error.cpp -o bin/error.o
+	$(CC) -c error.cpp -o bin/error.o $(VERSION)
 
 out: bin/main.o bin/regular-exp.o bin/scanner.o bin/token.o bin/error.o
-	cd bin/
-	$(CC) main.o regular-exp.o scanner.o token.o error.o -o ../$(OUTPUT)
+	$(CC) bin/main.o bin/regular-exp.o bin/scanner.o bin/token.o bin/error.o -o $(OUTPUT) $(VERSION)
 
 clean:
 	$(RM) bin/*.o $(OUTPUT)
