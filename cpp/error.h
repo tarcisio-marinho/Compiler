@@ -11,9 +11,7 @@ public:
     static void char_error(int linha, int coluna, std::string lexema);
     static void comentario_error(int linha, int coluna, std::string lexema);
     static void caracter_invalido_error(int linha, int coluna, std::string lexema);
-
-
-    static void sintaxe_error();
+    static void diferenca_error(int linha, int coluna, std::string lexema);
 };
 
 

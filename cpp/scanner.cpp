@@ -32,13 +32,224 @@ Token Scanner::scan(){
         }
 
         else if(Reg::is_digito(caracter_lido)){
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
 
+            while(Reg::is_digito(caracter_lido)){
+                lexema.push_back(caracter_lido);
+                proximo_caracter();
+            }
+
+            if(caracter_lido == '.'){
+                lexema.push_back(caracter_lido);
+                proximo_caracter();
+
+                if(!Reg::is_digito(caracter_lido)){
+                    Error::float_error(n_linha, n_coluna, lexema);
+                }
+
+                while(Reg::is_digito(caracter_lido)){
+                    lexema.push_back(caracter_lido);
+                    proximo_caracter();
+                }
+
+                return Token(gramatica.TIPOFLOAT, lexema);
+            }
+
+            return Token(gramatica.TIPOINT, lexema);
         }
+
+        else if(caracter_lido == '.'){
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+
+            if(!Reg::is_digito(caracter_lido)){
+                Error::float_error(n_linha, n_coluna, lexema);
+            }
+
+            while(Reg::is_digito(caracter_lido)){
+                lexema.push_back(caracter_lido);
+                proximo_caracter();
+            }
+
+            return Token(gramatica.TIPOFLOAT, lexema);
+        }
+
+        else if(caracter_lido == '\''){
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+
+            if(!Reg::is_caracter(caracter_lido)){
+                Error::char_error(n_linha, n_coluna, lexema);
+            }
+
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+
+            if(caracter_lido != '\''){
+                Error::caracter_invalido_error(n_linha, n_coluna, lexema);
+            }
+
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+
+            return Token(gramatica.TIPOCHAR, lexema);
+        }
+
+        else if(caracter_lido == '+'){ // ++ += ?? 
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+            return Token(gramatica.SOMA, lexema);
+        }
+
+        else if(caracter_lido == '-'){ // -- -= ??
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+            return Token(gramatica.SUBTRACAO, lexema);
+        }
+
+        else if(caracter_lido == '*'){ // *=
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+            return Token(gramatica.MULTIPLICACAO, lexema);
+        }
+
+        else if(caracter_lido == '/'){
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+
+            if(caracter_lido == '/'){ // comentario de uma linha
+                while(caracter_lido != '\n'){
+                    lexema.push_back(caracter_lido);
+                    proximo_caracter();
+                }
+            }
+            else if(caracter_lido == '*'){ // comentario de multiplas linhas
+                lexema.push_back(caracter_lido);
+                proximo_caracter();
+
+                while(true){
+                    if(caracter_lido == '*'){
+                        proximo_caracter();
+
+                        if(caracter_lido == '/'){
+                            proximo_caracter();
+                            break;
+                        }else if(caracter_lido == EOF){
+                            Error::comentario_error(n_linha, n_coluna, lexema);
+                        }
+                    }
+                    else if (caracter_lido == EOF){
+                        Error::comentario_error(n_linha, n_coluna, lexema);
+                    }
+                    proximo_caracter();
+                }
+            }else{
+                return Token(gramatica.DIVISAO, lexema); // é uma divisão
+            }
+        }
+
+        else if(caracter_lido == '='){
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+
+            if(caracter_lido == '='){
+                lexema.push_back(caracter_lido);
+                proximo_caracter();
+
+                return Token(gramatica.IGUAL, lexema);
+            }
+
+            return Token(gramatica.ATRIBUICAO, lexema);
+        }
+
+        else if(caracter_lido == '<'){
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+
+            if(caracter_lido == '='){
+                lexema.push_back(caracter_lido);
+                proximo_caracter();
+
+                return Token(gramatica.MENORIGUAL, lexema);
+            }
+
+            return Token(gramatica.MENOR, lexema);
+        }
+
+        else if(caracter_lido == '>'){
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+
+            if(caracter_lido == '='){
+                lexema.push_back(caracter_lido);
+                proximo_caracter();
+
+                return Token(gramatica.MAIORIGUAL, lexema);
+            }
+
+            return Token(gramatica.MAIOR, lexema);
+        }
+
+        else if(caracter_lido == '!'){ // ! negação ??? 
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+
+            if(caracter_lido != '='){
+                lexema.push_back(caracter_lido);
+                proximo_caracter();
+                Error::diferenca_error(n_linha, n_coluna, lexema);
+            }
+            
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+            return Token(gramatica.DIFERENCA, lexema);
+        }
+
+        else if(caracter_lido == '('){
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+            return Token(gramatica.ABREPARENTESES, lexema);
+        }
+
+        else if(caracter_lido == ')'){
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+            return Token(gramatica.FECHAPARENTESES, lexema);
+        }
+
+        else if(caracter_lido == '{'){
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+            return Token(gramatica.ABRECHAVE, lexema);
+        }
+
+        else if(caracter_lido == '}'){
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+            return Token(gramatica.FECHACHAVE, lexema);
+        }
+
+        else if(caracter_lido == ';'){
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+            return Token(gramatica.PONTOVIRGULA, lexema);
+        }
+
+        else if(caracter_lido == ','){
+            lexema.push_back(caracter_lido);
+            proximo_caracter();
+            return Token(gramatica.VIRGULA, lexema);
+        }
+
+        lexema.push_back(caracter_lido);
+        Error::caracter_invalido_error(n_linha, n_coluna, lexema);
+
 
 
         
     }
-    return Token(gramatica.ID, std::string("eaemen kk"));
+    return Token(gramatica.EoF, std::string("EOF"));
 
     
 }
