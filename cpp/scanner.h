@@ -22,6 +22,7 @@ private:
 
     void proximo_caracter();
     void incremento_l_c();
+    int identificador_check(std::string lexema);
 
 };
 

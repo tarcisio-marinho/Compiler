@@ -32,7 +32,8 @@ public:
 	FECHAPARENTESES = 26,
 	TIPOINT = 27,
 	TIPOFLOAT = 28,
-	TIPOCHAR = 29;
+	TIPOCHAR = 29,
+	FOR = 30;
 };
 
 #endif

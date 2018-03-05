@@ -28,7 +28,7 @@ Token Scanner::scan(){
                 proximo_caracter();
             }
 
-            return Token(gramatica.ID, lexema);
+            return Token(identificador_check(lexema), lexema);
         }
 
         else if(Reg::is_digito(caracter_lido)){
@@ -273,4 +273,38 @@ void Scanner::incremento_l_c(){
 void Scanner::proximo_caracter(){
     caracter_lido = (char)fgetc(arquivo);
     incremento_l_c();
+}
+
+
+int Scanner::identificador_check(std::string lexema){
+
+    if(lexema == "main")    return gramatica.MAIN;
+    
+
+    else if(lexema == "if")    return gramatica.IF;
+    
+
+    else if(lexema == "else")    return gramatica.ELSE;
+    
+    
+    else if(lexema == "int")    return gramatica.INT;
+    
+
+    else if(lexema == "float")    return gramatica.FLOAT;
+    
+
+    else if(lexema == "char")    return gramatica.CHAR;
+    
+
+    else if(lexema == "while")    return gramatica.WHILE;
+    
+     
+    else if(lexema == "do")    return gramatica.DO;
+    
+    
+    else if(lexema == "for")    return gramatica.FOR;
+    
+
+    else     return gramatica.ID;
+
 }
