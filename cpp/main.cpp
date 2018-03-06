@@ -39,10 +39,10 @@ int main(int argc, char * argv[]){
         Scanner s(f);
         
         while(true){
-            Token t = s.scan();
-            std::cout << t.lexema << std::endl;
+            Token td = s.scan();
+            std::cout << td.identificador << std::endl;
 
-            if(t.lexema == "EOF"){
+            if(td.lexema == "EOF"){
                 break;
             }
         }

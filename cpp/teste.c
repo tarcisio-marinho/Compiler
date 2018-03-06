@@ -1,5 +1,5 @@
 
-int a = 0.a;
+int a = 0.1;
 float b = 3;
 
 while(a < 3){
