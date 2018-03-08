@@ -19,7 +19,7 @@ Token Scanner::scan(){
         }
         
         if(caracter_lido == EOF){
-            return Token(gramatica.EoF, std::string("EOF"));
+            return Token(Gramatica::EoF, std::string("EOF"));
         }
 
         else if(Reg::is_letra(caracter_lido) || caracter_lido == '_'){
@@ -53,10 +53,10 @@ Token Scanner::scan(){
                     proximo_caracter();
                 }
 
-                return Token(gramatica.TIPOFLOAT, lexema);
+                return Token(Gramatica::TIPOFLOAT, lexema);
             }
 
-            return Token(gramatica.TIPOINT, lexema);
+            return Token(Gramatica::TIPOINT, lexema);
         }
 
         else if(caracter_lido == '.'){
@@ -72,7 +72,7 @@ Token Scanner::scan(){
                 proximo_caracter();
             }
 
-            return Token(gramatica.TIPOFLOAT, lexema);
+            return Token(Gramatica::TIPOFLOAT, lexema);
         }
 
         else if(caracter_lido == '\''){
@@ -93,25 +93,25 @@ Token Scanner::scan(){
             lexema.push_back(caracter_lido);
             proximo_caracter();
 
-            return Token(gramatica.TIPOCHAR, lexema);
+            return Token(Gramatica::TIPOCHAR, lexema);
         }
 
         else if(caracter_lido == '+'){ // ++ += ?? 
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(gramatica.SOMA, lexema);
+            return Token(Gramatica::SOMA, lexema);
         }
 
         else if(caracter_lido == '-'){ // -- -= ??
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(gramatica.SUBTRACAO, lexema);
+            return Token(Gramatica::SUBTRACAO, lexema);
         }
 
         else if(caracter_lido == '*'){ // *=
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(gramatica.MULTIPLICACAO, lexema);
+            return Token(Gramatica::MULTIPLICACAO, lexema);
         }
 
         else if(caracter_lido == '/'){
@@ -145,7 +145,7 @@ Token Scanner::scan(){
                     proximo_caracter();
                 }
             }else{
-                return Token(gramatica.DIVISAO, lexema); // é uma divisão
+                return Token(Gramatica::DIVISAO, lexema); // é uma divisão
             }
         }
 
@@ -157,10 +157,10 @@ Token Scanner::scan(){
                 lexema.push_back(caracter_lido);
                 proximo_caracter();
 
-                return Token(gramatica.IGUAL, lexema);
+                return Token(Gramatica::IGUAL, lexema);
             }
 
-            return Token(gramatica.ATRIBUICAO, lexema);
+            return Token(Gramatica::ATRIBUICAO, lexema);
         }
 
         else if(caracter_lido == '<'){
@@ -171,10 +171,10 @@ Token Scanner::scan(){
                 lexema.push_back(caracter_lido);
                 proximo_caracter();
 
-                return Token(gramatica.MENORIGUAL, lexema);
+                return Token(Gramatica::MENORIGUAL, lexema);
             }
 
-            return Token(gramatica.MENOR, lexema);
+            return Token(Gramatica::MENOR, lexema);
         }
 
         else if(caracter_lido == '>'){
@@ -185,10 +185,10 @@ Token Scanner::scan(){
                 lexema.push_back(caracter_lido);
                 proximo_caracter();
 
-                return Token(gramatica.MAIORIGUAL, lexema);
+                return Token(Gramatica::MAIORIGUAL, lexema);
             }
 
-            return Token(gramatica.MAIOR, lexema);
+            return Token(Gramatica::MAIOR, lexema);
         }
 
         else if(caracter_lido == '!'){ // ! negação ??? 
@@ -203,50 +203,50 @@ Token Scanner::scan(){
             
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(gramatica.DIFERENCA, lexema);
+            return Token(Gramatica::DIFERENCA, lexema);
         }
 
         else if(caracter_lido == '('){
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(gramatica.ABREPARENTESES, lexema);
+            return Token(Gramatica::ABREPARENTESES, lexema);
         }
 
         else if(caracter_lido == ')'){
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(gramatica.FECHAPARENTESES, lexema);
+            return Token(Gramatica::FECHAPARENTESES, lexema);
         }
 
         else if(caracter_lido == '{'){
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(gramatica.ABRECHAVE, lexema);
+            return Token(Gramatica::ABRECHAVE, lexema);
         }
 
         else if(caracter_lido == '}'){
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(gramatica.FECHACHAVE, lexema);
+            return Token(Gramatica::FECHACHAVE, lexema);
         }
 
         else if(caracter_lido == ';'){
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(gramatica.PONTOVIRGULA, lexema);
+            return Token(Gramatica::PONTOVIRGULA, lexema);
         }
 
         else if(caracter_lido == ','){
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(gramatica.VIRGULA, lexema);
+            return Token(Gramatica::VIRGULA, lexema);
         }
 
         lexema.push_back(caracter_lido);
         Error::caracter_invalido_error(n_linha, n_coluna, lexema);
         
     }
-    return Token(gramatica.EoF, std::string("EOF"));
+    return Token(Gramatica::EoF, std::string("EOF"));
 
     
 }
@@ -274,33 +274,33 @@ void Scanner::proximo_caracter(){
 
 int Scanner::identificador_check(std::string lexema){
 
-    if(lexema == "main")    return gramatica.MAIN;
+    if(lexema == "main")    return Gramatica::MAIN;
     
 
-    else if(lexema == "if")    return gramatica.IF;
+    else if(lexema == "if")    return Gramatica::IF;
     
 
-    else if(lexema == "else")    return gramatica.ELSE;
+    else if(lexema == "else")    return Gramatica::ELSE;
     
     
-    else if(lexema == "int")    return gramatica.INT;
-    
-
-    else if(lexema == "float")    return gramatica.FLOAT;
+    else if(lexema == "int")    return Gramatica::INT;
     
 
-    else if(lexema == "char")    return gramatica.CHAR;
+    else if(lexema == "float")    return Gramatica::FLOAT;
     
 
-    else if(lexema == "while")    return gramatica.WHILE;
+    else if(lexema == "char")    return Gramatica::CHAR;
+    
+
+    else if(lexema == "while")    return Gramatica::WHILE;
     
      
-    else if(lexema == "do")    return gramatica.DO;
+    else if(lexema == "do")    return Gramatica::DO;
     
     
-    else if(lexema == "for")    return gramatica.FOR;
+    else if(lexema == "for")    return Gramatica::FOR;
     
 
-    else     return gramatica.ID;
+    else     return Gramatica::ID;
 
 }

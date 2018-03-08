@@ -3,7 +3,7 @@
 
 class Gramatica {
 public:
-	int EoF = 0,
+	static const int EoF = 0,
 	ID = 1,
 	MAIN = 2,
 	INT = 3,

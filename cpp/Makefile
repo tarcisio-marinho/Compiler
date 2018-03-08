@@ -26,4 +26,4 @@ clean:
 	$(RM) bin/*.o $(OUTPUT)
 
 run:
-	./$(OUTPUT) ../$(TESTE)
+	./$(OUTPUT) $(TESTE)

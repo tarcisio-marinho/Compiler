@@ -10,7 +10,6 @@
 class Scanner{
 public:
 
-    Gramatica gramatica;
     Scanner(FILE *arq);
     Token scan();
 
