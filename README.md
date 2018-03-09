@@ -19,22 +19,22 @@ Você pode compilar de três modos:
 - via scriptshell:
 
 
-    cd cpp/
+	    ~$ cd cpp/
     
-    sh comp.sh
+	    ~$ sh comp.sh
 
 - via makefile:
 
 
-    cd cpp/
+	    ~$ cd cpp/
     
-    Make
+	    ~$ make
 
 
 - Na mão kk:
 
 
-    g++ main.cpp -o main scanner.cpp token.cpp regular-exp.cpp error.cpp -std=c++11
+	    ~$ g++ main.cpp -o main scanner.cpp token.cpp regular-exp.cpp error.cpp -std=c++11
 
 
 # Testar o compilador:
