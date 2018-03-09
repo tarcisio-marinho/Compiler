@@ -11,7 +11,7 @@ Scanner::Scanner(FILE * arq){
 Token Scanner::scan(){
     std::string lexema = "";
     
-  
+
     while(true){
         
         while(isspace(caracter_lido)){
