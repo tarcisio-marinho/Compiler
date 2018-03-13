@@ -123,13 +123,15 @@ Token Scanner::scan(){
                     if(caracter_lido == EOF){
                         return Token(Gramatica::EoF, std::string("EOF"));
                     }
-                    
+
                     lexema.push_back(caracter_lido);
                     proximo_caracter();
                 }
                 continue;
             }
+
             else if(caracter_lido == '*'){ // comentario de multiplas linhas
+                int flag = 0;
                 lexema.push_back(caracter_lido);
                 proximo_caracter();
 
@@ -139,8 +141,11 @@ Token Scanner::scan(){
 
                         if(caracter_lido == '/'){
                             proximo_caracter();
+                            flag = 1;
                             break;
-                        }else if(caracter_lido == EOF){
+                        }
+
+                        if(caracter_lido == EOF){
                             Error::comentario_error(n_linha, n_coluna, lexema);
                         }
                     }
@@ -149,6 +154,11 @@ Token Scanner::scan(){
                     }
                     proximo_caracter();
                 }
+
+                if(flag == 1){
+                    continue;
+                }
+
             }else{
                 return Token(Gramatica::DIVISAO, lexema); // é uma divisão
             }
