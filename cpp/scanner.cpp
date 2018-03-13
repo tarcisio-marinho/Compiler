@@ -9,10 +9,10 @@ Scanner::Scanner(FILE * arq){
 
 
 Token Scanner::scan(){
-    std::string lexema = "";
     
 
     while(true){
+        std::string lexema = "";
         
         while(isspace(caracter_lido)){
             proximo_caracter();
@@ -120,9 +120,14 @@ Token Scanner::scan(){
 
             if(caracter_lido == '/'){ // comentario de uma linha
                 while(caracter_lido != '\n'){
+                    if(caracter_lido == EOF){
+                        return Token(Gramatica::EoF, std::string("EOF"));
+                    }
+                    
                     lexema.push_back(caracter_lido);
                     proximo_caracter();
                 }
+                continue;
             }
             else if(caracter_lido == '*'){ // comentario de multiplas linhas
                 lexema.push_back(caracter_lido);
