@@ -1,14 +1,38 @@
+int main() {
+    int x,y,z;
+    float h;int c;float w,k,a;
+    
+    k = x;
+    w = 5/x+y*8+5* 7;
+    /** /** /*
+       teste &% 
+    ***/
+    
 
-int a = 0.1;
-float b = 3;
+     
+    do{
+	
+        w = w + 1;
+	
+    }while  (y<10);
 
-while(a < 3){
-    a = a + 3;
-    b = b - 2;
-} 
 
-/* comentar
-io 
+    y = x;
+    
+    while (x>w*8) {
+       float y,a;
+        w = w +1;
+        y = x;
+    }
 
-*/
-int 
+    a = 0;
+
+    if (w != x) 
+    {
+
+        p = 10;
+    }
+
+}
+
+
