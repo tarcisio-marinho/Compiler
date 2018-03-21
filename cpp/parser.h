@@ -9,7 +9,7 @@
 class Parser{
 public:
     FILE * arquivo;
-    //Scanner scanner;
+    Scanner *scanner;
 
     Parser(FILE *f);
     void parse();

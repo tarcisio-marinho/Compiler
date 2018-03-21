@@ -2,14 +2,13 @@
 
 Parser::Parser(FILE *f){
     arquivo = f;
-    //scanner(arquivo);
+    scanner = new Scanner(arquivo);
 }
 
 void Parser::parse(){
-    Scanner s(arquivo);
-        
+    
     while(true){
-        Token td = s.scan();
+        Token td = scanner->scan();
         std::cout << "token lido: " << td.lexema << " identificador: " << td.identificador << std::endl;
         
         if(td.lexema == "EOF"){
