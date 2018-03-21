@@ -40,7 +40,7 @@ int main(int argc, char * argv[]){
         
         while(true){
             Token td = s.scan();
-            std::cout << td.lexema << std::endl;
+            std::cout << "token lido: " << td.lexema << " identificador: " << td.identificador << std::endl;
             
             if(td.lexema == "EOF"){
                 break;
