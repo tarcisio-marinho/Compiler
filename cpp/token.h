@@ -9,7 +9,8 @@ class Token{
 public:
     std::string lexema;
     int identificador;
-    Token(int valor, std::string lex);
+    int linha, coluna;
+    Token(int valor, std::string lex, int l, int c);
 };
 
 #endif

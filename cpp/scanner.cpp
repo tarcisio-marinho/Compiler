@@ -19,7 +19,7 @@ Token Scanner::scan(){
         }
         
         if(caracter_lido == EOF){
-            return Token(Gramatica::EoF, std::string("EOF"));
+            return Token(Gramatica::EoF, std::string("EOF"), n_linha, n_coluna);
         }
 
         else if(Reg::is_letra(caracter_lido) || caracter_lido == '_'){
@@ -28,7 +28,7 @@ Token Scanner::scan(){
                 proximo_caracter();
             }
 
-            return Token(identificador_check(lexema), lexema);
+            return Token(identificador_check(lexema), lexema, n_linha, n_coluna);
         }
 
         else if(Reg::is_digito(caracter_lido)){
@@ -53,10 +53,10 @@ Token Scanner::scan(){
                     proximo_caracter();
                 }
 
-                return Token(Gramatica::TIPOFLOAT, lexema);
+                return Token(Gramatica::TIPOFLOAT, lexema, n_linha, n_coluna);
             }
 
-            return Token(Gramatica::TIPOINT, lexema);
+            return Token(Gramatica::TIPOINT, lexema, n_linha, n_coluna);
         }
 
         else if(caracter_lido == '.'){
@@ -72,7 +72,7 @@ Token Scanner::scan(){
                 proximo_caracter();
             }
 
-            return Token(Gramatica::TIPOFLOAT, lexema);
+            return Token(Gramatica::TIPOFLOAT, lexema, n_linha, n_coluna);
         }
 
         else if(caracter_lido == '\''){
@@ -93,25 +93,25 @@ Token Scanner::scan(){
             lexema.push_back(caracter_lido);
             proximo_caracter();
 
-            return Token(Gramatica::TIPOCHAR, lexema);
+            return Token(Gramatica::TIPOCHAR, lexema, n_linha, n_coluna);
         }
 
         else if(caracter_lido == '+'){ // ++ += ?? 
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(Gramatica::SOMA, lexema);
+            return Token(Gramatica::SOMA, lexema, n_linha, n_coluna);
         }
 
         else if(caracter_lido == '-'){ // -- -= ??
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(Gramatica::SUBTRACAO, lexema);
+            return Token(Gramatica::SUBTRACAO, lexema, n_linha, n_coluna);
         }
 
         else if(caracter_lido == '*'){ // *=
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(Gramatica::MULTIPLICACAO, lexema);
+            return Token(Gramatica::MULTIPLICACAO, lexema, n_linha, n_coluna);
         }
 
         else if(caracter_lido == '/'){
@@ -121,7 +121,7 @@ Token Scanner::scan(){
             if(caracter_lido == '/'){ // comentario de uma linha
                 while(caracter_lido != '\n'){
                     if(caracter_lido == EOF){
-                        return Token(Gramatica::EoF, std::string("EOF"));
+                        return Token(Gramatica::EoF, std::string("EOF"), n_linha, n_coluna);
                     }
 
                     lexema.push_back(caracter_lido);
@@ -160,7 +160,7 @@ Token Scanner::scan(){
                 }
 
             }else{
-                return Token(Gramatica::DIVISAO, lexema); // é uma divisão
+                return Token(Gramatica::DIVISAO, lexema, n_linha, n_coluna); // é uma divisão
             }
         }
 
@@ -172,10 +172,10 @@ Token Scanner::scan(){
                 lexema.push_back(caracter_lido);
                 proximo_caracter();
 
-                return Token(Gramatica::IGUAL, lexema);
+                return Token(Gramatica::IGUAL, lexema, n_linha, n_coluna);
             }
 
-            return Token(Gramatica::ATRIBUICAO, lexema);
+            return Token(Gramatica::ATRIBUICAO, lexema, n_linha, n_coluna);
         }
 
         else if(caracter_lido == '<'){
@@ -186,10 +186,10 @@ Token Scanner::scan(){
                 lexema.push_back(caracter_lido);
                 proximo_caracter();
 
-                return Token(Gramatica::MENORIGUAL, lexema);
+                return Token(Gramatica::MENORIGUAL, lexema, n_linha, n_coluna);
             }
 
-            return Token(Gramatica::MENOR, lexema);
+            return Token(Gramatica::MENOR, lexema, n_linha, n_coluna);
         }
 
         else if(caracter_lido == '>'){
@@ -200,10 +200,10 @@ Token Scanner::scan(){
                 lexema.push_back(caracter_lido);
                 proximo_caracter();
 
-                return Token(Gramatica::MAIORIGUAL, lexema);
+                return Token(Gramatica::MAIORIGUAL, lexema, n_linha, n_coluna);
             }
 
-            return Token(Gramatica::MAIOR, lexema);
+            return Token(Gramatica::MAIOR, lexema, n_linha, n_coluna);
         }
 
         else if(caracter_lido == '!'){ // ! negação ??? 
@@ -218,50 +218,50 @@ Token Scanner::scan(){
             
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(Gramatica::DIFERENCA, lexema);
+            return Token(Gramatica::DIFERENCA, lexema, n_linha, n_coluna);
         }
 
         else if(caracter_lido == '('){
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(Gramatica::ABREPARENTESES, lexema);
+            return Token(Gramatica::ABREPARENTESES, lexema, n_linha, n_coluna);
         }
 
         else if(caracter_lido == ')'){
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(Gramatica::FECHAPARENTESES, lexema);
+            return Token(Gramatica::FECHAPARENTESES, lexema, n_linha, n_coluna);
         }
 
         else if(caracter_lido == '{'){
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(Gramatica::ABRECHAVE, lexema);
+            return Token(Gramatica::ABRECHAVE, lexema, n_linha, n_coluna);
         }
 
         else if(caracter_lido == '}'){
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(Gramatica::FECHACHAVE, lexema);
+            return Token(Gramatica::FECHACHAVE, lexema, n_linha, n_coluna);
         }
 
         else if(caracter_lido == ';'){
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(Gramatica::PONTOVIRGULA, lexema);
+            return Token(Gramatica::PONTOVIRGULA, lexema, n_linha, n_coluna);
         }
 
         else if(caracter_lido == ','){
             lexema.push_back(caracter_lido);
             proximo_caracter();
-            return Token(Gramatica::VIRGULA, lexema);
+            return Token(Gramatica::VIRGULA, lexema, n_linha, n_coluna);
         }
 
         lexema.push_back(caracter_lido);
         Error::caracter_invalido_error(n_linha, n_coluna, lexema);
         
     }
-    return Token(Gramatica::EoF, std::string("EOF"));
+    return Token(Gramatica::EoF, std::string("EOF"), n_linha, n_coluna);
 
     
 }
