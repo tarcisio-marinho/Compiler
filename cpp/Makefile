@@ -4,8 +4,8 @@ RM=rm
 TESTE=teste.c
 VERSION=-std=c++11
 
-main: main.o regular-exp.o scanner.o token.o error.o
-	$(CC) main.o regular-exp.o scanner.o token.o error.o -o $(OUTPUT) $(VERSION)
+main: main.o regular-exp.o scanner.o token.o error.o parser.o
+	$(CC) main.o regular-exp.o scanner.o token.o error.o parser.o -o $(OUTPUT) $(VERSION)
 
 main.o: main.cpp 
 	$(CC) -c main.cpp -o main.o $(VERSION)
@@ -21,6 +21,9 @@ token.o: token.cpp token.h
 
 error.o: error.cpp error.h
 	$(CC) -c error.cpp -o error.o $(VERSION)
+
+parser.o: parser.cpp parser.h
+	$(CC) -c parser.cpp -o parser.o $(VERSION)
 
 clean:
 	$(RM) *.o $(OUTPUT)

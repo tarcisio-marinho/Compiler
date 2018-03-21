@@ -7,8 +7,12 @@
 #include "token.h"
 
 class Parser{
-    
-    Parser();
+public:
+    FILE * arquivo;
+    //Scanner scanner;
+
+    Parser(FILE *f);
+    void parse();
 };
 
 

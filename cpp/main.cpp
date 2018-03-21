@@ -3,6 +3,7 @@
 #include <string>
 #include "token.h"
 #include "regular-exp.h"
+#include "parser.h"
 
 //BLUE, RED, WHITE, YELLOW, MAGENTA, GREEN, END = '\33[94m', '\033[91m', '\33[97m', '\33[93m', '\033[1;35m', '\033[1;32m', '\033[0m'
 
@@ -36,15 +37,7 @@ int main(int argc, char * argv[]){
         
         }
 
-        Scanner s(f);
-        
-        while(true){
-            Token td = s.scan();
-            std::cout << "token lido: " << td.lexema << " identificador: " << td.identificador << std::endl;
-            
-            if(td.lexema == "EOF"){
-                break;
-            }
-        }
+        Parser p(f);
+        p.parse();
     }
 }
