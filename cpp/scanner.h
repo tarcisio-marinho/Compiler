@@ -11,7 +11,7 @@ class Scanner{
 public:
 
     Scanner(FILE *arq);
-    Token scan();
+    Token * scan();
 
     
 private:
