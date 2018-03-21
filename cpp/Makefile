@@ -4,26 +4,26 @@ RM=rm
 TESTE=teste.c
 VERSION=-std=c++11
 
-main: bin/main.o bin/regular-exp.o bin/scanner.o bin/token.o bin/error.o
-	$(CC) bin/main.o bin/regular-exp.o bin/scanner.o bin/token.o bin/error.o -o $(OUTPUT) $(VERSION)
+main: main.o regular-exp.o scanner.o token.o error.o
+	$(CC) main.o regular-exp.o scanner.o token.o error.o -o $(OUTPUT) $(VERSION)
 
-bin/main.o: main.cpp 
-	$(CC) -c main.cpp -o bin/main.o $(VERSION)
+main.o: main.cpp 
+	$(CC) -c main.cpp -o main.o $(VERSION)
 
-bin/regular-exp.o: regular-exp.cpp regular-exp.h
-	$(CC) -c regular-exp.cpp -o bin/regular-exp.o $(VERSION)
+regular-exp.o: regular-exp.cpp regular-exp.h
+	$(CC) -c regular-exp.cpp -o regular-exp.o $(VERSION)
 
-bin/scanner.o: scanner.cpp scanner.h 
-	$(CC) -c scanner.cpp -o bin/scanner.o $(VERSION)
+scanner.o: scanner.cpp scanner.h 
+	$(CC) -c scanner.cpp -o scanner.o $(VERSION)
 
-bin/token.o: token.cpp token.h
-	$(CC) -c token.cpp -o bin/token.o $(VERSION)
+token.o: token.cpp token.h
+	$(CC) -c token.cpp -o token.o $(VERSION)
 
-bin/error.o: error.cpp error.h
-	$(CC) -c error.cpp -o bin/error.o $(VERSION)
+error.o: error.cpp error.h
+	$(CC) -c error.cpp -o error.o $(VERSION)
 
 clean:
-	$(RM) bin/*.o $(OUTPUT)
+	$(RM) *.o $(OUTPUT)
 
 run:
 	./$(OUTPUT) $(TESTE)
