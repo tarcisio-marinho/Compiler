@@ -2,6 +2,7 @@
 #define __ERROR__
 
 #include "scanner.h"
+#include "token.h"
 #include <iostream>
 #include <string>
 
