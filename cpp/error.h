@@ -12,6 +12,8 @@ public:
     static void comentario_error(int linha, int coluna, std::string lexema);
     static void caracter_invalido_error(int linha, int coluna, std::string lexema);
     static void diferenca_error(int linha, int coluna, std::string lexema);
+
+    static void token_esperado_nao_encontrado(Token *t, std::string esperado);
 };
 
 

@@ -5,6 +5,7 @@
 #include "error.h"
 #include "scanner.h"
 #include "token.h"
+#include "gramatica.h"
 
 class Parser{
 public:
@@ -16,8 +17,5 @@ public:
     void parse();
     void next_token();
 };
-
-
-
 
 #endif

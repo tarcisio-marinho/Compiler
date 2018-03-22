@@ -50,3 +50,12 @@ void Error::diferenca_error(int linha, int coluna, std::string lexema){
     std::cout << error << std::endl; 
     exit(-1);    
 }
+
+void Error::token_esperado_nao_encontrado(Token *t, std::string esperado){
+    std::string error = std::string("\033[91mERRO\033[0m: na linha: \33[93m") += std::to_string(t->linha) += std::string("\033[0m, coluna: \33[93m") 
+                        += std::to_string(t->coluna) += std::string("\033[0m. Token esperado: \033[1;32m")  += esperado 
+                        += std::string("\033[0m Token lido: \033[1;32m") += t->lexema += std::string("\033[0m");
+
+    std::cout << error << std::endl; 
+    exit(-1); 
+}

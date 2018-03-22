@@ -1,4 +1,4 @@
-int main() {
+int main () {
     int x,y,z;
     float h;int c;float w,k,a;
     

@@ -6,16 +6,29 @@ Parser::Parser(FILE *f){
 }
 
 void Parser::parse(){
-
-    while(true){
-        next_token();
-
-        std::cout << "token lido: " << this->look_ahead->lexema << " identificador: " << this->look_ahead->identificador << std::endl;
-        
-        if(this->look_ahead->lexema == "EOF"){
-            break;
-        }
+    next_token();
+    if(look_ahead->identificador != Gramatica::INT){
+        Error::token_esperado_nao_encontrado(look_ahead, "int");
     }
+
+    next_token();
+    if(look_ahead->identificador != Gramatica::MAIN){
+        Error::token_esperado_nao_encontrado(look_ahead, "main");
+    }
+    
+    next_token();
+    if(look_ahead->identificador != Gramatica::ABREPARENTESES){
+        Error::token_esperado_nao_encontrado(look_ahead, "(");
+    }
+
+    next_token();
+    if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
+        Error::token_esperado_nao_encontrado(look_ahead, ")");
+    }
+
+    // Entrou no main
+
+    
 }
 
 void Parser::next_token(){
