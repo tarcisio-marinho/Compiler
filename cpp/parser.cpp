@@ -32,6 +32,34 @@ void Parser::parse(){
 
 }
 
+
+/*
+    Bloco -> Declaração de variaveis | comando
+*/
+void Parser::bloco(){
+    
+    next_token();
+    if(look_ahead->identificador != Gramatica::ABRECHAVE){
+        Error::token_esperado_nao_encontrado(look_ahead, "{");
+    }
+
+    next_token();
+    if(is_declaracao_de_variavel()){
+        
+    }
+
+}
+
+
+bool Parser::is_declaracao_de_variavel(){
+    if (look_ahead->identificador == Gramatica::INT ||
+        look_ahead->identificador == Gramatica::FLOAT ||
+        look_ahead->identificador == Gramatica::CHAR)   
+        return true;
+
+    return false;
+}
+
 void Parser::next_token(){
     this->look_ahead = this->scanner->scan();
 }
