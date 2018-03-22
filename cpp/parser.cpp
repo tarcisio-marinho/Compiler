@@ -58,7 +58,7 @@ void Parser::bloco(){
 /*
     <comando> ::= <comando_básico> | <iteração> | if "("<expr_relacional>")" <comando> {else <comando>}?
 */
-void comando(){
+void Parser::comando(){
 
 }
 
