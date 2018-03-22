@@ -16,6 +16,7 @@ public:
     Parser(FILE *f);
     void parse();
     void next_token();
+    void bloco();
 };
 
 #endif

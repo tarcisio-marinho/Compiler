@@ -27,8 +27,9 @@ void Parser::parse(){
     }
 
     // Entrou no main
+    bloco();
 
-    
+
 }
 
 void Parser::next_token(){
