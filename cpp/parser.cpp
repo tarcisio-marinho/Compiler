@@ -44,10 +44,15 @@ void Parser::bloco(){
     }
 
     next_token();
-    if(is_declaracao_de_variavel()){
-        
+    while(is_declaracao_de_variavel()){ // Múltiplas declarações de variaveis
+        declaracao_de_variavel();
     }
 
+}
+
+
+void Parser::declaracao_de_variavel(){
+    
 }
 
 
