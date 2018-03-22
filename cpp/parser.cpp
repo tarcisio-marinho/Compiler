@@ -29,7 +29,6 @@ void Parser::parse(){
     // Entrou no main
     bloco();
 
-
 }
 
 
@@ -47,13 +46,13 @@ void Parser::bloco(){
     while(is_declaracao_de_variavel()){ // Múltiplas declarações de variaveis
         declaracao_de_variavel();
     }
-
+    
 }
 
 
 void Parser::declaracao_de_variavel(){
     std::string parte_do_erro = "Declaração de variável";
-
+    // checagem de tipos ??
     next_token();
     if(look_ahead->identificador != Gramatica::ID){
         Error::token_esperado_nao_encontrado(look_ahead, std::string("Identificador"));
@@ -69,10 +68,12 @@ void Parser::declaracao_de_variavel(){
 
         next_token();
     }
-    
+
     if(look_ahead->identificador != Gramatica::PONTOVIRGULA){
         Error::token_esperado_nao_encontrado(look_ahead, std::string(";"));
     }
+
+    next_token();
     
 }
 
