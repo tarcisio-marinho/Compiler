@@ -19,6 +19,8 @@ public:
     void bloco();
     bool is_declaracao_de_variavel();
     void declaracao_de_variavel();
+    bool is_comando();
+    void comando();
 };
 
 #endif

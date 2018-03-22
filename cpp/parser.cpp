@@ -33,7 +33,7 @@ void Parser::parse(){
 
 
 /*
-    Bloco -> Declaração de variaveis | comando
+    <bloco> ::= “{“ {<decl_var>}* {<comando>}* “}”
 */
 void Parser::bloco(){
     
@@ -46,7 +46,20 @@ void Parser::bloco(){
     while(is_declaracao_de_variavel()){ // Múltiplas declarações de variaveis
         declaracao_de_variavel();
     }
+
+    while(is_comando()){
+        comando();
+    }
     
+    
+}
+
+
+/*
+    <comando> ::= <comando_básico> | <iteração> | if "("<expr_relacional>")" <comando> {else <comando>}?
+*/
+void comando(){
+
 }
 
 
@@ -86,6 +99,18 @@ bool Parser::is_declaracao_de_variavel(){
 
     return false;
 }
+
+
+bool Parser::is_comando(){
+    if(look_ahead->identificador == Gramatica::DO ||
+        look_ahead->identificador == Gramatica::WHILE||
+        look_ahead->identificador == Gramatica::ID ||
+        look_ahead->identificador == Gramatica::IF ||
+        look_ahead->identificador == Gramatica::ABRECHAVE)
+        return true;
+    return false;
+}
+
 
 void Parser::next_token(){
     this->look_ahead = this->scanner->scan();
