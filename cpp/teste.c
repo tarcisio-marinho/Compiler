@@ -1,5 +1,5 @@
 int main () {
-    int x,y,z;
+    int x, y,z;
     float h;int c;float w,k,a;
     
     k = x;
