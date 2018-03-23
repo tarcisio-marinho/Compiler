@@ -14,13 +14,15 @@ public:
     Token * look_ahead;
 
     Parser(FILE *f);
-    void parse();
     void next_token();
+    void parse();
     void bloco();
-    bool is_declaracao_de_variavel();
-    void declaracao_de_variavel();
-    bool is_comando();
     void comando();
+    void declaracao_de_variavel();
+    bool is_declaracao_de_variavel();
+    bool is_comando();
+    bool is_comando_basico();
+    bool is_iteracao();
 };
 
 #endif

@@ -1,5 +1,37 @@
 #include "parser.h"
 
+/*
+    <decl_var> ::= <tipo> <id> {,<id>}* ";"
+    
+    <tipo> ::= int | float | char
+    
+    <programa> ::= int main"("")" <bloco>
+    
+    <bloco> ::= “{“ {<decl_var>}* {<comando>}* “}”
+    
+    <comando> ::= <comando_básico> | <iteração> | if "("<expr_relacional>")" <comando> {else <comando>}?
+    
+    <comando_básico> ::= <atribuição> | <bloco>
+    
+    <iteração> ::= while "("<expr_relacional>")" <comando> | do <comando> while "("<expr_relacional>")"";"
+    
+    <atribuição> ::= <id> "=" <expr_arit> ";"
+    
+    <expr_relacional> ::= <expr_arit> <op_relacional> <expr_arit>
+    
+    <expr_arit> ::= <expr_arit> "+" <termo>   | <expr_arit> "-" <termo> | <termo>
+    
+    <termo> ::= <termo> "*" <fator> | <termo> “/” <fator> | <fator>
+    
+    <fator> ::= “(“ <expr_arit> “)” | <id> | <real> | <inteiro> | <char>
+
+*/
+
+void Parser::next_token(){
+    this->look_ahead = this->scanner->scan();
+}
+
+
 Parser::Parser(FILE *f){
     this->arquivo = f;
     this->scanner = new Scanner(arquivo);
@@ -51,6 +83,9 @@ void Parser::bloco(){
         comando();
     }
     
+    if(look_ahead->identificador != Gramatica::FECHACHAVE){
+        Error::token_esperado_nao_encontrado(look_ahead, "}");
+    }
     
 }
 
@@ -91,6 +126,12 @@ void Parser::declaracao_de_variavel(){
 }
 
 
+
+
+
+
+// IS's
+
 bool Parser::is_declaracao_de_variavel(){
     if (look_ahead->identificador == Gramatica::INT ||
         look_ahead->identificador == Gramatica::FLOAT ||
@@ -111,7 +152,10 @@ bool Parser::is_comando(){
     return false;
 }
 
+bool Parser::is_comando_basico(){
 
-void Parser::next_token(){
-    this->look_ahead = this->scanner->scan();
+}
+
+bool Parser::is_iteracao(){
+
 }
