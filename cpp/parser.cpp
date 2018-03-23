@@ -94,7 +94,17 @@ void Parser::bloco(){
     <comando> ::= <comando_básico> | <iteração> | if "("<expr_relacional>")" <comando> {else <comando>}?
 */
 void Parser::comando(){
-
+    if(is_comando_basico){
+        comando_basico();
+    }
+    else if(is_iteracao()){
+        iteracao();
+    }
+    else if(look_ahead->identificador == Gramatica::IF){
+        
+    }else{
+        Error::token_esperado_nao_encontrado(look_ahead, "if | identificador | { | while | do  ");
+    }
 }
 
 
@@ -126,6 +136,17 @@ void Parser::declaracao_de_variavel(){
 }
 
 
+void Parser::comando_basico(){
+
+
+}
+
+
+void Parser::iteracao(){
+
+
+}
+
 
 
 
@@ -144,18 +165,26 @@ bool Parser::is_declaracao_de_variavel(){
 
 bool Parser::is_comando(){
     if(look_ahead->identificador == Gramatica::DO ||
-        look_ahead->identificador == Gramatica::WHILE||
-        look_ahead->identificador == Gramatica::ID ||
-        look_ahead->identificador == Gramatica::IF ||
-        look_ahead->identificador == Gramatica::ABRECHAVE)
+       look_ahead->identificador == Gramatica::WHILE||
+       look_ahead->identificador == Gramatica::ID ||
+       look_ahead->identificador == Gramatica::IF ||
+       look_ahead->identificador == Gramatica::ABRECHAVE)
         return true;
     return false;
 }
 
-bool Parser::is_comando_basico(){
 
+bool Parser::is_comando_basico(){
+    if(look_ahead->identificador == Gramatica::ID ||
+       look_ahead->identificador == Gramatica::ABRECHAVE)
+        return true;
+    return false;
 }
 
-bool Parser::is_iteracao(){
 
+bool Parser::is_iteracao(){
+    if(look_ahead->identificador == Gramatica::WHILE ||
+        look_ahead->identificador == Gramatica::DO)
+        return true;
+    return false;
 }
