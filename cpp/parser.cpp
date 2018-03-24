@@ -182,10 +182,26 @@ void Parser::iteracao(){
 
 
 void Parser::atribuicao(){
+    
+    next_token();
+    if(look_ahead->identificador != Gramatica::ATRIBUICAO)
+        Error::token_esperado_nao_encontrado(look_ahead, "=");
+    
+    expressao_aritmetica();
+
+    next_token();
+    if(look_ahead->identificador != Gramatica::PONTOVIRGULA)
+        Error::token_esperado_nao_encontrado(look_ahead, ";");
+    
+    return;
 
 
 }
 
+
+void Parser::expressao_aritmetica(){
+    
+}
 
 
 

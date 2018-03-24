@@ -23,6 +23,7 @@ public:
     void expressao_relacional();
     void iteracao();
     void atribuicao();
+    void expressao_aritmetica();
 
     bool is_declaracao_de_variavel();
     bool is_comando();
