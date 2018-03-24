@@ -20,6 +20,7 @@ public:
     void comando();
     void declaracao_de_variavel();
     void comando_basico();
+    void expressao_relacional();
     void iteracao();
     bool is_declaracao_de_variavel();
     bool is_comando();

@@ -101,7 +101,24 @@ void Parser::comando(){
         iteracao();
     }
     else if(look_ahead->identificador == Gramatica::IF){
-        
+
+        next_token();
+        if(look_ahead->identificador != Gramatica::ABREPARENTESES){
+            Error::token_esperado_nao_encontrado(look_ahead, "(");
+        }
+
+        expressao_relacional();
+
+        if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
+            Error::token_esperado_nao_encontrado(look_ahead, ")");
+        }
+
+        comando();
+
+        if(look_ahead->identificador == Gramatica::ELSE){
+            comando();
+        }
+    
     }else{
         Error::token_esperado_nao_encontrado(look_ahead, "if | identificador | { | while | do  ");
     }
@@ -133,6 +150,11 @@ void Parser::declaracao_de_variavel(){
 
     next_token();
     
+}
+
+
+void Parser::expressao_relacional(){
+
 }
 
 
