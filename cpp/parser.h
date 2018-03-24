@@ -22,10 +22,14 @@ public:
     void comando_basico();
     void expressao_relacional();
     void iteracao();
+    void atribuicao();
+
     bool is_declaracao_de_variavel();
     bool is_comando();
     bool is_comando_basico();
     bool is_iteracao();
+    bool is_bloco();
+    bool is_atribuicao();
 };
 
 #endif
