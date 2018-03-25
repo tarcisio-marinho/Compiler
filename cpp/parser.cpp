@@ -61,6 +61,10 @@ void Parser::parse(){
     // Entrou no main
     bloco();
 
+    next_token();
+    if(look_ahead->identificador == Gramatica::EoF){
+        return;
+    }
 }
 
 
