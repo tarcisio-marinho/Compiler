@@ -245,12 +245,20 @@ void Parser::atribuicao(){
 
 
 void Parser::expressao_aritmetica(){
-    
+    termo();
+    next_token();
+    expressao_aritmetica();
+
+    return;
 }
 
 
 void Parser::expressao_relacional(){
+    expressao_aritmetica();
+    // operador relacional
+    expressao_aritmetica();
 
+    return;
 }
 
 
