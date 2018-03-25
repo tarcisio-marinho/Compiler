@@ -255,12 +255,38 @@ void Parser::expressao_relacional(){
 
 
 void Parser::termo(){
+    fator();
 
+    while(look_ahead->identificador == Gramatica::MULTIPLICACAO || look_ahead->identificador == Gramatica::DIVISAO){
+        next_token();
+        fator();
+    }
 }
 
 
 void Parser::fator(){
+    if(look_ahead->identificador == Gramatica::ABREPARENTESES){
+        next_token();
+        expressao_aritmetica();
 
+        next_token();
+        if(look_ahead->identificador == Gramatica::FECHAPARENTESES){
+            return;
+        }
+    }
+
+    else if(look_ahead->identificador == Gramatica::ID){
+        next_token();
+        return;
+    }
+
+    else if(look_ahead->identificador == Gramatica::TIPOFLOAT ||
+            look_ahead->identificador == Gramatica::TIPOINT ||
+            look_ahead->identificador == Gramatica::TIPOCHAR){
+                next_token();
+            }
+    
+    Error::token_esperado_nao_encontrado(look_ahead, "( | Identificador | float | int | char");
 }
 
 
