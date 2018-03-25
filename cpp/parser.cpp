@@ -160,10 +160,6 @@ void Parser::declaracao_de_variavel(){
 }
 
 
-void Parser::expressao_relacional(){
-
-}
-
 
 void Parser::comando_basico(){
     if(is_atribuicao())
