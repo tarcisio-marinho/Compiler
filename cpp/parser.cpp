@@ -249,6 +249,20 @@ void Parser::expressao_aritmetica(){
 }
 
 
+void Parser::expressao_relacional(){
+
+}
+
+
+void Parser::termo(){
+
+}
+
+
+void Parser::fator(){
+
+}
+
 
 // IS's
 
