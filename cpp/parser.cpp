@@ -133,7 +133,7 @@ void Parser::declaracao_de_variavel(){
     // checagem de tipos ??
     next_token();
     if(look_ahead->identificador != Gramatica::ID)
-        Error::token_esperado_nao_encontrado(look_ahead, std::string("Identificador"));
+        Error::token_esperado_nao_encontrado(look_ahead, "Identificador");
     
 
     next_token();
@@ -141,14 +141,14 @@ void Parser::declaracao_de_variavel(){
         
         next_token();
         if(look_ahead->identificador != Gramatica::ID)
-            Error::token_esperado_nao_encontrado(look_ahead, std::string("Identificador"));
+            Error::token_esperado_nao_encontrado(look_ahead, "Identificador");
         
 
         next_token();
     }
 
     if(look_ahead->identificador != Gramatica::PONTOVIRGULA)
-        Error::token_esperado_nao_encontrado(look_ahead, std::string(";"));
+        Error::token_esperado_nao_encontrado(look_ahead, ";");
     
 
     next_token();
@@ -176,7 +176,48 @@ void Parser::comando_basico(){
 
 
 void Parser::iteracao(){
+    if(look_ahead->identificador == Gramatica::DO){
+        comando();
+        next_token();
+        if(look_ahead->identificador != Gramatica::WHILE){
+            Error::token_esperado_nao_encontrado(look_ahead, "WHILE");
+        }
 
+        next_token();
+        if(look_ahead->identificador != Gramatica::ABREPARENTESES){
+            Error::token_esperado_nao_encontrado(look_ahead, "(");
+        }
+
+        expressao_relacional();
+        
+        next_token();
+        if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
+            Error::token_esperado_nao_encontrado(look_ahead, ")");
+        }
+
+        next_token();
+        if(look_ahead->identificador != Gramatica::PONTOVIRGULA){
+            Error::token_esperado_nao_encontrado(look_ahead, ";");
+        }
+
+        return;
+
+    }else if(look_ahead->identificador == Gramatica::WHILE){
+        
+        next_token();
+        if(look_ahead->identificador != Gramatica::ABREPARENTESES){
+            Error::token_esperado_nao_encontrado(look_ahead, "(");
+        }
+
+        expressao_relacional();
+
+        next_token();
+        if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
+            Error::token_esperado_nao_encontrado(look_ahead, ")");
+        }
+
+        comando();
+    }
 
 }
 
