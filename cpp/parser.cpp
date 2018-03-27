@@ -270,13 +270,16 @@ void Parser::termo(){
 
 void Parser::fator(){
     if(look_ahead->identificador == Gramatica::ABREPARENTESES){
+        
         next_token();
+
         expressao_aritmetica();
 
         next_token();
-        if(look_ahead->identificador == Gramatica::FECHAPARENTESES){
-            return;
+        if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
+            Error::token_esperado_nao_encontrado(look_ahead, ")");
         }
+        return;
     }
 
     else if(look_ahead->identificador == Gramatica::ID){
@@ -288,6 +291,7 @@ void Parser::fator(){
             look_ahead->identificador == Gramatica::TIPOINT ||
             look_ahead->identificador == Gramatica::TIPOCHAR){
                 next_token();
+                return;
             }
     
     Error::token_esperado_nao_encontrado(look_ahead, "( | Identificador | float | int | char");
