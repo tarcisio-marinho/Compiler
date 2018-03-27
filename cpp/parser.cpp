@@ -242,8 +242,11 @@ void Parser::atribuicao(){
 
 void Parser::expressao_aritmetica(){
     termo();
-    next_token();
-    expressao_aritmetica();
+    if(look_ahead->identificador == Gramatica::SOMA ||
+        look_ahead->identificador == Gramatica::SUBTRACAO){
+            next_token();
+            expressao_aritmetica();
+        }
 
     return;
 }
@@ -251,9 +254,18 @@ void Parser::expressao_aritmetica(){
 
 void Parser::expressao_relacional(){
     expressao_aritmetica();
+    if(look_ahead->identificador == Gramatica::MENORIGUAL ||
+        look_ahead->identificador == Gramatica::MAIORIGUAL||
+        look_ahead->identificador == Gramatica::MAIOR||
+        look_ahead->identificador == Gramatica::MENOR||
+        look_ahead->identificador == Gramatica::IGUAL||
+        look_ahead->identificador == Gramatica::DIFERENCA){
+        expressao_aritmetica();
+    }else
+        Error::token_esperado_nao_encontrado(look_ahead, " == | != | < | > | >= | <= "); 
+    
     // operador relacional
-    expressao_aritmetica();
-
+   
     return;
 }
 
@@ -290,9 +302,9 @@ void Parser::fator(){
     else if(look_ahead->identificador == Gramatica::TIPOFLOAT ||
             look_ahead->identificador == Gramatica::TIPOINT ||
             look_ahead->identificador == Gramatica::TIPOCHAR){
-                next_token();
-                return;
-            }
+            next_token();
+            return;
+    }
     
     Error::token_esperado_nao_encontrado(look_ahead, "( | Identificador | float | int | char");
 }
