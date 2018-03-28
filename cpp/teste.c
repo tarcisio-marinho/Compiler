@@ -3,12 +3,12 @@ int main () {
     float h;
     int c;
     float w, k,a;
-    
+   
     k = x;
-    w = 5/x+y*8+5* 7;
+    //w = 5/x+y*8+5* 7;
     /** /** /*
        teste &% 
-    ***/
+    **
     
 
      
@@ -34,7 +34,7 @@ int main () {
 
         p = 10;
     }
-
+*/
 }
 
 

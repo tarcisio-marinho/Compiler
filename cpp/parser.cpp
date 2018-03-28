@@ -68,6 +68,7 @@ void Parser::parse(){
 }
 
 
+
 /*
     <bloco> ::= “{“ {<decl_var>}* {<comando>}* “}”
 */
@@ -85,8 +86,10 @@ void Parser::bloco(){
 
     while(is_comando())
         comando();
+
+
     
-    
+    next_token();
     if(look_ahead->identificador != Gramatica::FECHACHAVE)
         Error::token_esperado_nao_encontrado(look_ahead, "}");
     
@@ -133,8 +136,7 @@ void Parser::comando(){
 
 
 void Parser::declaracao_de_variavel(){
-    std::string parte_do_erro = "Declaração de variável";
-    // checagem de tipos ??
+    
     next_token();
     if(look_ahead->identificador != Gramatica::ID)
         Error::token_esperado_nao_encontrado(look_ahead, "Identificador");
