@@ -178,6 +178,8 @@ void Parser::comando_basico(){
 
 
 void Parser::iteracao(){
+    next_token();
+
     if(look_ahead->identificador == Gramatica::DO){
         comando();
         next_token();
@@ -198,11 +200,9 @@ void Parser::iteracao(){
         }
 
         next_token();
-        if(look_ahead->identificador != Gramatica::PONTOVIRGULA){
-            Error::token_esperado_nao_encontrado(look_ahead, ";");
+        if(look_ahead->identificador == Gramatica::PONTOVIRGULA){
+            return;
         }
-
-        return;
 
     }else if(look_ahead->identificador == Gramatica::WHILE){
         
@@ -219,13 +219,15 @@ void Parser::iteracao(){
         }
 
         comando();
-    }
+    }else
+        Error::token_esperado_nao_encontrado(look_ahead, "DO | WHILE");
 
 }
 
 
 void Parser::atribuicao(){
     
+    next_token(); // ????
     next_token();
     if(look_ahead->identificador != Gramatica::ATRIBUICAO)
         Error::token_esperado_nao_encontrado(look_ahead, "=");
@@ -244,13 +246,21 @@ void Parser::atribuicao(){
 
 void Parser::expressao_aritmetica(){
     termo();
+    expressao_aritmetica_recursiva();
+    
+    return;
+}
+
+
+void Parser::expressao_aritmetica_recursiva(){
     if(look_ahead->identificador == Gramatica::SOMA ||
         look_ahead->identificador == Gramatica::SUBTRACAO){
-            next_token();
-            expressao_aritmetica();
-        }
-
+        next_token();
+        termo();
+        expressao_aritmetica_recursiva();
+    }
     return;
+
 }
 
 
@@ -262,6 +272,7 @@ void Parser::expressao_relacional(){
         look_ahead->identificador == Gramatica::MENOR||
         look_ahead->identificador == Gramatica::IGUAL||
         look_ahead->identificador == Gramatica::DIFERENCA){
+        next_token();
         expressao_aritmetica();
     }else
         Error::token_esperado_nao_encontrado(look_ahead, " == | != | < | > | >= | <= "); 
@@ -279,6 +290,7 @@ void Parser::termo(){
         next_token();
         fator();
     }
+    return;
 }
 
 
@@ -290,10 +302,9 @@ void Parser::fator(){
         expressao_aritmetica();
 
         next_token();
-        if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
-            Error::token_esperado_nao_encontrado(look_ahead, ")");
+        if(look_ahead->identificador == Gramatica::FECHAPARENTESES){
+            return;
         }
-        return;
     }
 
     else if(look_ahead->identificador == Gramatica::ID){

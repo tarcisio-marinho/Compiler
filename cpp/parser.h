@@ -24,6 +24,7 @@ public:
     void atribuicao();
     void expressao_relacional();
     void expressao_aritmetica();
+    void expressao_aritmetica_recursiva();
     void termo();
     void fator();
 
