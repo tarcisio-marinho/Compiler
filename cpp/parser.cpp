@@ -102,36 +102,43 @@ void Parser::bloco(){
 */
 void Parser::comando(){
   
-    if(is_comando_basico())
+    if(is_comando_basico()){
         comando_basico();
+        return;
     
     
-    else if(is_iteracao())
+    }else if(is_iteracao()){
         iteracao();
-    
-    
-    else if(look_ahead->identificador == Gramatica::IF){
-
-        next_token();
-        if(look_ahead->identificador != Gramatica::ABREPARENTESES)
-            Error::token_esperado_nao_encontrado(look_ahead, "(");
-        
-
-        expressao_relacional();
-
-        if(look_ahead->identificador != Gramatica::FECHAPARENTESES)
-            Error::token_esperado_nao_encontrado(look_ahead, ")");
-        
-
-        comando();
-
-        if(look_ahead->identificador == Gramatica::ELSE)
-            comando();
-        
+        return;
     
     }else{
-        Error::token_esperado_nao_encontrado(look_ahead, "if | identificador | { | while | do  ");
+        
+        next_token();
+        if(look_ahead->identificador == Gramatica::IF){
+
+            next_token();
+            if(look_ahead->identificador != Gramatica::ABREPARENTESES)
+                Error::token_esperado_nao_encontrado(look_ahead, "(");
+            
+
+            expressao_relacional();
+
+            next_token();
+            if(look_ahead->identificador != Gramatica::FECHAPARENTESES)
+                Error::token_esperado_nao_encontrado(look_ahead, ")");
+            
+
+            comando();
+
+            if(look_ahead->identificador == Gramatica::ELSE){
+                next_token();
+                comando();
+            }
+        }
     }
+    
+    Error::token_esperado_nao_encontrado(look_ahead, "if | identificador | { | while | do  ");
+    
 }
 
 
