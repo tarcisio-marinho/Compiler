@@ -38,24 +38,25 @@ Parser::Parser(FILE *f){
 }
 
 void Parser::parse(){
+    std::string funcao = std::string("main");
     next_token();
     if(look_ahead->identificador != Gramatica::INT)
-        Error::token_esperado_nao_encontrado(look_ahead, "int");
+        Error::token_esperado_nao_encontrado(look_ahead, "int", funcao);
     
 
     next_token();
     if(look_ahead->identificador != Gramatica::MAIN)
-        Error::token_esperado_nao_encontrado(look_ahead, "main");
+        Error::token_esperado_nao_encontrado(look_ahead, "main", funcao);
     
     
     next_token();
     if(look_ahead->identificador != Gramatica::ABREPARENTESES)
-        Error::token_esperado_nao_encontrado(look_ahead, "(");
+        Error::token_esperado_nao_encontrado(look_ahead, "(", funcao);
     
 
     next_token();
     if(look_ahead->identificador != Gramatica::FECHAPARENTESES)
-        Error::token_esperado_nao_encontrado(look_ahead, ")");
+        Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
     
 
     // Entrou no main
@@ -73,12 +74,13 @@ void Parser::parse(){
     <bloco> ::= “{“ {<decl_var>}* {<comando>}* “}”
 */
 void Parser::bloco(){
+    std::string funcao = std::string("bloco");
     
     next_token();
     if(look_ahead->identificador != Gramatica::ABRECHAVE)
-        Error::token_esperado_nao_encontrado(look_ahead, "{");
+        Error::token_esperado_nao_encontrado(look_ahead, "{", funcao);
     
-
+    // next token ??
     next_token();
     while(is_declaracao_de_variavel()) // Múltiplas declarações de variaveis
         declaracao_de_variavel();
@@ -91,16 +93,46 @@ void Parser::bloco(){
     
     next_token();
     if(look_ahead->identificador != Gramatica::FECHACHAVE)
-        Error::token_esperado_nao_encontrado(look_ahead, "}");
+        Error::token_esperado_nao_encontrado(look_ahead, "}", funcao);
+
+    return;
     
     
 }
 
 
+
+void Parser::declaracao_de_variavel(){
+    std::string funcao = std::string("declaracao de variavel");
+    
+    next_token();
+    if(look_ahead->identificador != Gramatica::ID)
+        Error::token_esperado_nao_encontrado(look_ahead, "Identificador", funcao);
+    
+
+    next_token();
+    while(look_ahead->identificador == Gramatica::VIRGULA){
+        
+        next_token();
+        if(look_ahead->identificador != Gramatica::ID)
+            Error::token_esperado_nao_encontrado(look_ahead, "Identificador", funcao);
+        
+
+        next_token();
+    }
+
+    if(look_ahead->identificador != Gramatica::PONTOVIRGULA)
+        Error::token_esperado_nao_encontrado(look_ahead, ";", funcao);
+    
+
+    next_token();
+    
+}
 /*
     <comando> ::= <comando_básico> | <iteração> | if "("<expr_relacional>")" <comando> {else <comando>}?
 */
 void Parser::comando(){
+    std::string funcao = std::string("comando");
   
     if(is_comando_basico()){
         comando_basico();
@@ -118,14 +150,14 @@ void Parser::comando(){
 
             next_token();
             if(look_ahead->identificador != Gramatica::ABREPARENTESES)
-                Error::token_esperado_nao_encontrado(look_ahead, "(");
+                Error::token_esperado_nao_encontrado(look_ahead, "(", funcao);
             
 
             expressao_relacional();
 
             next_token();
             if(look_ahead->identificador != Gramatica::FECHAPARENTESES)
-                Error::token_esperado_nao_encontrado(look_ahead, ")");
+                Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
             
 
             comando();
@@ -137,40 +169,14 @@ void Parser::comando(){
         }
     }
     
-    Error::token_esperado_nao_encontrado(look_ahead, "if | identificador | { | while | do  ");
-    
-}
-
-
-void Parser::declaracao_de_variavel(){
-    
-    next_token();
-    if(look_ahead->identificador != Gramatica::ID)
-        Error::token_esperado_nao_encontrado(look_ahead, "Identificador");
-    
-
-    next_token();
-    while(look_ahead->identificador == Gramatica::VIRGULA){
-        
-        next_token();
-        if(look_ahead->identificador != Gramatica::ID)
-            Error::token_esperado_nao_encontrado(look_ahead, "Identificador");
-        
-
-        next_token();
-    }
-
-    if(look_ahead->identificador != Gramatica::PONTOVIRGULA)
-        Error::token_esperado_nao_encontrado(look_ahead, ";");
-    
-
-    next_token();
+    Error::token_esperado_nao_encontrado(look_ahead, "if | identificador | { | while | do  ", funcao);
     
 }
 
 
 
 void Parser::comando_basico(){
+    std::string funcao = std::string("comando basico");
     if(is_atribuicao())
         atribuicao();
     
@@ -178,32 +184,33 @@ void Parser::comando_basico(){
         bloco();
     
     else
-        Error::token_esperado_nao_encontrado(look_ahead, "Identificador | {");
+        Error::token_esperado_nao_encontrado(look_ahead, "Identificador | {", funcao);
     
 
 }
 
 
 void Parser::iteracao(){
+    std::string funcao = std::string("iteracao");
     next_token();
 
     if(look_ahead->identificador == Gramatica::DO){
         comando();
         next_token();
         if(look_ahead->identificador != Gramatica::WHILE){
-            Error::token_esperado_nao_encontrado(look_ahead, "WHILE");
+            Error::token_esperado_nao_encontrado(look_ahead, "WHILE", funcao);
         }
 
         next_token();
         if(look_ahead->identificador != Gramatica::ABREPARENTESES){
-            Error::token_esperado_nao_encontrado(look_ahead, "(");
+            Error::token_esperado_nao_encontrado(look_ahead, "(", funcao);
         }
 
         expressao_relacional();
         
         next_token();
         if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
-            Error::token_esperado_nao_encontrado(look_ahead, ")");
+            Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
         }
 
         next_token();
@@ -215,39 +222,37 @@ void Parser::iteracao(){
         
         next_token();
         if(look_ahead->identificador != Gramatica::ABREPARENTESES){
-            Error::token_esperado_nao_encontrado(look_ahead, "(");
+            Error::token_esperado_nao_encontrado(look_ahead, "(", funcao);
         }
 
         expressao_relacional();
 
         next_token();
         if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
-            Error::token_esperado_nao_encontrado(look_ahead, ")");
+            Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
         }
 
         comando();
     }else
-        Error::token_esperado_nao_encontrado(look_ahead, "DO | WHILE");
+        Error::token_esperado_nao_encontrado(look_ahead, "DO | WHILE", funcao);
 
 }
 
 
 void Parser::atribuicao(){
-    
+    std::string funcao = std::string("atribuicao");
     next_token(); // ????
     next_token();
     if(look_ahead->identificador != Gramatica::ATRIBUICAO)
-        Error::token_esperado_nao_encontrado(look_ahead, "=");
+        Error::token_esperado_nao_encontrado(look_ahead, "=", funcao);
     
     expressao_aritmetica();
 
     next_token();
     if(look_ahead->identificador != Gramatica::PONTOVIRGULA)
-        Error::token_esperado_nao_encontrado(look_ahead, ";");
+        Error::token_esperado_nao_encontrado(look_ahead, ";", funcao);
     
     return;
-
-
 }
 
 
@@ -272,6 +277,7 @@ void Parser::expressao_aritmetica_recursiva(){
 
 
 void Parser::expressao_relacional(){
+    std::string funcao = std::string("expressao relacional");
     expressao_aritmetica();
     if(look_ahead->identificador == Gramatica::MENORIGUAL ||
         look_ahead->identificador == Gramatica::MAIORIGUAL||
@@ -282,7 +288,7 @@ void Parser::expressao_relacional(){
         next_token();
         expressao_aritmetica();
     }else
-        Error::token_esperado_nao_encontrado(look_ahead, " == | != | < | > | >= | <= "); 
+        Error::token_esperado_nao_encontrado(look_ahead, " == | != | < | > | >= | <= ", funcao); 
     
     // operador relacional
    
@@ -302,6 +308,7 @@ void Parser::termo(){
 
 
 void Parser::fator(){
+    std::string funcao = std::string("fator");
     if(look_ahead->identificador == Gramatica::ABREPARENTESES){
         
         next_token();
@@ -326,7 +333,7 @@ void Parser::fator(){
             return;
     }
     
-    Error::token_esperado_nao_encontrado(look_ahead, "( | Identificador | float | int | char");
+    Error::token_esperado_nao_encontrado(look_ahead, "( | Identificador | float | int | char", funcao);
 }
 
 
