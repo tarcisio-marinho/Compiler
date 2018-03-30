@@ -60,6 +60,7 @@ void Parser::parse(){
     
 
     // Entrou no main
+    next_token();
     bloco();
 
     next_token();
@@ -76,24 +77,21 @@ void Parser::parse(){
 void Parser::bloco(){
     std::string funcao = std::string("bloco");
     
-    next_token();
     if(look_ahead->identificador != Gramatica::ABRECHAVE)
         Error::token_esperado_nao_encontrado(look_ahead, "{", funcao);
     
-    // next token ??
     next_token();
-    while(is_declaracao_de_variavel()) // Múltiplas declarações de variaveis
+    while(is_declaracao_de_variavel()) 
         declaracao_de_variavel();
     
 
     while(is_comando())
         comando();
 
-
-    
-    next_token();
     if(look_ahead->identificador != Gramatica::FECHACHAVE)
         Error::token_esperado_nao_encontrado(look_ahead, "}", funcao);
+
+    next_token();
 
     return;
     

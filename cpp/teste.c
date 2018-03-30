@@ -11,11 +11,11 @@ int main () {
     
 
      
-    do{
+    do
 	
         w = w + 1;
 	
-    }while  (y<10);
+    while  (y<10);
 
 
     y = x;
