@@ -232,8 +232,85 @@ void Parser::comando_do(){
 }
 
 
+void Parser::expressao_relacional(){
+    std::string funcao = std::string("expressao relacional");
+    expressao_aritmetica();
+    operador_relacional();
+    expressao_aritmetica();
+}
 
 
+void Parser::operador_relacional(){
+    std::string funcao = std::string("operador relacional");
+    if(look_ahead->identificador == Gramatica::IGUAL ||
+        look_ahead->identificador == Gramatica::DIFERENCA || 
+        look_ahead->identificador == Gramatica::MAIOR ||
+        look_ahead->identificador == Gramatica::MENOR ||
+        look_ahead->identificador == Gramatica::MAIORIGUAL ||
+        look_ahead->identificador == Gramatica::MENORIGUAL){
+        next_token();
+    }else{
+        Error::token_esperado_nao_encontrado(look_ahead, "== | != | > | < | >= | <= ", funcao);
+    }
+}
+
+
+void Parser::termo(){
+    fator();
+
+    while(look_ahead->identificador == Gramatica::MULTIPLICACAO || look_ahead->identificador == Gramatica::DIVISAO){
+        next_token();
+        fator();
+    }
+    return;
+}
+
+
+void Parser::fator(){
+    std::string funcao = std::string("fator");
+    if(look_ahead->identificador == Gramatica::ABREPARENTESES){
+        
+        next_token();
+        expressao_aritmetica();
+        if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
+            Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
+        }
+        next_token();
+    
+    }else{
+        if(look_ahead->identificador == Gramatica::ID){
+            next_token();
+        }else if(look_ahead->identificador == Gramatica::TIPOCHAR){
+            next_token();
+        }else if(look_ahead->identificador == Gramatica::TIPOFLOAT){
+            next_token();
+        }else if(look_ahead->identificador == Gramatica::TIPOINT){
+            next_token();
+        }else{
+            Error::token_esperado_nao_encontrado(look_ahead, "identificador | tipoInt | tipoFloat | tipoChar", funcao);
+        }
+    }
+}
+
+
+void Parser::expressao_aritmetica(){
+    termo();
+    expressao_aritmetica_recursiva();
+    
+    return;
+}
+
+
+void Parser::expressao_aritmetica_recursiva(){
+    if(look_ahead->identificador == Gramatica::SOMA ||
+        look_ahead->identificador == Gramatica::SUBTRACAO){
+        next_token();
+        termo();
+        expressao_aritmetica_recursiva();
+    }
+    return;
+
+}
 
 
 void Parser::comando_basico(){
@@ -269,89 +346,7 @@ void Parser::atribuicao(){
 }
 
 
-void Parser::expressao_aritmetica(){
-    termo();
-    expressao_aritmetica_recursiva();
-    
-    return;
-}
-
-
-void Parser::expressao_aritmetica_recursiva(){
-    if(look_ahead->identificador == Gramatica::SOMA ||
-        look_ahead->identificador == Gramatica::SUBTRACAO){
-        next_token();
-        termo();
-        expressao_aritmetica_recursiva();
-    }
-    return;
-
-}
-
-
-void Parser::expressao_relacional(){
-    std::string funcao = std::string("expressao relacional");
-    expressao_aritmetica();
-    if(look_ahead->identificador == Gramatica::MENORIGUAL ||
-        look_ahead->identificador == Gramatica::MAIORIGUAL||
-        look_ahead->identificador == Gramatica::MAIOR||
-        look_ahead->identificador == Gramatica::MENOR||
-        look_ahead->identificador == Gramatica::IGUAL||
-        look_ahead->identificador == Gramatica::DIFERENCA){
-        next_token();
-        expressao_aritmetica();
-    }else
-        Error::token_esperado_nao_encontrado(look_ahead, " == | != | < | > | >= | <= ", funcao); 
-    
-    // operador relacional
-   
-    return;
-}
-
-
-void Parser::termo(){
-    fator();
-
-    while(look_ahead->identificador == Gramatica::MULTIPLICACAO || look_ahead->identificador == Gramatica::DIVISAO){
-        next_token();
-        fator();
-    }
-    return;
-}
-
-
-void Parser::fator(){
-    std::string funcao = std::string("fator");
-    if(look_ahead->identificador == Gramatica::ABREPARENTESES){
-        
-        next_token();
-
-        expressao_aritmetica();
-
-        next_token();
-        if(look_ahead->identificador == Gramatica::FECHAPARENTESES){
-            return;
-        }
-    }
-
-    else if(look_ahead->identificador == Gramatica::ID){
-        next_token();
-        return;
-    }
-
-    else if(look_ahead->identificador == Gramatica::TIPOFLOAT ||
-            look_ahead->identificador == Gramatica::TIPOINT ||
-            look_ahead->identificador == Gramatica::TIPOCHAR){
-            next_token();
-            return;
-    }
-    
-    Error::token_esperado_nao_encontrado(look_ahead, "( | Identificador | float | int | char", funcao);
-}
-
-
 // IS's
-
 bool Parser::is_declaracao_de_variavel(){
     if (look_ahead->identificador == Gramatica::INT ||
         look_ahead->identificador == Gramatica::FLOAT ||

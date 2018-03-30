@@ -21,11 +21,12 @@ public:
     void comando_if();
     void comando_while();
     void comando_do();
+    void expressao_relacional();
+    void operador_relacional();
     void declaracao_de_variavel();
     void comando_basico();
     void iteracao();
     void atribuicao();
-    void expressao_relacional();
     void expressao_aritmetica();
     void expressao_aritmetica_recursiva();
     void termo();
