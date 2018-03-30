@@ -58,8 +58,6 @@ void Parser::parse(){
     if(look_ahead->identificador != Gramatica::FECHAPARENTESES)
         Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
     
-
-    // Entrou no main
     next_token();
     bloco();
 
@@ -71,9 +69,6 @@ void Parser::parse(){
 
 
 
-/*
-    <bloco> ::= “{“ {<decl_var>}* {<comando>}* “}”
-*/
 void Parser::bloco(){
     std::string funcao = std::string("bloco");
     
@@ -95,7 +90,6 @@ void Parser::bloco(){
 
     return; 
 }
-
 
 
 void Parser::declaracao_de_variavel(){
@@ -123,9 +117,8 @@ void Parser::declaracao_de_variavel(){
 
     next_token();
 }
-/*
-    <comando> ::= <comando_básico> | <iteração> | if "("<expr_relacional>")" <comando> {else <comando>}?
-*/
+
+
 void Parser::comando(){
     std::string funcao = std::string("comando");
   

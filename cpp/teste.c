@@ -21,7 +21,7 @@ int main () {
     y = x;
     
     while (x>w*8) {
-       float y,a;
+        float y,a;
         w = w +1;
         y = x;
     }
