@@ -331,18 +331,23 @@ void Parser::comando_basico(){
 
 void Parser::atribuicao(){
     std::string funcao = std::string("atribuicao");
-    next_token(); // ????
-    next_token();
-    if(look_ahead->identificador != Gramatica::ATRIBUICAO)
-        Error::token_esperado_nao_encontrado(look_ahead, "=", funcao);
     
-    expressao_aritmetica();
+    if(look_ahead->identificador != Gramatica::ID){
+        Error::token_esperado_nao_encontrado(look_ahead, "identificador", funcao);
+    }
 
     next_token();
-    if(look_ahead->identificador != Gramatica::PONTOVIRGULA)
+    if(look_ahead->identificador != Gramatica::ATRIBUICAO){
+        Error::token_esperado_nao_encontrado(look_ahead, "=", funcao);
+    }
+
+    next_token();
+    expressao_aritmetica();
+
+    if(look_ahead->identificador != Gramatica::PONTOVIRGULA){
         Error::token_esperado_nao_encontrado(look_ahead, ";", funcao);
-    
-    return;
+    }
+    next_token();
 }
 
 
