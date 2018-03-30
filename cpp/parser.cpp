@@ -134,57 +134,43 @@ void Parser::comando(){
   
     if(is_comando_basico()){
         comando_basico();
-        return;
-    
-    
+
     }else if(is_iteracao()){
         iteracao();
-        return;
+    
+    }else if(look_ahead->identificador == Gramatica::IF){
+        comando_if();
     
     }else{
-        
-        next_token();
-        if(look_ahead->identificador == Gramatica::IF){
-
-            next_token();
-            if(look_ahead->identificador != Gramatica::ABREPARENTESES)
-                Error::token_esperado_nao_encontrado(look_ahead, "(", funcao);
-            
-
-            expressao_relacional();
-
-            next_token();
-            if(look_ahead->identificador != Gramatica::FECHAPARENTESES)
-                Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
-            
-
-            comando();
-
-            if(look_ahead->identificador == Gramatica::ELSE){
-                next_token();
-                comando();
-            }
-        }
+        Error::token_esperado_nao_encontrado(look_ahead, "if | identificador | { | while | do  ", funcao);
     }
-    
-    Error::token_esperado_nao_encontrado(look_ahead, "if | identificador | { | while | do  ", funcao);
-    
 }
 
 
+void Parser::comando_if(){
+    std::string funcao = std::string("IF");
+    if(look_ahead->identificador != Gramatica::IF){
+        Error::token_esperado_nao_encontrado(look_ahead, "if", funcao);
+    }
 
-void Parser::comando_basico(){
-    std::string funcao = std::string("comando basico");
-    if(is_atribuicao())
-        atribuicao();
+    next_token();
+    if(look_ahead->identificador != Gramatica::ABREPARENTESES){
+        Error::token_esperado_nao_encontrado(look_ahead, "(", funcao);
+    }
     
-    else if(is_bloco())
-        bloco();
+    next_token();
+    expressao_relacional();
+    if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
+        Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
+    }
     
-    else
-        Error::token_esperado_nao_encontrado(look_ahead, "Identificador | {", funcao);
-    
+    next_token();
+    comando();
 
+    if(look_ahead->identificador == Gramatica::ELSE){
+        next_token();
+        comando();
+    }
 }
 
 
@@ -235,6 +221,21 @@ void Parser::iteracao(){
         Error::token_esperado_nao_encontrado(look_ahead, "DO | WHILE", funcao);
 
 }
+
+void Parser::comando_basico(){
+    std::string funcao = std::string("comando basico");
+    if(is_atribuicao())
+        atribuicao();
+    
+    else if(is_bloco())
+        bloco();
+    
+    else
+        Error::token_esperado_nao_encontrado(look_ahead, "Identificador | {", funcao);
+    
+
+}
+
 
 
 void Parser::atribuicao(){

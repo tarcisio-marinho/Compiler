@@ -18,6 +18,7 @@ public:
     void parse();
     void bloco();
     void comando();
+    void comando_if();
     void declaracao_de_variavel();
     void comando_basico();
     void iteracao();
