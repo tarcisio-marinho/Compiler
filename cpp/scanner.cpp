@@ -134,8 +134,8 @@ Token * Scanner::scan(){
                 int flag = 0;
                 lexema.push_back(caracter_lido);
                 proximo_caracter();
-
                 while(true){
+                    
                     if(caracter_lido == '*'){
                         proximo_caracter();
 
@@ -144,12 +144,9 @@ Token * Scanner::scan(){
                             flag = 1;
                             break;
                         }
-
-                        if(caracter_lido == EOF){
-                            Error::comentario_error(n_linha, n_coluna, lexema);
-                        }
-                    }
-                    else if (caracter_lido == EOF){
+                        continue;
+                    }         
+                    if(caracter_lido == EOF){
                         Error::comentario_error(n_linha, n_coluna, lexema);
                     }
                     proximo_caracter();

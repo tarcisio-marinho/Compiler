@@ -4,11 +4,10 @@ int main () {
     int c;
     float w, k,a;
    
-    k = x;
-    w = 5/x+y*8+5* 7;
+
     /** /** /*
        teste &% 
-    **/
+    ***/
     
 
      
