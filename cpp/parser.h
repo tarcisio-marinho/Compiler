@@ -19,6 +19,8 @@ public:
     void bloco();
     void comando();
     void comando_if();
+    void comando_while();
+    void comando_do();
     void declaracao_de_variavel();
     void comando_basico();
     void iteracao();

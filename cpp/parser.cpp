@@ -93,9 +93,7 @@ void Parser::bloco(){
 
     next_token();
 
-    return;
-    
-    
+    return; 
 }
 
 
@@ -124,7 +122,6 @@ void Parser::declaracao_de_variavel(){
     
 
     next_token();
-    
 }
 /*
     <comando> ::= <comando_básico> | <iteração> | if "("<expr_relacional>")" <comando> {else <comando>}?
@@ -176,51 +173,68 @@ void Parser::comando_if(){
 
 void Parser::iteracao(){
     std::string funcao = std::string("iteracao");
-    next_token();
 
-    if(look_ahead->identificador == Gramatica::DO){
-        comando();
-        next_token();
-        if(look_ahead->identificador != Gramatica::WHILE){
-            Error::token_esperado_nao_encontrado(look_ahead, "WHILE", funcao);
-        }
-
-        next_token();
-        if(look_ahead->identificador != Gramatica::ABREPARENTESES){
-            Error::token_esperado_nao_encontrado(look_ahead, "(", funcao);
-        }
-
-        expressao_relacional();
-        
-        next_token();
-        if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
-            Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
-        }
-
-        next_token();
-        if(look_ahead->identificador == Gramatica::PONTOVIRGULA){
-            return;
-        }
-
-    }else if(look_ahead->identificador == Gramatica::WHILE){
-        
-        next_token();
-        if(look_ahead->identificador != Gramatica::ABREPARENTESES){
-            Error::token_esperado_nao_encontrado(look_ahead, "(", funcao);
-        }
-
-        expressao_relacional();
-
-        next_token();
-        if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
-            Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
-        }
-
-        comando();
-    }else
+    if(look_ahead->identificador == Gramatica::WHILE){
+        comando_while();
+    }else if(look_ahead->identificador == Gramatica::DO){
+        comando_do();
+    }else{
         Error::token_esperado_nao_encontrado(look_ahead, "DO | WHILE", funcao);
-
+    }
 }
+
+
+void Parser::comando_while(){
+    std::string funcao = std::string("comando while");
+    next_token();
+    if(look_ahead->identificador != Gramatica::ABREPARENTESES){
+        Error::token_esperado_nao_encontrado(look_ahead, "(", funcao);
+    }
+
+    next_token();
+    expressao_relacional();
+
+    if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
+        Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
+    }
+
+    next_token();
+    comando();
+}
+
+
+void Parser::comando_do(){
+    std::string funcao = std::string("comando do");
+    next_token();
+    comando();
+
+    if(look_ahead->identificador != Gramatica::WHILE){
+        Error::token_esperado_nao_encontrado(look_ahead, "while", funcao);
+    }
+    
+    next_token();
+    if(look_ahead->identificador != Gramatica::ABREPARENTESES){
+        Error::token_esperado_nao_encontrado(look_ahead, "(", funcao);
+    }
+
+    next_token();
+    expressao_relacional();
+
+    if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
+        Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
+    }
+
+    next_token();
+    if(look_ahead->identificador != Gramatica::PONTOVIRGULA){
+        Error::token_esperado_nao_encontrado(look_ahead, ";", funcao);
+    }
+    next_token();
+}
+
+
+
+
+
 
 void Parser::comando_basico(){
     std::string funcao = std::string("comando basico");
