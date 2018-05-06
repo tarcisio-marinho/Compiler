@@ -393,3 +393,29 @@ bool Parser::is_atribuicao(){
         return true;
     return false;
 }
+
+
+// Semantic
+
+void Parser::new_simbol(Simbol *s){
+    if(search_simbol(s->lexema, s->escopo) == NULL){
+        this->simbol_table.push_back(s);
+    }else{
+        Error::semantico(s->tipo);
+    }
+}
+
+
+Simbol * Parser::search_simbol(std::string lexema, int escopo){
+    for (auto s : this->simbol_table){
+        Simbol *aux = s;
+        if(aux->lexema == lexema){
+            if(escopo == -1){
+                return aux;
+            }else if(aux->escopo == escopo){
+                return aux;
+            }
+        }
+    }
+    return NULL;
+}

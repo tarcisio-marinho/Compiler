@@ -13,7 +13,7 @@ public:
     FILE * arquivo;
     Scanner *scanner;
     Token * look_ahead;
-    std::vector<Simbol> simbol_table;
+    std::vector<Simbol*> simbol_table;
     int escopo;
 
     Parser(FILE *f);
@@ -41,6 +41,10 @@ public:
     bool is_iteracao();
     bool is_bloco();
     bool is_atribuicao();
+
+    void new_simbol(Simbol * s);
+    Simbol *search_simbol(std::string lexema, int escopo);
+
 };
 
 #endif
