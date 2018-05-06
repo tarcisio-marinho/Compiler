@@ -61,9 +61,9 @@ void Parser::parse(){
     next_token();
     bloco();
 
-    next_token();
-    if(look_ahead->identificador == Gramatica::EoF){
-        return;
+    //next_token();
+    if(look_ahead->identificador != Gramatica::EoF){
+        Error::token_esperado_nao_encontrado(look_ahead, "EOF", funcao);
     }
 }
 
