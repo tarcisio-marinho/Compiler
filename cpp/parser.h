@@ -14,7 +14,7 @@ public:
     Scanner *scanner;
     Token * look_ahead;
     std::vector<Simbol> simbol_table;
-
+    int escopo;
 
     Parser(FILE *f);
     void next_token();

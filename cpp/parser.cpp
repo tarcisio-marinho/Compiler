@@ -35,6 +35,7 @@ void Parser::next_token(){
 Parser::Parser(FILE *f){
     this->arquivo = f;
     this->scanner = new Scanner(arquivo);
+    this->escopo = -1;
 }
 
 void Parser::parse(){
@@ -71,7 +72,7 @@ void Parser::parse(){
 
 void Parser::bloco(){
     std::string funcao = std::string("bloco");
-    
+    this->escopo++;
     if(look_ahead->identificador != Gramatica::ABRECHAVE)
         Error::token_esperado_nao_encontrado(look_ahead, "{", funcao);
     
@@ -87,7 +88,7 @@ void Parser::bloco(){
         Error::token_esperado_nao_encontrado(look_ahead, "}", funcao);
 
     next_token();
-
+    this->escopo--;
     return; 
 }
 
