@@ -1,17 +1,20 @@
 #ifndef __PARSER__
 #define __PARSER__
 
-#include<iostream>
+#include <iostream>
 #include "error.h"
 #include "scanner.h"
 #include "token.h"
 #include "gramatica.h"
-
+#include "simbol.h"
+#include <vector>
 class Parser{
 public:
     FILE * arquivo;
     Scanner *scanner;
     Token * look_ahead;
+    std::vector<Simbol> simbol_table;
+
 
     Parser(FILE *f);
     void next_token();
