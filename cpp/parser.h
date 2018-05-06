@@ -44,6 +44,7 @@ public:
 
     void new_simbol(Simbol * s);
     Simbol *search_simbol(std::string lexema, int escopo);
+    void clean_simbols(int escopo);
 
 };
 

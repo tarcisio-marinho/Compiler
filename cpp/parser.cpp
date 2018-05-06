@@ -419,3 +419,16 @@ Simbol * Parser::search_simbol(std::string lexema, int escopo){
     }
     return NULL;
 }
+
+
+void Parser::clean_simbols(int escopo){ // POP_BACK ?? FRONT ??? QUEUE ?? 
+    if(!this->simbol_table.empty()){
+        Simbol *aux;
+        while(!simbol_table.empty() && aux->escopo == escopo){
+            aux = this->simbol_table.front();
+            if(aux->escopo == escopo){
+                this->simbol_table.pop_back();
+            }
+        }
+    }  
+}
