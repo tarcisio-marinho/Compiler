@@ -65,3 +65,31 @@ void Error::token_esperado_nao_encontrado(Token *t, std::string esperado, std::s
     std::cout << error << std::endl; 
     exit(-1); 
 }
+
+
+static void atribuicao_incompativel(Token *t, int tipo1, int tipo2){
+    
+}
+
+
+static void char_nao_opera_com_outros_tipos(Token *t, int tipo1, int tipo2){
+    
+}
+
+
+static void variavel_nao_declarada(Token *t){
+    std::string error = std::string("\033[91mERRO\033[0m: na linha: \33[93m") += std::to_string(t->linha) += std::string("\033[0m, coluna: \33[93m") 
+                        += std::to_string(t->coluna)  
+                        += std::string("\033[0m, Token lido: \033[1;32m") += t->lexema += std::string("\033[0m") 
+                        += std::string("\033[0m")
+                        += std::string("Variavel não declarada.");
+
+    std::cout << error << std::endl; 
+    exit(-1); 
+}
+
+
+static void identificador_repetido(Token *t){
+    
+}
+
