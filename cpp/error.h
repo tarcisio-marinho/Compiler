@@ -18,7 +18,6 @@ public:
     // Parser
     static void token_esperado_nao_encontrado(Token *t, std::string esperado, std::string funcao);
 
-
     // Semantic
     static void atribuicao_incompativel(Token *t, int tipo1, int tipo2);
     static void char_nao_opera_com_outros_tipos(Token *t, int tipo1, int tipo2);
