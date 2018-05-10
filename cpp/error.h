@@ -5,6 +5,7 @@
 #include "token.h"
 #include <iostream>
 #include <string>
+#include "simbol.h"
 
 class Error{
 public:
@@ -19,10 +20,10 @@ public:
     static void token_esperado_nao_encontrado(Token *t, std::string esperado, std::string funcao);
 
     // Semantic
-    static void atribuicao_incompativel(Token *t, int tipo1, int tipo2);
-    static void char_nao_opera_com_outros_tipos(Token *t, int tipo1, int tipo2);
-    static void variavel_nao_declarada(Token *t);
-    static void identificador_repetido(Token *t);
+    static void atribuicao_incompativel(Simbol *s1, Simbol *s2, int tipo1, int tipo2);
+    static void char_nao_opera_com_outros_tipos(Simbol *s1, Simbol *s2, int tipo1, int tipo2);
+    static void variavel_nao_declarada(Simbol *s);
+    static void identificador_repetido(Simbol *s);
 };
 
 

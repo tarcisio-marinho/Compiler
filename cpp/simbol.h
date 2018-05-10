@@ -2,13 +2,14 @@
 #define SIMBOL_H
 #include <string>
 #include <iostream>
+#include "token.h"
 
 class Simbol{
 public:
-    std::string lexema;
+    Token *t;
     int tipo;
     int escopo;
-    Simbol(std::string lexema, int tipo, int escopo);
+    Simbol(Token *t, int tipo, int escopo);
 };
 
 #endif

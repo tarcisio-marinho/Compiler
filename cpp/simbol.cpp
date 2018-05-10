@@ -1,8 +1,8 @@
 #include "simbol.h"
 
 
-Simbol::Simbol(std::string lexema, int tipo, int escopo){
-    this->lexema = lexema;
+Simbol::Simbol(Token *t, int tipo, int escopo){
+    this->t = t;
     this->tipo = tipo;
     this->escopo = escopo;
 }

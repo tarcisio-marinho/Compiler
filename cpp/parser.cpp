@@ -88,6 +88,7 @@ void Parser::bloco(){
         Error::token_esperado_nao_encontrado(look_ahead, "}", funcao);
 
     next_token();
+    clean_simbols(this->escopo);
     this->escopo--;
     return; 
 }
@@ -398,7 +399,7 @@ bool Parser::is_atribuicao(){
 // Semantic
 
 void Parser::new_simbol(Simbol *s){
-    if(search_simbol(s->lexema, s->escopo) == NULL){
+    if(search_simbol(s->t->lexema, s->escopo) == NULL){
         this->simbol_table.push(s);
     }else{
         Error::semantico(s->tipo);
@@ -411,7 +412,7 @@ Simbol * Parser::search_simbol(std::string lexema, int escopo){
     
     while (!tmp_q.empty()){
         Simbol * aux = tmp_q.front();
-        if(aux->lexema == lexema){
+        if(aux->t->lexema == lexema){
             if(escopo == -1){
                 return aux;
             }else if(aux->escopo == escopo){
