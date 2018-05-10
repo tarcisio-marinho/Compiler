@@ -407,8 +407,10 @@ void Parser::new_simbol(Simbol *s){
 
 
 Simbol * Parser::search_simbol(std::string lexema, int escopo){
-    for (auto s : this->simbol_table){
-        Simbol *aux = s;
+    std::queue<Simbol*> tmp_q = this->simbol_table; 
+    
+    while (!tmp_q.empty()){
+        Simbol * aux = tmp_q.front();
         if(aux->lexema == lexema){
             if(escopo == -1){
                 return aux;
@@ -416,7 +418,11 @@ Simbol * Parser::search_simbol(std::string lexema, int escopo){
                 return aux;
             }
         }
-    }
+
+        tmp_q.pop();
+    } 
+
+
     return NULL;
 }
 
