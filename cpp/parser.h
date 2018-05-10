@@ -8,12 +8,14 @@
 #include "gramatica.h"
 #include "simbol.h"
 #include <vector>
+#include <queue>
+
 class Parser{
 public:
     FILE * arquivo;
     Scanner *scanner;
     Token * look_ahead;
-    std::vector<Simbol*> simbol_table;
+    std::queue<Simbol*> simbol_table;
     int escopo;
 
     Parser(FILE *f);

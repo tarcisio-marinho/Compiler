@@ -399,7 +399,7 @@ bool Parser::is_atribuicao(){
 
 void Parser::new_simbol(Simbol *s){
     if(search_simbol(s->lexema, s->escopo) == NULL){
-        this->simbol_table.push_back(s);
+        this->simbol_table.push(s);
     }else{
         Error::semantico(s->tipo);
     }
@@ -427,7 +427,7 @@ void Parser::clean_simbols(int escopo){ // POP_BACK ?? FRONT ??? QUEUE ??
         while(!simbol_table.empty() && aux->escopo == escopo){
             aux = this->simbol_table.front();
             if(aux->escopo == escopo){
-                this->simbol_table.pop_back();
+                this->simbol_table.pop();
             }
         }
     }  
