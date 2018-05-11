@@ -408,10 +408,10 @@ void Parser::new_simbol(Simbol *s){
 
 
 Simbol * Parser::search_simbol(std::string lexema, int escopo){
-    std::queue<Simbol*> tmp_q = this->simbol_table; 
+    std::stack<Simbol*> tmp_q = this->simbol_table; 
     
     while (!tmp_q.empty()){
-        Simbol * aux = tmp_q.front();
+        Simbol * aux = tmp_q.top();
         if(aux->t->lexema == lexema){
             if(escopo == -1){
                 return aux;
@@ -431,9 +431,9 @@ Simbol * Parser::search_simbol(std::string lexema, int escopo){
 void Parser::clean_simbols(int escopo){ 
     if(!this->simbol_table.empty()){
         Simbol *aux;
-        while(!simbol_table.empty() && aux->escopo == escopo){
-            aux = this->simbol_table.front();
-            if(aux->escopo == escopo){
+        while(!simbol_table.empty() && aux->escopo == this->escopo){
+            aux = this->simbol_table.top();
+            if(aux->escopo == this->escopo){
                 this->simbol_table.pop();
             }
         }

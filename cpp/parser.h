@@ -9,13 +9,14 @@
 #include "simbol.h"
 #include <vector>
 #include <queue>
+#include <stack>
 
 class Parser{
 public:
     FILE * arquivo;
     Scanner *scanner;
     Token * look_ahead;
-    std::queue<Simbol*> simbol_table;
+    std::stack<Simbol*> simbol_table;
     int escopo;
 
     Parser(FILE *f);
