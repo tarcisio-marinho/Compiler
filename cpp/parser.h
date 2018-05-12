@@ -6,6 +6,7 @@
 #include "scanner.h"
 #include "token.h"
 #include "gramatica.h"
+#include "expressao.h"
 #include "simbol.h"
 #include <vector>
 #include <queue>
@@ -33,10 +34,10 @@ public:
     void comando_basico();
     void iteracao();
     void atribuicao();
-    void expressao_aritmetica();
+    Expressao* expressao_aritmetica();
     void expressao_aritmetica_recursiva();
-    void termo();
-    void fator();
+    Expressao* termo();
+    Expressao* fator();
     int tipo();
 
     bool is_declaracao_de_variavel();
@@ -49,6 +50,7 @@ public:
     void new_simbol(Simbol * s);
     Simbol *search_simbol(std::string lexema, int escopo);
     void clean_simbols(int escopo);
+    void Parser::check_types_expressao_relacional(Simbol * s1, Simbol *s2, int type1, int type2);
 
 };
 
