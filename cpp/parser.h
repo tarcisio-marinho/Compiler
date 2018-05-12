@@ -37,6 +37,7 @@ public:
     void expressao_aritmetica_recursiva();
     void termo();
     void fator();
+    int tipo();
 
     bool is_declaracao_de_variavel();
     bool is_comando();

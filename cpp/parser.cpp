@@ -97,9 +97,14 @@ void Parser::bloco(){
 void Parser::declaracao_de_variavel(){
     std::string funcao = std::string("declaracao de variavel");
     
+    int type = this->tipo();
+
     next_token();
     if(look_ahead->identificador != Gramatica::ID)
         Error::token_esperado_nao_encontrado(look_ahead, "Identificador", funcao);
+
+
+    new_simbol(new Simbol(look_ahead, type, this->escopo));
     
 
     next_token();
@@ -109,6 +114,7 @@ void Parser::declaracao_de_variavel(){
         if(look_ahead->identificador != Gramatica::ID)
             Error::token_esperado_nao_encontrado(look_ahead, "Identificador", funcao);
         
+        new_simbol(new Simbol(look_ahead, type, this->escopo));
 
         next_token();
     }
@@ -343,6 +349,16 @@ void Parser::atribuicao(){
         Error::token_esperado_nao_encontrado(look_ahead, ";", funcao);
     }
     next_token();
+}
+
+
+int Parser::tipo(){
+    int tipo = look_ahead->identificador;
+    if(tipo == Gramatica::TIPOINT || tipo == Gramatica::TIPOFLOAT 
+        || tipo == Gramatica::TIPOCHAR){
+        return tipo;
+    }
+
 }
 
 
