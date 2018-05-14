@@ -179,3 +179,30 @@ Nota: os símbolos abre e fecha chaves, quando entre aspas, são terminais
 Para as variáveis, sugere-se que a tabela de símbolos seja uma lista encadeada onde os nós serão registros com os atributos das variáveis: lexema e tipo. O aluno pode modificar a tabela se encontrar utilidade para outro tipo de atributo ou se achar necessário incluir constantes com seus tipos e valores.
 
 Como em toda lista encadeada, precisamos de um nó que aponta para a "cabeça" da lista. Chamemos este nó de "tabela". Na ativação de um bloco, guarde o conteúdo de "tabela" e adicione as novas variáveis no inicio da tabela de símbolos. Na desativação, restaure o valor de "tabela", eliminando assim todas as variáveis declaradas nesse bloco. Lembre de desalocar todos os nós com as variáveis do bloco sendo desativado. A busca a partir de "tabela" sempre encontrará o identificador mais recentemente declarado, por isso as variáveis devem ser incluídas no início da tabela de símbolos.
+
+
+# Definição do analisador Semântico
+
+1. Introdução
+
+Complemente seu parser com um analisador semântico. Como a linguagem é simples, haverá basicamente checagem de tipos.
+
+Sugere-se que o sintático não seja um código à parte, mas que esteja embutido no parser.
+
+Observação 1: o arquivo a ser compilado será passado ao seu compilador via argumento da linha de comando
+
+Observação 2: Imprimir apenas mensagens de erro.
+
+Observação 3: A mensagem deve ser clara e específica de erro, sempre que for o caso, e em qualquer fase do compilador. Formato: "ERRO na linha n, coluna m, ultimo token lido t: mensagem específica do erro"
+
+2. Regras
+
+Qualquer comando que relacionar duas ou mais entidades (como variáveis e constantes) deverá verificar a compatibilidade de seus tipos.
+
+O tipo char (constantes char) é compatível apenas com ele mesmo. Seu compilador deve aceitar expressões aritméticas e relacionais com variáveis e literais do tipo char
+
+Os tipos numéricos float e int são compatíveis, porém não se pode atribuir um float a um int. Além disso, dividindo-se dois inteiros (variáveis ou constantes) o tipo resultante é float
+
+Variáveis devem ter sido declaradas antes de ser usadas, e só podem ser usadas observando-se as regras padrão de escopo. Não podem haver variáveis com o mesmo nome no mesmo escopo, mas em escopos diferentes (e.g., sub-blocos) são permitidas.
+
+A tabela de símbolos deve ser utilizada para pesquisa da existência da variável e seu tipo, e deve dar suporte ao mecanismo de escopo explicado no projeto do parser.
