@@ -439,9 +439,19 @@ void Parser::comando_basico(){
 
 void Parser::atribuicao(){
     std::string funcao = std::string("atribuicao");
+    Expressao *expr1 = NULL, *expr2;
+    Simbol *tempsim;
     
     if(look_ahead->identificador != Gramatica::ID){
         Error::token_esperado_nao_encontrado(look_ahead, "identificador", funcao);
+    }
+
+    
+    tempsim = search_simbol(look_ahead->lexema, -1);
+    if(tempsim != NULL){
+        expr1 = new Expressao(tempsim->tipo, tempsim->t->lexema);
+    }else{
+        Error::variavel_nao_declarada();
     }
 
     next_token();
@@ -450,7 +460,14 @@ void Parser::atribuicao(){
     }
 
     next_token();
-    expressao_aritmetica();
+    expr2 = expressao_aritmetica();
+    check_types_atribuicao(expr1->tipo, expr2->tipo);
+
+    if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
+        expr2->lexema = "(float) " + expr2->lexema;
+    }
+
+    // gerador
 
     if(look_ahead->identificador != Gramatica::PONTOVIRGULA){
         Error::token_esperado_nao_encontrado(look_ahead, ";", funcao);
