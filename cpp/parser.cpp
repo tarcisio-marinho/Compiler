@@ -98,9 +98,14 @@ void Parser::bloco(){
 void Parser::declaracao_de_variavel(){
     std::string funcao = std::string("declaracao de variavel");
     
+    int type = this->tipo();
+
     next_token();
     if(look_ahead->identificador != Gramatica::ID)
         Error::token_esperado_nao_encontrado(look_ahead, "Identificador", funcao);
+
+
+    new_simbol(new Simbol(look_ahead, type, this->escopo));
     
 
     next_token();
@@ -110,6 +115,7 @@ void Parser::declaracao_de_variavel(){
         if(look_ahead->identificador != Gramatica::ID)
             Error::token_esperado_nao_encontrado(look_ahead, "Identificador", funcao);
         
+        new_simbol(new Simbol(look_ahead, type, this->escopo));
 
         next_token();
     }
@@ -230,9 +236,11 @@ void Parser::comando_do(){
 
 void Parser::expressao_relacional(){
     std::string funcao = std::string("expressao relacional");
-    expressao_aritmetica();
+    Expressao *e1 = expressao_aritmetica();
     operador_relacional();
-    expressao_aritmetica();
+    Expressao *e2 = expressao_aritmetica();
+
+    check_types_expressao_relacional(e1, e2, s1->tipo, s2->tipo);
 }
 
 
@@ -251,7 +259,7 @@ void Parser::operador_relacional(){
 }
 
 
-void Parser::termo(){
+Expressao* Parser::termo(){
     fator();
 
     while(look_ahead->identificador == Gramatica::MULTIPLICACAO || look_ahead->identificador == Gramatica::DIVISAO){
@@ -262,7 +270,7 @@ void Parser::termo(){
 }
 
 
-void Parser::fator(){
+Expressao* Parser::fator(){
     std::string funcao = std::string("fator");
     if(look_ahead->identificador == Gramatica::ABREPARENTESES){
         
@@ -344,6 +352,16 @@ void Parser::atribuicao(){
         Error::token_esperado_nao_encontrado(look_ahead, ";", funcao);
     }
     next_token();
+}
+
+
+int Parser::tipo(){
+    int tipo = look_ahead->identificador;
+    if(tipo == Gramatica::TIPOINT || tipo == Gramatica::TIPOFLOAT 
+        || tipo == Gramatica::TIPOCHAR){
+        return tipo;
+    }
+
 }
 
 
@@ -439,4 +457,10 @@ void Parser::clean_simbols(int escopo){
             }
         }
     }  
+}
+
+void Parser::check_types_expressao_relacional(Simbol * s1, Simbol *s2, int type1, int type2){
+    if(type1 != type2 && (type1 == Gramatica::TIPOCHAR || type2 == Gramatica::TIPOCHAR)){
+        Error::char_nao_opera_com_outros_tipos(s1, s2, type1, type2);
+    }
 }
