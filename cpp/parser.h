@@ -9,7 +9,6 @@
 #include "expressao.h"
 #include "simbol.h"
 #include <vector>
-#include <queue>
 #include <stack>
 
 class Parser{
