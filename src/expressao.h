@@ -7,6 +7,8 @@ public:
     int tipo, op;
     std::string lexema;
     Expressao(std::string l, int tipo);
+    Expressao(int tipo);
+    Expressao(std::string s);
 };
 
 #endif

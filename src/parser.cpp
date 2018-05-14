@@ -272,27 +272,51 @@ Expressao* Parser::termo(){
 
 Expressao* Parser::fator(){
     std::string funcao = std::string("fator");
+    Expressao *temp;
+    Simbol * tempsimb;
+    std::string lexema = NULL;
+    int tipo = -5;
+
     if(look_ahead->identificador == Gramatica::ABREPARENTESES){
         
         next_token();
-        expressao_aritmetica();
+        temp = expressao_aritmetica();
         if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
             Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
         }
         next_token();
     
     }else{
+        lexema = look_ahead->lexema;
+        temp = new Expressao(lexema);
+
         if(look_ahead->identificador == Gramatica::ID){
+            tempsimb = search_simbol(look_ahead->lexema, -1);
+            if(tempsimb != NULL){
+                tipo = tempsimb->tipo;
+            }else{
+                Error::variavel_nao_declarada();
+            }
             next_token();
+
         }else if(look_ahead->identificador == Gramatica::TIPOCHAR){
+            tipo = Gramatica::TIPOCHAR;
             next_token();
+
         }else if(look_ahead->identificador == Gramatica::TIPOFLOAT){
+            tipo = Gramatica::TIPOFLOAT;
             next_token();
+
         }else if(look_ahead->identificador == Gramatica::TIPOINT){
+            tipo = Gramatica::TIPOINT;
             next_token();
+
         }else{
             Error::token_esperado_nao_encontrado(look_ahead, "identificador | tipoInt | tipoFloat | tipoChar", funcao);
         }
+
+        temp->tipo = tipo;
+        return temp;
     }
 }
 
@@ -330,7 +354,6 @@ void Parser::comando_basico(){
     
 
 }
-
 
 
 void Parser::atribuicao(){
@@ -459,6 +482,7 @@ void Parser::clean_simbols(int escopo){
     }  
 }
 
+
 void Parser::check_types_expressao_relacional(Simbol * s1, Simbol *s2, int type1, int type2){
     if(type1 != type2 && (type1 == Gramatica::TIPOCHAR || type2 == Gramatica::TIPOCHAR)){
         Error::char_nao_opera_com_outros_tipos(s1, s2, type1, type2);
@@ -485,7 +509,7 @@ int Parser::check_types_termo(Expressao *e1, Expressao *e2, int op){
         if(tipo1 == tipo2 && tipo1 == Gramatica::CHAR){
             return e1->tipo;
         }else if(tipo1 == Gramatica::CHAR || tipo2 == Gramatica::CHAR){
-            Error::char_nao_opera_com_outros_tipos()
+            Error::char_nao_opera_com_outros_tipos();
         }else if(op == Gramatica::DIVISAO){
             return Gramatica::FLOAT;
         }else if(tipo1 == Gramatica::FLOAT|| tipo2 == Gramatica::FLOAT){
