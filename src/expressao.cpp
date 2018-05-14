@@ -1,6 +1,6 @@
 #include "expressao.h"
 
-Expressao::Expressao(std::string l, int tipo){
+Expressao::Expressao(int tipo, std::string l){
     this->lexema = l;
     this->tipo = tipo;
 }

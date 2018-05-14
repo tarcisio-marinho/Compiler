@@ -6,7 +6,7 @@ class Expressao{
 public:
     int tipo, op;
     std::string lexema;
-    Expressao(std::string l, int tipo);
+    Expressao(int tipo, std::string l);
     Expressao(int tipo);
     Expressao(std::string s);
 };

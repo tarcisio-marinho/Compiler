@@ -36,6 +36,7 @@ Parser::Parser(FILE *f){
     this->arquivo = f;
     this->scanner = new Scanner(arquivo);
     this->escopo = -1;
+    this->num_t = 0;
 }
 
 void Parser::parse(){
@@ -260,13 +261,32 @@ void Parser::operador_relacional(){
 
 
 Expressao* Parser::termo(){
-    fator();
+    Expressao *expr1, *expr2, *t;
+    int op, tipo;
+
+
+
+
+    expr1 = fator();
 
     while(look_ahead->identificador == Gramatica::MULTIPLICACAO || look_ahead->identificador == Gramatica::DIVISAO){
+        op = look_ahead->identificador;
         next_token();
-        fator();
+        expr2 = fator();
+        tipo = check_types_termo(expr1, expr2, op);
+
+        if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
+            expr1->lexema = "(FLOAT) " + expr1->lexema;
+    
+        }else if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
+            expr2->lexema == "(FLOAT) " + expr2->lexema;
+        }
+
+        t = new Expressao(tipo, novo_t());
+        // gerador
+        expr1 = t;
     }
-    return;
+    return expr1;
 }
 
 
@@ -519,4 +539,9 @@ int Parser::check_types_termo(Expressao *e1, Expressao *e2, int op){
     }else{
         return e1->tipo;
     }
+}
+
+
+std::string Parser::novo_t(){
+        return "T" + this->num_t++;
 }

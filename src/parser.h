@@ -18,6 +18,7 @@ public:
     Token * look_ahead;
     std::stack<Simbol*> simbol_table;
     int escopo;
+    int num_t;
 
     Parser(FILE *f);
     void next_token();
@@ -54,6 +55,9 @@ public:
     void check_types_expressao_relacional(Simbol * s1, Simbol *s2, int type1, int type2);
     void check_types_atribuicao(int type1, int type2);
     int check_types_termo(Expressao *e1, Expressao *e2, int op);
+
+    std::string novo_t();
+    
 
 };
 
