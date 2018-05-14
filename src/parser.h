@@ -52,9 +52,9 @@ public:
     void new_simbol(Simbol * s);
     Simbol *search_simbol(std::string lexema, int escopo);
     void clean_simbols(int escopo);
-    void check_types_expressao_relacional(Simbol *s, int type1, int type2);
-    void check_types_atribuicao(Simbol *s, int type1, int type2);
-    int check_types_termo(Expressao *e1, Expressao *e2, int op, Simbol *s);
+    void check_types_expressao_relacional(Token *s, int type1, int type2);
+    void check_types_atribuicao(Token *s, int type1, int type2);
+    int check_types_termo(Expressao *e1, Expressao *e2, int op, Token *s);
 
     std::string novo_t();
     

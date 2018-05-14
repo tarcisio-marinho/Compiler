@@ -69,7 +69,7 @@ void Error::token_esperado_nao_encontrado(Token *t, std::string esperado, std::s
 
 // Semantico
 
-void Error::atribuicao_incompativel(Simbol *s, int tipo1, int tipo2){
+void Error::atribuicao_incompativel(Token *t, int tipo1, int tipo2){
     std::string t1, t2;
     if(tipo1 == 3){
         t1 = "int";
@@ -99,8 +99,8 @@ void Error::atribuicao_incompativel(Simbol *s, int tipo1, int tipo2){
         t2 == "tipo char";
     }
     
-    std::string error = std::string("\033[91mERRO\033[0m: na linha: \33[93m") += std::to_string(s->t->linha) += std::string("\033[0m, coluna: \33[93m") 
-                        += std::to_string(s->t->coluna) += std::string("\033[0m. Atribuição incompatível. Encontrado: \033[1;32m")
+    std::string error = std::string("\033[91mERRO\033[0m: na linha: \33[93m") += std::to_string(t->linha) += std::string("\033[0m, coluna: \33[93m") 
+                        += std::to_string(t->coluna) += std::string("\033[0m. Atribuição incompatível. Encontrado: \033[1;32m")
                         += t1 += std::string(" - ") += t2 +=std::string("\033[0m")
                         += std::string("\033[0m");
 
@@ -109,7 +109,7 @@ void Error::atribuicao_incompativel(Simbol *s, int tipo1, int tipo2){
 }
 
 
-void Error::char_nao_opera_com_outros_tipos(Simbol *s, int tipo1, int tipo2){
+void Error::char_nao_opera_com_outros_tipos(Token *t, int tipo1, int tipo2){
     std::string t1, t2;
     if(tipo1 == 3){
         t1 = "int";
@@ -139,8 +139,8 @@ void Error::char_nao_opera_com_outros_tipos(Simbol *s, int tipo1, int tipo2){
         t2 == "tipo char";
     }
 
-    std::string error = std::string("\033[91mERRO\033[0m: na linha: \33[93m") += std::to_string(s->t->linha) += std::string("\033[0m, coluna: \33[93m") 
-                        += std::to_string(s->t->coluna) += std::string("\033[0m. Tipo char não opera com outros tipos. Encontrado: \033[1;32m")
+    std::string error = std::string("\033[91mERRO\033[0m: na linha: \33[93m") += std::to_string(t->linha) += std::string("\033[0m, coluna: \33[93m") 
+                        += std::to_string(t->coluna) += std::string("\033[0m. Tipo char não opera com outros tipos. Encontrado: \033[1;32m")
                         += t1 += std::string(" - ") += t2 +=std::string("\033[0m")
                         += std::string("\033[0m");
 

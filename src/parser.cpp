@@ -243,7 +243,7 @@ std::string Parser::expressao_relacional(){
     op = operador_relacional();
     expr2 = expressao_aritmetica();
 
-    check_types_expressao_relacional(expr1->tipo, expr2->tipo);
+    check_types_expressao_relacional(look_ahead, expr1->tipo, expr2->tipo);
 
     if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
         expr1->lexema == "(float) " + expr1->lexema;
@@ -289,7 +289,7 @@ Expressao* Parser::termo(){
         op = look_ahead->identificador;
         next_token();
         expr2 = fator();
-        tipo = check_types_termo(expr1, expr2, op);
+        tipo = check_types_termo(expr1, expr2, op, look_ahead);
 
         if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
             expr1->lexema = "(FLOAT) " + expr1->lexema;
@@ -365,7 +365,7 @@ Expressao* Parser::expressao_aritmetica(){
     expr2 = expressao_aritmetica_recursiva();
     
     if(expr2 != NULL){
-        tipo = check_types_termo(expr1, expr2, expr2->op);
+        tipo = check_types_termo(expr1, expr2, expr2->op, look_ahead);
 
         if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
             expr1->lexema == "(float) " + expr1->lexema;
@@ -399,7 +399,7 @@ Expressao * Parser::expressao_aritmetica_recursiva(){
         return NULL;
     }
 
-    tipo = check_types_termo(expr1, expr2, op);
+    tipo = check_types_termo(expr1, expr2, op, look_ahead);
 
     if(expr2 != NULL){
         if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
@@ -460,7 +460,7 @@ void Parser::atribuicao(){
 
     next_token();
     expr2 = expressao_aritmetica();
-    check_types_atribuicao(expr1->tipo, expr2->tipo);
+    check_types_atribuicao(look_ahead, expr1->tipo, expr2->tipo);
 
     if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
         expr2->lexema = "(float) " + expr2->lexema;
@@ -580,14 +580,14 @@ void Parser::clean_simbols(int escopo){
 }
 
 
-void Parser::check_types_expressao_relacional(Simbol *s, int type1, int type2){
+void Parser::check_types_expressao_relacional(Token *s, int type1, int type2){
     if(type1 != type2 && (type1 == Gramatica::TIPOCHAR || type2 == Gramatica::TIPOCHAR)){
         Error::char_nao_opera_com_outros_tipos(s, type1, type2);
     }
 }
 
 
-void Parser::check_types_atribuicao(Simbol *s, int type1, int type2){
+void Parser::check_types_atribuicao(Token *s, int type1, int type2){
     if(type1 != type2){
         if(!(type1 == Gramatica::FLOAT && type2 == Gramatica::INT)){
             Error::atribuicao_incompativel(s, type1, type2);
@@ -596,7 +596,7 @@ void Parser::check_types_atribuicao(Simbol *s, int type1, int type2){
 }
 
 
-int Parser::check_types_termo(Expressao *e1, Expressao *e2, int op, Simbol *s){
+int Parser::check_types_termo(Expressao *e1, Expressao *e2, int op, Token *s){
     int tipo1, tipo2;
 
     if(e2 != NULL){
