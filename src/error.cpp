@@ -169,10 +169,3 @@ void Error::identificador_repetido(Simbol *s){
     std::cout << error << std::endl; 
     exit(-1); 
 }
-
-/*
-    0 - identificador repetido
-    1 - variavel n declarada
-    2 - atribuicao de tipos incompativeis
-    3 - char nao opera com outros
-*/

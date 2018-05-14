@@ -331,7 +331,7 @@ Expressao* Parser::fator(){
             if(tempsimb != NULL){
                 tipo = tempsimb->tipo;
             }else{
-                Error::variavel_nao_declarada();
+                Error::variavel_nao_declarada(tempsimb);
             }
             next_token();
 
@@ -450,7 +450,7 @@ void Parser::atribuicao(){
     if(tempsim != NULL){
         expr1 = new Expressao(tempsim->tipo, tempsim->t->lexema);
     }else{
-        Error::variavel_nao_declarada();
+        Error::variavel_nao_declarada(tempsim);
     }
 
     next_token();
@@ -541,7 +541,7 @@ void Parser::new_simbol(Simbol *s){
     if(search_simbol(s->t->lexema, s->escopo) == NULL){
         this->simbol_table.push(s);
     }else{
-        Error::semantico(s->tipo);
+        Error::identificador_repetido(s);
     }
 }
 
@@ -580,23 +580,23 @@ void Parser::clean_simbols(int escopo){
 }
 
 
-void Parser::check_types_expressao_relacional(int type1, int type2){
+void Parser::check_types_expressao_relacional(Simbol *s, int type1, int type2){
     if(type1 != type2 && (type1 == Gramatica::TIPOCHAR || type2 == Gramatica::TIPOCHAR)){
-        Error::char_nao_opera_com_outros_tipos(type1, type2);
+        Error::char_nao_opera_com_outros_tipos(s, type1, type2);
     }
 }
 
 
-void Parser::check_types_atribuicao(int type1, int type2){
+void Parser::check_types_atribuicao(Simbol *s, int type1, int type2){
     if(type1 != type2){
         if(!(type1 == Gramatica::FLOAT && type2 == Gramatica::INT)){
-            Error::atribuicao_incompativel(type1, type2);
+            Error::atribuicao_incompativel(s, type1, type2);
         }
     }
 }
 
 
-int Parser::check_types_termo(Expressao *e1, Expressao *e2, int op){
+int Parser::check_types_termo(Expressao *e1, Expressao *e2, int op, Simbol *s){
     int tipo1, tipo2;
 
     if(e2 != NULL){
@@ -606,7 +606,7 @@ int Parser::check_types_termo(Expressao *e1, Expressao *e2, int op){
         if(tipo1 == tipo2 && tipo1 == Gramatica::CHAR){
             return e1->tipo;
         }else if(tipo1 == Gramatica::CHAR || tipo2 == Gramatica::CHAR){
-            Error::char_nao_opera_com_outros_tipos();
+            Error::char_nao_opera_com_outros_tipos(s, tipo1, tipo2);
         }else if(op == Gramatica::DIVISAO){
             return Gramatica::FLOAT;
         }else if(tipo1 == Gramatica::FLOAT|| tipo2 == Gramatica::FLOAT){
