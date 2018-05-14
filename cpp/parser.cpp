@@ -468,7 +468,7 @@ void Parser::check_types_expressao_relacional(Simbol * s1, Simbol *s2, int type1
 
 void Parser::check_types_atribuicao(int type1, int type2){
     if(type1 != type2){
-        if(!(type1 == Gramatica::TIPOFLOAT && type2 == Gramatica::TIPOINT)){
+        if(!(type1 == Gramatica::FLOAT && type2 == Gramatica::INT)){
             Error::atribuicao_incompativel(type1, type2);
         }
     }
