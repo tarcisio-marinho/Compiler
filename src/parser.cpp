@@ -342,21 +342,65 @@ Expressao* Parser::fator(){
 
 
 Expressao* Parser::expressao_aritmetica(){
-    termo();
-    expressao_aritmetica_recursiva();
+    Expressao *expr1, *expr2, *t;
+    int tipo;
+
+    expr1 = termo();
+    expr2 = expressao_aritmetica_recursiva();
     
-    return;
+    if(expr2 != NULL){
+        tipo = check_types_termo(expr1, expr2, expr2->op);
+
+        if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
+            expr1->lexema == "(float) " + expr1->lexema;
+        }else if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
+            expr2->lexema = "(float) " + expr2->lexema;
+        }
+
+        t = new Expressao(tipo, novo_t());
+        t->op = expr2->op;
+        // gerador
+    }else{
+        return expr1;
+    }
+    
+    return t;
 }
 
 
-void Parser::expressao_aritmetica_recursiva(){
+Expressao * Parser::expressao_aritmetica_recursiva(){
+
+    Expressao *expr1, *expr2, *t;
+    int op, tipo;
+
     if(look_ahead->identificador == Gramatica::SOMA ||
         look_ahead->identificador == Gramatica::SUBTRACAO){
+        op = look_ahead->identificador;
         next_token();
-        termo();
-        expressao_aritmetica_recursiva();
+        expr1 = termo();
+        expr2 = expressao_aritmetica_recursiva();
+    }else{
+        return NULL;
     }
-    return;
+
+    tipo = check_types_termo(expr1, expr2, op);
+
+    if(expr2 != NULL){
+        if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
+            expr1->lexema = "(float) " + expr1->lexema;
+        }else if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
+            expr2->lexema = "(float) " + expr2->lexema;
+        }
+
+        t = new Expressao(tipo, novo_t());
+        t->op = op;
+        // gerador
+    }else{
+        expr1->op = op;
+        return expr1;
+    }
+    
+    return t;
 
 }
 

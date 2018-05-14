@@ -35,7 +35,7 @@ public:
     void iteracao();
     void atribuicao();
     Expressao* expressao_aritmetica();
-    void expressao_aritmetica_recursiva();
+    Expressao* expressao_aritmetica_recursiva();
     Expressao* termo();
     Expressao* fator();
     int tipo();
