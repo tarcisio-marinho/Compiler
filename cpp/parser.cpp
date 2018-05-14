@@ -482,8 +482,17 @@ int Parser::check_types_termo(Expressao *e1, Expressao *e2, int op){
         tipo2 = e2->tipo;
         tipo1 = e1->tipo;
 
-        if(tipo1 == tipo2 && tipo1 == Gramatica::TIPOCHAR){
+        if(tipo1 == tipo2 && tipo1 == Gramatica::CHAR){
             return e1->tipo;
+        }else if(tipo1 == Gramatica::CHAR || tipo2 == Gramatica::CHAR){
+            Error::char_nao_opera_com_outros_tipos()
+        }else if(op == Gramatica::DIVISAO){
+            return Gramatica::FLOAT;
+        }else if(tipo1 == Gramatica::FLOAT|| tipo2 == Gramatica::FLOAT){
+            return Gramatica::FLOAT;
         }
+        return Gramatica::INT;
+    }else{
+        return e1->tipo;
     }
 }
