@@ -297,7 +297,7 @@ Expressao* Parser::fator(){
 }
 
 
-void Parser::expressao_aritmetica(){
+Expressao* Parser::expressao_aritmetica(){
     termo();
     expressao_aritmetica_recursiva();
     
@@ -462,5 +462,28 @@ void Parser::clean_simbols(int escopo){
 void Parser::check_types_expressao_relacional(Simbol * s1, Simbol *s2, int type1, int type2){
     if(type1 != type2 && (type1 == Gramatica::TIPOCHAR || type2 == Gramatica::TIPOCHAR)){
         Error::char_nao_opera_com_outros_tipos(s1, s2, type1, type2);
+    }
+}
+
+
+void Parser::check_types_atribuicao(int type1, int type2){
+    if(type1 != type2){
+        if(!(type1 == Gramatica::TIPOFLOAT && type2 == Gramatica::TIPOINT)){
+            Error::atribuicao_incompativel(type1, type2);
+        }
+    }
+}
+
+
+int Parser::check_types_termo(Expressao *e1, Expressao *e2, int op){
+    int tipo1, tipo2;
+
+    if(e2 != NULL){
+        tipo2 = e2->tipo;
+        tipo1 = e1->tipo;
+
+        if(tipo1 == tipo2 && tipo1 == Gramatica::TIPOCHAR){
+            return e1->tipo;
+        }
     }
 }
