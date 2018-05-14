@@ -88,6 +88,7 @@ void Parser::bloco(){
         Error::token_esperado_nao_encontrado(look_ahead, "}", funcao);
 
     next_token();
+    
     clean_simbols(this->escopo);
     this->escopo--;
     return; 
