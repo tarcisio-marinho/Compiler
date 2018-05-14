@@ -81,7 +81,6 @@ void Parser::bloco(){
     while(is_declaracao_de_variavel()) 
         declaracao_de_variavel();
     
-
     while(is_comando())
         comando();
 
