@@ -28,8 +28,8 @@ public:
     void comando_if();
     void comando_while();
     void comando_do();
-    void expressao_relacional();
-    void operador_relacional();
+    std::string expressao_relacional();
+    int operador_relacional();
     void declaracao_de_variavel();
     void comando_basico();
     void iteracao();
@@ -52,7 +52,7 @@ public:
     void new_simbol(Simbol * s);
     Simbol *search_simbol(std::string lexema, int escopo);
     void clean_simbols(int escopo);
-    void check_types_expressao_relacional(Simbol * s1, Simbol *s2, int type1, int type2);
+    void check_types_expressao_relacional(int type1, int type2);
     void check_types_atribuicao(int type1, int type2);
     int check_types_termo(Expressao *e1, Expressao *e2, int op);
 

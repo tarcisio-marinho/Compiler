@@ -235,28 +235,45 @@ void Parser::comando_do(){
 }
 
 
-void Parser::expressao_relacional(){
+std::string Parser::expressao_relacional(){
     std::string funcao = std::string("expressao relacional");
-    Expressao *e1 = expressao_aritmetica();
-    operador_relacional();
-    Expressao *e2 = expressao_aritmetica();
+    int op;
+    Expressao *t, *expr1, *expr2;
 
-    check_types_expressao_relacional(e1, e2, s1->tipo, s2->tipo);
+    expr1 = expressao_aritmetica();
+    op = operador_relacional();
+    expr2 = expressao_aritmetica();
+
+    check_types_expressao_relacional(expr1->tipo, expr2->tipo);
+
+    if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
+        expr1->lexema == "(float) " + expr1->lexema;
+    }else if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
+        expr2->lexema == "(float) " + expr2->lexema;
+    }
+
+    t = new Expressao(novo_t());
+    // gerador
+
+    return t->lexema;
 }
 
 
-void Parser::operador_relacional(){
+int Parser::operador_relacional(){
     std::string funcao = std::string("operador relacional");
+    int op = -5;
     if(look_ahead->identificador == Gramatica::IGUAL ||
         look_ahead->identificador == Gramatica::DIFERENCA || 
         look_ahead->identificador == Gramatica::MAIOR ||
         look_ahead->identificador == Gramatica::MENOR ||
         look_ahead->identificador == Gramatica::MAIORIGUAL ||
         look_ahead->identificador == Gramatica::MENORIGUAL){
+        op = look_ahead->identificador;
         next_token();
     }else{
         Error::token_esperado_nao_encontrado(look_ahead, "== | != | > | < | >= | <= ", funcao);
     }
+    return op;
 }
 
 
@@ -399,7 +416,7 @@ Expressao * Parser::expressao_aritmetica_recursiva(){
         expr1->op = op;
         return expr1;
     }
-    
+
     return t;
 
 }
@@ -547,9 +564,9 @@ void Parser::clean_simbols(int escopo){
 }
 
 
-void Parser::check_types_expressao_relacional(Simbol * s1, Simbol *s2, int type1, int type2){
+void Parser::check_types_expressao_relacional(int type1, int type2){
     if(type1 != type2 && (type1 == Gramatica::TIPOCHAR || type2 == Gramatica::TIPOCHAR)){
-        Error::char_nao_opera_com_outros_tipos(s1, s2, type1, type2);
+        Error::char_nao_opera_com_outros_tipos(type1, type2);
     }
 }
 
