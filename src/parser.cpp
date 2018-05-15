@@ -246,9 +246,9 @@ std::string Parser::expressao_relacional(){
     check_types_expressao_relacional(look_ahead, expr1->tipo, expr2->tipo);
 
     if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
-        expr1->lexema = "(float) " + expr1->lexema;
+        //expr1->lexema = "(float) " + expr1->lexema;
     }else if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
-        expr2->lexema = "(float) " + expr2->lexema;
+        //expr2->lexema = "(float) " + expr2->lexema;
     }
 
     t = new Expressao(novo_t());
@@ -292,10 +292,10 @@ Expressao* Parser::termo(){
         tipo = check_types_termo(expr1, expr2, op, look_ahead);
 
         if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
-            expr1->lexema = "(FLOAT) " + expr1->lexema;
+            //expr1->lexema = "(FLOAT) " + expr1->lexema;
     
         }else if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
-            expr2->lexema = "(FLOAT) " + expr2->lexema;
+           // expr2->lexema = "(FLOAT) " + expr2->lexema;
         }
 
         t = new Expressao(tipo, novo_t());
@@ -368,9 +368,9 @@ Expressao* Parser::expressao_aritmetica(){
         tipo = check_types_termo(expr1, expr2, expr2->op, look_ahead);
 
         if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
-            expr1->lexema = "(float) " + expr1->lexema;
+            //expr1->lexema = "(float) " + expr1->lexema;
         }else if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
-            expr2->lexema = "(float) " + expr2->lexema;
+            //expr2->lexema = "(float) " + expr2->lexema;
         }
 
         t = new Expressao(tipo, novo_t());
@@ -403,9 +403,9 @@ Expressao * Parser::expressao_aritmetica_recursiva(){
 
     if(expr2 != NULL){
         if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
-            expr1->lexema = "(float) " + expr1->lexema;
+            //expr1->lexema = "(float) " + expr1->lexema;
         }else if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
-            expr2->lexema = "(float) " + expr2->lexema;
+            //expr2->lexema = "(float) " + expr2->lexema;
         }
 
         t = new Expressao(tipo, novo_t());
@@ -463,7 +463,7 @@ void Parser::atribuicao(){
     check_types_atribuicao(look_ahead, expr1->tipo, expr2->tipo);
 
     if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
-        expr2->lexema = "(float) " + expr2->lexema;
+        //expr2->lexema = "(float) " + expr2->lexema;
     }
 
     // gerador
@@ -620,5 +620,5 @@ int Parser::check_types_termo(Expressao *e1, Expressao *e2, int op, Token *s){
 
 
 std::string Parser::novo_t(){
-        return "T" + this->num_t++;
+        return std::string("T") + std::to_string(this->num_t++);
 }
