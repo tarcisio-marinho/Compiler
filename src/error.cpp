@@ -72,31 +72,31 @@ void Error::token_esperado_nao_encontrado(Token *t, std::string esperado, std::s
 void Error::atribuicao_incompativel(Token *t, int tipo1, int tipo2){
     std::string t1, t2;
     if(tipo1 == 3){
-        t1 = "int";
+        t1 = std::string("int");
     }else if(tipo1 == 4){
-        t1 = "float";
+        t1 = std::string("float");
     }else if(tipo1 == 5){
-        t1 = "char";
+        t1 = std::string("char");
     }else if(tipo1 == 27){
-        t1 = "tipo int";
+        t1 = std::string("tipo int");
     }else if(tipo1 == 28){
-        t1 = "tipo float";
+        t1 = std::string("tipo float");
     }else if(tipo1 == 29){
-        t1 = "tipo char";
+        t1 = std::string("tipo char");
     }
 
     if(tipo2 == 3){
-        t2 = "int";
+        t2 = std::string("int");
     }else if(tipo2 == 4){
-        t2 = "float";
+        t2 = std::string("float");
     }else if(tipo2 == 5){
-        t2 = "char";
+        t2 = std::string("char");
     }else if(tipo2 == 27){
-        t2 = "tipo int";
+        t2 = std::string("tipo int");
     }else if(tipo2 == 28){
-        t2 = "tipo float";
+        t2 = std::string("tipo float");
     }else if(tipo2 == 29){
-        t2 == "tipo char";
+        t2 = std::string( "tipo char");
     }
     
     std::string error = std::string("\033[91mERRO\033[0m: na linha: \33[93m") += std::to_string(t->linha) += std::string("\033[0m, coluna: \33[93m") 
@@ -112,31 +112,31 @@ void Error::atribuicao_incompativel(Token *t, int tipo1, int tipo2){
 void Error::char_nao_opera_com_outros_tipos(Token *t, int tipo1, int tipo2){
     std::string t1, t2;
     if(tipo1 == 3){
-        t1 = "int";
+        t1 = std::string("int");
     }else if(tipo1 == 4){
-        t1 = "float";
+        t1 = std::string("float");
     }else if(tipo1 == 5){
-        t1 = "char";
+        t1 = std::string("char");
     }else if(tipo1 == 27){
-        t1 = "tipo int";
+        t1 = std::string("tipo int");
     }else if(tipo1 == 28){
-        t1 = "tipo float";
+        t1 = std::string("tipo float");
     }else if(tipo1 == 29){
-        t1 = "tipo char";
+        t1 = std::string("tipo char");
     }
 
     if(tipo2 == 3){
-        t2 = "int";
+        t2 = std::string("int");
     }else if(tipo2 == 4){
-        t2 = "float";
+        t2 = std::string("float");
     }else if(tipo2 == 5){
-        t2 = "char";
+        t2 = std::string("char");
     }else if(tipo2 == 27){
-        t2 = "tipo int";
+        t2 = std::string("tipo int");
     }else if(tipo2 == 28){
-        t2 = "tipo float";
+        t2 = std::string("tipo float");
     }else if(tipo2 == 29){
-        t2 == "tipo char";
+        t2 = std::string( "tipo char");
     }
 
     std::string error = std::string("\033[91mERRO\033[0m: na linha: \33[93m") += std::to_string(t->linha) += std::string("\033[0m, coluna: \33[93m") 
