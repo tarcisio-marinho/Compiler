@@ -234,10 +234,10 @@ void Parser::comando_do(){
 }
 
 
-std::string Parser::expressao_relacional(){
+Simbol* Parser::expressao_relacional(){
     std::string funcao = std::string("expressao relacional");
     int op;
-    Expressao *t, *expr1, *expr2;
+    Simbol *t, *expr1, *expr2;
 
     expr1 = expressao_aritmetica();
     op = operador_relacional();
@@ -276,8 +276,8 @@ int Parser::operador_relacional(){
 }
 
 
-Expressao* Parser::termo(){
-    Expressao *expr1, *expr2, *t;
+Simbol* Parser::termo(){
+    Simbol *expr1, *expr2, *t;
     int op, tipo;
 
 
@@ -306,9 +306,9 @@ Expressao* Parser::termo(){
 }
 
 
-Expressao* Parser::fator(){
+Simbol* Parser::fator(){
     std::string funcao = std::string("fator");
-    Expressao *temp;
+    Simbol *temp;
     Simbol * tempsimb;
     std::string lexema = NULL;
     int tipo = -5;
@@ -357,8 +357,8 @@ Expressao* Parser::fator(){
 }
 
 
-Expressao* Parser::expressao_aritmetica(){
-    Expressao *expr1, *expr2, *t;
+Simbol* Parser::expressao_aritmetica(){
+    Simbol *expr1, *expr2, *t;
     int tipo;
 
     expr1 = termo();
@@ -384,9 +384,9 @@ Expressao* Parser::expressao_aritmetica(){
 }
 
 
-Expressao * Parser::expressao_aritmetica_recursiva(){
+Simbol* Parser::expressao_aritmetica_recursiva(){
 
-    Expressao *expr1, *expr2, *t;
+    Simbol *expr1, *expr2, *t;
     int op, tipo;
 
     if(look_ahead->identificador == Gramatica::SOMA ||
@@ -438,7 +438,7 @@ void Parser::comando_basico(){
 
 void Parser::atribuicao(){
     std::string funcao = std::string("atribuicao");
-    Expressao *expr1 = NULL, *expr2;
+    Simbol *expr1 = NULL, *expr2;
     Simbol *tempsim;
     
     if(look_ahead->identificador != Gramatica::ID){
@@ -596,7 +596,7 @@ void Parser::check_types_atribuicao(Token *s, int type1, int type2){
 }
 
 
-int Parser::check_types_termo(Expressao *e1, Expressao *e2, int op, Token *s){
+int Parser::check_types_termo(Simbol *e1, Simbol *e2, int op, Token *s){
     int tipo1, tipo2;
 
     if(e2 != NULL){
