@@ -27,7 +27,7 @@ public:
     void comando_if();
     void comando_while();
     void comando_do();
-    Simbol* expressao_relacional();
+    void expressao_relacional();
     int operador_relacional();
     void declaracao_de_variavel();
     void comando_basico();

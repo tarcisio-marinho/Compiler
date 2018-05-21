@@ -234,7 +234,7 @@ void Parser::comando_do(){
 }
 
 
-Simbol* Parser::expressao_relacional(){
+void Parser::expressao_relacional(){
     std::string funcao = std::string("expressao relacional");
     int op;
     Simbol *t, *expr1, *expr2;
@@ -245,16 +245,14 @@ Simbol* Parser::expressao_relacional(){
 
     check_types_expressao_relacional(look_ahead, expr1->tipo, expr2->tipo);
 
-    if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
-        //expr1->lexema = "(float) " + expr1->lexema;
-    }else if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
-        //expr2->lexema = "(float) " + expr2->lexema;
-    }
+    // if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
+    //     //expr1->lexema = "(float) " + expr1->lexema;
+    // }else if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
+    //     //expr2->lexema = "(float) " + expr2->lexema;
+    // }
 
-    t = new Expressao(novo_t());
+    // t = new Expressao(novo_t());
     // gerador
-
-    return t->lexema;
 }
 
 
