@@ -508,7 +508,7 @@ bool Parser::is_atribuicao(){
 
 // Semantic
 void Parser::new_simbol(Simbol *s){
-    if(search_simbol(s->t->lexema, s->escopo) == NULL){
+    if(search_simbol(s->t->lexema) == NULL){
         this->simbol_table.push(s);
     }else{
         Error::identificador_repetido(s);
