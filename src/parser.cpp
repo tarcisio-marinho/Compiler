@@ -105,7 +105,7 @@ void Parser::declaracao_de_variavel(){
         Error::token_esperado_nao_encontrado(look_ahead, "Identificador", funcao);
 
 
-    new_simbol(new Simbol(look_ahead, type, this->escopo));
+    new_simbol(new Simbol(look_ahead->lexema, type, this->escopo, look_ahead));
     
 
     next_token();
@@ -115,7 +115,7 @@ void Parser::declaracao_de_variavel(){
         if(look_ahead->identificador != Gramatica::ID)
             Error::token_esperado_nao_encontrado(look_ahead, "Identificador", funcao);
         
-        new_simbol(new Simbol(look_ahead, type, this->escopo));
+        new_simbol(new Simbol(look_ahead->lexema, type, this->escopo, look_ahead));
 
         next_token();
     }
