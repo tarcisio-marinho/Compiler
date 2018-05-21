@@ -437,9 +437,7 @@ void Parser::atribuicao(){
 
     
     tempsim = search_simbol(look_ahead->lexema, -1);
-    if(tempsim != NULL){
-        expr1 = new Expressao(tempsim->tipo, tempsim->t->lexema);
-    }else{
+    if(tempsim == NULL){
         Error::variavel_nao_declarada(tempsim);
     }
 
@@ -452,11 +450,11 @@ void Parser::atribuicao(){
     expr2 = expressao_aritmetica();
     check_types_atribuicao(look_ahead, expr1->tipo, expr2->tipo);
 
-    if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
-        //expr2->lexema = "(float) " + expr2->lexema;
-    }
+    // if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
+    //     //expr2->lexema = "(float) " + expr2->lexema;
+    // }
 
-    // gerador
+    // // gerador
 
     if(look_ahead->identificador != Gramatica::PONTOVIRGULA){
         Error::token_esperado_nao_encontrado(look_ahead, ";", funcao);
