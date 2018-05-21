@@ -469,7 +469,6 @@ int Parser::tipo(){
         || tipo == Gramatica::TIPOCHAR){
         return tipo;
     }
-
 }
 
 
@@ -524,7 +523,6 @@ bool Parser::is_atribuicao(){
 
 
 // Semantic
-
 void Parser::new_simbol(Simbol *s){
     if(search_simbol(s->t->lexema, s->escopo) == NULL){
         this->simbol_table.push(s);
@@ -564,7 +562,7 @@ void Parser::clean_simbols(int escopo){
                 this->simbol_table.pop();
             }
         }
-    }  
+    }
 }
 
 
@@ -604,9 +602,4 @@ int Parser::check_types_termo(Simbol *e1, Simbol *e2, int op, Token *s){
     }else{
         return e1->tipo;
     }
-}
-
-
-std::string Parser::novo_t(){
-        return std::string("T") + std::to_string(this->num_t++);
 }
