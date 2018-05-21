@@ -49,7 +49,7 @@ public:
 
     // Sematico
     void new_simbol(Simbol * s);
-    Simbol *search_simbol(std::string lexema, int escopo);
+    Simbol *search_simbol(std::string lexema);
     void clean_simbols(int escopo);
     void check_types_expressao_relacional(Token *s, int type1, int type2);
     void check_types_atribuicao(Token *s, int type1, int type2);
