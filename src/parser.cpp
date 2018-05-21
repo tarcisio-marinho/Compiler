@@ -280,9 +280,6 @@ Simbol* Parser::termo(){
     Simbol *expr1, *expr2, *t;
     int op, tipo;
 
-
-
-
     expr1 = fator();
 
     while(look_ahead->identificador == Gramatica::MULTIPLICACAO || look_ahead->identificador == Gramatica::DIVISAO){
@@ -309,9 +306,7 @@ Simbol* Parser::termo(){
 Simbol* Parser::fator(){
     std::string funcao = std::string("fator");
     Simbol *temp;
-    Simbol * tempsimb;
-    std::string lexema = NULL;
-    int tipo = -5;
+    Simbol *tempsimb, *s;
 
     if(look_ahead->identificador == Gramatica::ABREPARENTESES){
         
@@ -321,38 +316,38 @@ Simbol* Parser::fator(){
             Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
         }
         next_token();
+        return temp;
     
     }else{
-        lexema = look_ahead->lexema;
-        temp = new Expressao(lexema);
 
         if(look_ahead->identificador == Gramatica::ID){
             tempsimb = search_simbol(look_ahead->lexema, -1);
             if(tempsimb != NULL){
-                tipo = tempsimb->tipo;
+                s = new Simbol(look_ahead->lexema, tempsimb->tipo, tempsimb->escopo, look_ahead);
             }else{
                 Error::variavel_nao_declarada(tempsimb);
             }
             next_token();
+            return s;
 
         }else if(look_ahead->identificador == Gramatica::TIPOCHAR){
-            tipo = Gramatica::TIPOCHAR;
+            s = new Simbol(look_ahead->lexema, Gramatica::TIPOCHAR, this->escopo, look_ahead);
             next_token();
+            return s;
 
         }else if(look_ahead->identificador == Gramatica::TIPOFLOAT){
-            tipo = Gramatica::TIPOFLOAT;
+            s = new Simbol(look_ahead->lexema, Gramatica::TIPOFLOAT, this->escopo, look_ahead);
             next_token();
+            return s;
 
         }else if(look_ahead->identificador == Gramatica::TIPOINT){
-            tipo = Gramatica::TIPOINT;
+            s = new Simbol(look_ahead->lexema, Gramatica::TIPOINT, this->escopo, look_ahead);
             next_token();
+            return s;
 
         }else{
             Error::token_esperado_nao_encontrado(look_ahead, "identificador | tipoInt | tipoFloat | tipoChar", funcao);
         }
-
-        temp->tipo = tipo;
-        return temp;
     }
 }
 
