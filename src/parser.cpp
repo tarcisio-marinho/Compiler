@@ -370,9 +370,7 @@ Simbol* Parser::expressao_aritmetica(){
             //expr2->lexema = "(float) " + expr2->lexema;
         }
 
-        t = new Expressao(tipo, novo_t());
-        t->op = expr2->op;
-        // gerador
+        t = new Simbol(look_ahead->lexema, tipo, this->escopo, look_ahead);
     }else{
         return expr1;
     }
@@ -405,11 +403,8 @@ Simbol* Parser::expressao_aritmetica_recursiva(){
             //expr2->lexema = "(float) " + expr2->lexema;
         }
 
-        t = new Expressao(tipo, novo_t());
-        t->op = op;
-        // gerador
+        t = new Simbol(look_ahead->lexema, tipo, this->escopo, look_ahead);
     }else{
-        expr1->op = op;
         return expr1;
     }
 
