@@ -287,19 +287,21 @@ Simbol* Parser::termo(){
         next_token();
         expr2 = fator();
         tipo = check_types_termo(expr1, expr2, op, look_ahead);
+        t = new Simbol(look_ahead->lexema, tipo, this->escopo, look_ahead);
 
-        if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
-            //expr1->lexema = "(FLOAT) " + expr1->lexema;
+
+        // if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
+        //     //expr1->lexema = "(FLOAT) " + expr1->lexema;
     
-        }else if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
-           // expr2->lexema = "(FLOAT) " + expr2->lexema;
-        }
+        // }else if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
+        //    // expr2->lexema = "(FLOAT) " + expr2->lexema;
+        // }
 
-        t = new Expressao(tipo, novo_t());
-        // gerador
-        expr1 = t;
+        // t = new Expressao(tipo, novo_t());
+        // // gerador
+        // expr1 = t;
     }
-    return expr1;
+    return t;
 }
 
 
