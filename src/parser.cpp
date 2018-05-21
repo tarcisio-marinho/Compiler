@@ -360,7 +360,7 @@ Simbol* Parser::expressao_aritmetica(){
     expr2 = expressao_aritmetica_recursiva();
     
     if(expr2 != NULL){
-        tipo = check_types_termo(expr1, expr2, expr2->op, look_ahead);
+        tipo = check_types_termo(expr1, expr2, 1, look_ahead);
 
         if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
             //expr1->lexema = "(float) " + expr1->lexema;
