@@ -278,7 +278,7 @@ Simbol* Parser::termo(){
     Simbol *expr1, *expr2, *t;
     int op, tipo;
 
-    expr1 = fator();
+    expr1 = fator(); 
 
     while(look_ahead->identificador == Gramatica::MULTIPLICACAO || look_ahead->identificador == Gramatica::DIVISAO){
         op = look_ahead->identificador;
@@ -287,17 +287,6 @@ Simbol* Parser::termo(){
         tipo = check_types_termo(expr1, expr2, op, look_ahead);
         t = new Simbol(look_ahead->lexema, tipo, this->escopo, look_ahead);
 
-
-        // if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
-        //     //expr1->lexema = "(FLOAT) " + expr1->lexema;
-    
-        // }else if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
-        //    // expr2->lexema = "(FLOAT) " + expr2->lexema;
-        // }
-
-        // t = new Expressao(tipo, novo_t());
-        // // gerador
-        // expr1 = t;
     }
     return t;
 }
@@ -321,7 +310,7 @@ Simbol* Parser::fator(){
     }else{
 
         if(look_ahead->identificador == Gramatica::ID){
-            tempsimb = search_simbol(look_ahead->lexema, -1);
+            tempsimb = search_simbol(look_ahead->lexema);
             if(tempsimb != NULL){
                 s = new Simbol(look_ahead->lexema, tempsimb->tipo, tempsimb->escopo, look_ahead);
             }else{
@@ -330,17 +319,17 @@ Simbol* Parser::fator(){
             next_token();
             return s;
 
-        }else if(look_ahead->identificador == Gramatica::TIPOCHAR){
+        }else if(look_ahead->identificador == Gramatica::TIPOCHAR){ // 'c'
             s = new Simbol(look_ahead->lexema, Gramatica::TIPOCHAR, this->escopo, look_ahead);
             next_token();
             return s;
 
-        }else if(look_ahead->identificador == Gramatica::TIPOFLOAT){
+        }else if(look_ahead->identificador == Gramatica::TIPOFLOAT){ // 1.1
             s = new Simbol(look_ahead->lexema, Gramatica::TIPOFLOAT, this->escopo, look_ahead);
             next_token();
             return s;
 
-        }else if(look_ahead->identificador == Gramatica::TIPOINT){
+        }else if(look_ahead->identificador == Gramatica::TIPOINT){ // 3
             s = new Simbol(look_ahead->lexema, Gramatica::TIPOINT, this->escopo, look_ahead);
             next_token();
             return s;
@@ -580,21 +569,27 @@ void Parser::check_types_atribuicao(Token *s, int type1, int type2){
 
 int Parser::check_types_termo(Simbol *e1, Simbol *e2, int op, Token *s){
     int tipo1, tipo2;
-
     if(e2 != NULL){
         tipo2 = e2->tipo;
         tipo1 = e1->tipo;
 
-        if(tipo1 == tipo2 && tipo1 == Gramatica::CHAR){
-            return e1->tipo;
-        }else if(tipo1 == Gramatica::CHAR || tipo2 == Gramatica::CHAR){
+        if(tipo1 == Gramatica::INT && tipo2 == Gramatica::INT){
+            return Gramatica::INT;
+        }else if(tipo1 == Gramatica::INT && tipo2 == Gramatica::FLOAT){
+            return Gramatica::FLOAT;
+        }else if(tipo1 == Gramatica::INT && tipo2 == Gramatica::CHAR){
             Error::char_nao_opera_com_outros_tipos(s, tipo1, tipo2);
-        }else if(op == Gramatica::DIVISAO){
+        }else if(tipo1 == Gramatica::FLOAT && tipo2 == Gramatica::INT){
             return Gramatica::FLOAT;
-        }else if(tipo1 == Gramatica::FLOAT|| tipo2 == Gramatica::FLOAT){
+        }else if(tipo1 == Gramatica::FLOAT && tipo2 == Gramatica::FLOAT){
             return Gramatica::FLOAT;
+        }else if(tipo1 == Gramatica::FLOAT && tipo2 == Gramatica::CHAR){
+            Error::char_nao_opera_com_outros_tipos(s, tipo1, tipo2);
+        }else if(tipo1 == Gramatica::CHAR && tipo2 != Gramatica::CHAR){
+            Error::char_nao_opera_com_outros_tipos(s, tipo1, tipo2);
+        }else if(tipo1 == Gramatica::CHAR && tipo2 == Gramatica::CHAR){
+            return Gramatica::CHAR;
         }
-        return Gramatica::INT;
     }else{
         return e1->tipo;
     }
