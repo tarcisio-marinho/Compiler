@@ -349,7 +349,7 @@ Simbol* Parser::expressao_aritmetica(){
     expr2 = expressao_aritmetica_recursiva();
     
     if(expr2 != NULL){
-        tipo = check_types_termo(expr1, expr2, 1, look_ahead);
+        tipo = check_types_expressao_aritmetica(expr1->tipo, expr2->tipo, look_ahead);
 
 
         t = new Simbol(look_ahead->lexema, tipo, this->escopo, look_ahead);
@@ -364,11 +364,10 @@ Simbol* Parser::expressao_aritmetica(){
 Simbol* Parser::expressao_aritmetica_recursiva(){
 
     Simbol *expr1, *expr2, *t;
-    int op, tipo;
+    int tipo;
 
     if(look_ahead->identificador == Gramatica::SOMA ||
         look_ahead->identificador == Gramatica::SUBTRACAO){
-        op = look_ahead->identificador;
         next_token();
         expr1 = termo();
         expr2 = expressao_aritmetica_recursiva();
@@ -376,21 +375,16 @@ Simbol* Parser::expressao_aritmetica_recursiva(){
         return NULL;
     }
 
-    tipo = check_types_termo(expr1, expr2, op, look_ahead);
 
     if(expr2 != NULL){
-        if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
-            //expr1->lexema = "(float) " + expr1->lexema;
-        }else if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
-            //expr2->lexema = "(float) " + expr2->lexema;
-        }
-
+        tipo = check_types_expressao_aritmetica(expr1->tipo, expr2->tipo, look_ahead);
+        
         t = new Simbol(look_ahead->lexema, tipo, this->escopo, look_ahead);
+        return t;
+
     }else{
         return expr1;
     }
-
-    return t;
 
 }
 
@@ -593,4 +587,22 @@ int Parser::check_types_termo(Simbol *e1, Simbol *e2, int op, Token *s){
     }else{
         return e1->tipo;
     }
+}
+
+
+int Parser::check_types_expressao_aritmetica(int tipo1, int tipo2, Token *t){
+    if(tipo1 == Gramatica::INT && tipo2 == Gramatica::INT){
+        return Gramatica::INT;
+    }else if(tipo1 == Gramatica::INT && tipo2 == Gramatica::FLOAT){
+        return Gramatica::FLOAT;
+    }else if(tipo1 == Gramatica::INT && tipo2 == Gramatica::CHAR){
+        Error::char_nao_opera_com_outros_tipos(t, tipo1, tipo2);
+    }else if(tipo1 == Gramatica::FLOAT && tipo2 == Gramatica::INT){
+        return Gramatica::FLOAT;
+    }else if(tipo1 == Gramatica::FLOAT && tipo2 == Gramatica::CHAR){
+        Error::char_nao_opera_com_outros_tipos(t, tipo1, tipo2);
+    }else if(tipo1 == Gramatica::CHAR && tipo2 != Gramatica::CHAR){
+        Error::char_nao_opera_com_outros_tipos(t, tipo1, tipo2);
+    }
+    return Gramatica::CHAR;
 }

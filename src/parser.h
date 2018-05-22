@@ -54,6 +54,7 @@ public:
     void check_types_expressao_relacional(Token *s, int type1, int type2);
     void check_types_atribuicao(Token *s, int type1, int type2);
     int check_types_termo(Simbol* e1, Simbol* e2, int op, Token *s);
+    int check_types_expressao_aritmetica(int tipo1, int tipo2, Token *t);
 };
 
 #endif
