@@ -245,14 +245,7 @@ void Parser::expressao_relacional(){
 
     check_types_expressao_relacional(look_ahead, expr1->tipo, expr2->tipo);
 
-    // if(expr1->tipo == Gramatica::INT && expr2->tipo == Gramatica::FLOAT){
-    //     //expr1->lexema = "(float) " + expr1->lexema;
-    // }else if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
-    //     //expr2->lexema = "(float) " + expr2->lexema;
-    // }
 
-    // t = new Expressao(novo_t());
-    // gerador
 }
 
 
@@ -428,11 +421,6 @@ void Parser::atribuicao(){
     expr2 = expressao_aritmetica();
     check_types_atribuicao(look_ahead, tempsim->tipo, expr2->tipo);
 
-    // if(expr1->tipo == Gramatica::FLOAT && expr2->tipo == Gramatica::INT){
-    //     //expr2->lexema = "(float) " + expr2->lexema;
-    // }
-
-    // // gerador
 
     if(look_ahead->identificador != Gramatica::PONTOVIRGULA){
         Error::token_esperado_nao_encontrado(look_ahead, ";", funcao);
