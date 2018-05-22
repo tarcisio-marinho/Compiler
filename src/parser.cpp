@@ -279,9 +279,10 @@ Simbol* Parser::termo(){
         expr2 = fator();
         tipo = check_types_termo(expr1, expr2, op, look_ahead);
         t = new Simbol(look_ahead->lexema, tipo, this->escopo, look_ahead);
+        return t;
 
     }
-    return t;
+    return expr1;
 }
 
 

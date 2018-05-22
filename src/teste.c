@@ -1,4 +1,5 @@
 int main () {
-    int a;
-    b = a;
+    float a;
+    int b;
+    a = 'c';
 }
