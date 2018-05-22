@@ -347,11 +347,10 @@ Simbol* Parser::expressao_aritmetica(){
 
 
         t = new Simbol(look_ahead->lexema, tipo, this->escopo, look_ahead);
+        return t;
     }else{
         return expr1;
     }
-    
-    return t;
 }
 
 
@@ -491,7 +490,7 @@ bool Parser::is_atribuicao(){
 
 // Semantic
 void Parser::new_simbol(Simbol *s){
-    if(search_simbol(s->t->lexema) == NULL){
+    if(!search_simbol_in_scope(s->t->lexema, s->escopo)){
         this->simbol_table.push(s);
     }else{
         Error::identificador_repetido(s);
@@ -510,6 +509,20 @@ Simbol * Parser::search_simbol(std::string lexema){
         tmp_q.pop();
     }
     return NULL;
+}
+
+
+bool Parser::search_simbol_in_scope(std::string lexema, int escopo){
+    std::stack<Simbol*> tmp_q = this->simbol_table; 
+    
+    while (!tmp_q.empty()){
+        Simbol * aux = tmp_q.top();
+        if(aux->t->lexema == lexema && aux->escopo == escopo){
+            return true;
+        }
+        tmp_q.pop();
+    }
+    return false;
 }
 
 

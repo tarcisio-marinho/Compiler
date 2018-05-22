@@ -1,6 +1,8 @@
 int main () {
-    float a;
+    int a;
     int b;
-    char d;
-    a = a;
+    int a;
+    if(1 < 3){
+        int a;
+    }
 }
