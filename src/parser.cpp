@@ -314,17 +314,17 @@ Simbol* Parser::fator(){
             return s;
 
         }else if(look_ahead->identificador == Gramatica::TIPOCHAR){ // 'c'
-            s = new Simbol(look_ahead->lexema, Gramatica::TIPOCHAR, this->escopo, look_ahead);
+            s = new Simbol(look_ahead->lexema, Gramatica::CHAR, this->escopo, look_ahead);
             next_token();
             return s;
 
         }else if(look_ahead->identificador == Gramatica::TIPOFLOAT){ // 1.1
-            s = new Simbol(look_ahead->lexema, Gramatica::TIPOFLOAT, this->escopo, look_ahead);
+            s = new Simbol(look_ahead->lexema, Gramatica::FLOAT, this->escopo, look_ahead);
             next_token();
             return s;
 
         }else if(look_ahead->identificador == Gramatica::TIPOINT){ // 3
-            s = new Simbol(look_ahead->lexema, Gramatica::TIPOINT, this->escopo, look_ahead);
+            s = new Simbol(look_ahead->lexema, Gramatica::INT, this->escopo, look_ahead);
             next_token();
             return s;
 
