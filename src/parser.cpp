@@ -271,7 +271,7 @@ Simbol* Parser::termo(){
     Simbol *expr1, *expr2, *t;
     int op, tipo;
 
-    expr1 = fator(); 
+    expr1 = fator();
 
     while(look_ahead->identificador == Gramatica::MULTIPLICACAO || look_ahead->identificador == Gramatica::DIVISAO){
         op = look_ahead->identificador;
@@ -568,7 +568,9 @@ int Parser::check_types_termo(Simbol *e1, Simbol *e2, int op, Token *s){
     if(e2 != NULL){
         tipo2 = e2->tipo;
         tipo1 = e1->tipo;
-
+        if(op == Gramatica::DIVISAO){
+            return Gramatica::FLOAT;
+        }
         if(tipo1 == Gramatica::INT && tipo2 == Gramatica::INT){
             return Gramatica::INT;
         }else if(tipo1 == Gramatica::INT && tipo2 == Gramatica::FLOAT){
