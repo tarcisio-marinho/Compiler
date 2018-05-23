@@ -149,10 +149,10 @@ void Error::char_nao_opera_com_outros_tipos(Token *t, int tipo1, int tipo2){
 }
 
 
-void Error::variavel_nao_declarada(Simbol *s){
-    std::string error = std::string("\033[91mERRO\033[0m: na linha: \33[93m") += std::to_string(s->t->linha) += std::string("\033[0m, coluna: \33[93m") 
-                        += std::to_string(s->t->coluna) += std::string("\033[0m. Variavel não declarada: \033[1;32m")
-                        += s->t->lexema += std::string("\033[0m")
+void Error::variavel_nao_declarada(Token *s){
+    std::string error = std::string("\033[91mERRO\033[0m: na linha: \33[93m") += std::to_string(s->linha) += std::string("\033[0m, coluna: \33[93m") 
+                        += std::to_string(s->coluna) += std::string("\033[0m. Variavel não declarada: \033[1;32m")
+                        += s->lexema += std::string("\033[0m")
                         += std::string("\033[0m");
 
     std::cout << error << std::endl; 

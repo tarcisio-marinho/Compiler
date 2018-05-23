@@ -22,7 +22,7 @@ public:
     // Semantic
     static void atribuicao_incompativel(Token *t, int tipo1, int tipo2);
     static void char_nao_opera_com_outros_tipos(Token *t, int tipo1, int tipo2);
-    static void variavel_nao_declarada(Simbol *s);
+    static void variavel_nao_declarada(Token *s);
     static void identificador_repetido(Simbol *s);
 };
 

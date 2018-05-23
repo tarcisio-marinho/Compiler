@@ -1,6 +1,6 @@
 int main () {
-    float a;
-    float y;
-        //tipo1 / tipo2
-    a = y / 3;
+    int p;
+    if(p >'c'){
+        p = 10;
+    }
 }

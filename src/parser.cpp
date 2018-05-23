@@ -304,11 +304,13 @@ Simbol* Parser::fator(){
     }else{
 
         if(look_ahead->identificador == Gramatica::ID){
+
             tempsimb = search_simbol(look_ahead->lexema);
+            
             if(tempsimb != NULL){
                 s = new Simbol(look_ahead->lexema, tempsimb->tipo, tempsimb->escopo, look_ahead);
             }else{
-                Error::variavel_nao_declarada(tempsimb);
+                Error::variavel_nao_declarada(look_ahead);
             }
             next_token();
             return s;
@@ -408,8 +410,10 @@ void Parser::atribuicao(){
 
     
     tempsim = search_simbol(look_ahead->lexema);
+    std::cerr << "1\n";
     if(tempsim == NULL){
-        Error::variavel_nao_declarada(tempsim);
+        std::cerr << "2\n";
+        Error::variavel_nao_declarada(look_ahead);
     }
 
     next_token();
@@ -500,7 +504,7 @@ void Parser::new_simbol(Simbol *s){
 
 Simbol * Parser::search_simbol(std::string lexema){
     std::stack<Simbol*> tmp_q = this->simbol_table; 
-    
+
     while (!tmp_q.empty()){
         Simbol * aux = tmp_q.top();
         if(aux->t->lexema == lexema){
