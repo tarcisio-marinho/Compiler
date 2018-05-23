@@ -1,6 +1,7 @@
 int main () {
-    int p;
-    if(p >'c'){
-        p = 10;
+    int a;
+    int b;
+    if(a>(b - 4)){
+        b = b+ 1;
     }
 }

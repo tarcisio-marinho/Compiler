@@ -244,14 +244,12 @@ void Parser::expressao_relacional(){
     expr2 = expressao_aritmetica();
 
     check_types_expressao_relacional(look_ahead, expr1->tipo, expr2->tipo);
-
-
 }
 
 
 int Parser::operador_relacional(){
     std::string funcao = std::string("operador relacional");
-    int op = -5;
+    int op;
     if(look_ahead->identificador == Gramatica::IGUAL ||
         look_ahead->identificador == Gramatica::DIFERENCA || 
         look_ahead->identificador == Gramatica::MAIOR ||
@@ -543,9 +541,15 @@ void Parser::clean_simbols(int escopo){
 }
 
 
-void Parser::check_types_expressao_relacional(Token *s, int type1, int type2){
-    if(type1 != type2 && (type1 == Gramatica::TIPOCHAR || type2 == Gramatica::TIPOCHAR)){
-        Error::char_nao_opera_com_outros_tipos(s, type1, type2);
+void Parser::check_types_expressao_relacional(Token *s, int tipo1, int tipo2){
+    if(tipo1 == Gramatica::INT && tipo2 == Gramatica::CHAR){
+        Error::char_nao_opera_com_outros_tipos(look_ahead, tipo2, tipo1);
+    }else if(tipo1 == Gramatica::CHAR && tipo2 == Gramatica::INT){
+        Error::char_nao_opera_com_outros_tipos(look_ahead, tipo2, tipo1);
+    }else if(tipo1 == Gramatica::CHAR && tipo2 == Gramatica::FLOAT){
+        Error::char_nao_opera_com_outros_tipos(look_ahead, tipo2, tipo1);
+    }else if(tipo1 == Gramatica::FLOAT && tipo2 == Gramatica::CHAR){
+        Error::char_nao_opera_com_outros_tipos(look_ahead, tipo2, tipo1);
     }
 }
 
