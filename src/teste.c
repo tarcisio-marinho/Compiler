@@ -1,7 +1,7 @@
 int main () {
     int a;
     int b;
-    if(a>c){
+    if(a>(b - 4)){
         b = b+ 1;
     }
 }

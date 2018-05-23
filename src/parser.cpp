@@ -244,8 +244,6 @@ void Parser::expressao_relacional(){
     expr2 = expressao_aritmetica();
 
     check_types_expressao_relacional(look_ahead, expr1->tipo, expr2->tipo);
-
-
 }
 
 
