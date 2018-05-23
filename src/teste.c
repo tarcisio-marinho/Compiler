@@ -1,6 +1,7 @@
 int main () {
-    float a;
-    float y;
-        //tipo1 / tipo2
-    a = y / 3;
+    int a;
+    int b;
+    if(a>c){
+        b = b+ 1;
+    }
 }
