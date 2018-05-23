@@ -408,9 +408,7 @@ void Parser::atribuicao(){
 
     
     tempsim = search_simbol(look_ahead->lexema);
-    std::cerr << "1\n";
     if(tempsim == NULL){
-        std::cerr << "2\n";
         Error::variavel_nao_declarada(look_ahead);
     }
 
