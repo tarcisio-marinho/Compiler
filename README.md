@@ -8,7 +8,7 @@ Professor: Sílvio Bandeira.
 
 - [X] Análise léxica
 - [x] Análise Sintática
-- [ ] Análise Semântica
+- [x] Análise Semântica
 - [ ] Gerador de código intermédiário
 
 
