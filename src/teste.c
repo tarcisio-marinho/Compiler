@@ -5,5 +5,5 @@ int main (){
     int y;
 
     char1 = char2 * char1;
-    x = y * 4;
+    x = y + 4;
 }
