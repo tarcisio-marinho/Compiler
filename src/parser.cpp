@@ -176,7 +176,7 @@ void Parser::comando_if(){
 
 void Parser::iteracao(){
     std::string funcao = std::string("iteracao");
-
+    this->label++;
     if(look_ahead->identificador == Gramatica::WHILE){
         comando_while();
     }else if(look_ahead->identificador == Gramatica::DO){
@@ -189,13 +189,19 @@ void Parser::iteracao(){
 
 void Parser::comando_while(){
     std::string funcao = std::string("comando while");
+    std::string aux;
     next_token();
     if(look_ahead->identificador != Gramatica::ABREPARENTESES){
         Error::token_esperado_nao_encontrado(look_ahead, "(", funcao);
     }
 
+    print_codigo_intermediario("LABEL: " + std::to_string(this->label));
+
     next_token();
-    expressao_relacional();
+    aux = expressao_relacional();
+
+    print_codigo_intermediario("IF: return " + aux + " ==0, GOTO: LABEL: " + std::to_string(this->label+1));
+
 
     if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
         Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
@@ -203,11 +209,16 @@ void Parser::comando_while(){
 
     next_token();
     comando();
+    print_codigo_intermediario("GOTO: LABEL" + std::to_string(this->label));
+    this->label++;
+    print_codigo_intermediario("LABEL: " + std::to_string(this->label));
 }
 
 
 void Parser::comando_do(){
     std::string funcao = std::string("comando do");
+    std::string aux;
+    print_codigo_intermediario("LABEL: " + std::to_string(this->label));
     next_token();
     comando();
 
@@ -221,7 +232,10 @@ void Parser::comando_do(){
     }
 
     next_token();
-    expressao_relacional();
+    aux = expressao_relacional();
+
+    print_codigo_intermediario("IF: return " + aux + " == 1, GOTO: LABEL: " + std::to_string(this->label));
+    
 
     if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
         Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
