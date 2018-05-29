@@ -149,6 +149,7 @@ void Parser::comando(){
 
 void Parser::comando_if(){
     std::string funcao = std::string("IF");
+    std::string aux;
     if(look_ahead->identificador != Gramatica::IF){
         Error::token_esperado_nao_encontrado(look_ahead, "if", funcao);
     }
@@ -159,17 +160,25 @@ void Parser::comando_if(){
     }
     
     next_token();
-    expressao_relacional();
+    aux = expressao_relacional();
+    
+    print_codigo_intermediario("IF: return " + aux + " == 0, GOTO: LABEL: " + std::to_string(this->label+1));
+
     if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
         Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
     }
     
     next_token();
     comando();
+    this->label++;
+    print_codigo_intermediario("LABEL: " + std::to_string(this->label));
 
     if(look_ahead->identificador == Gramatica::ELSE){
+        print_codigo_intermediario("IF: return " + aux + " == 1, GOTO LABEL: " + std::to_string(this->label+1));
         next_token();
         comando();
+        this->label++;
+        print_codigo_intermediario("LABEL: " + std::to_string(this->label));
     }
 }
 
