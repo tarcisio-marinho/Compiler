@@ -28,7 +28,7 @@ public:
     void comando_if();
     void comando_while();
     void comando_do();
-    void expressao_relacional();
+    std::string expressao_relacional();
     int operador_relacional();
     void declaracao_de_variavel();
     void comando_basico();

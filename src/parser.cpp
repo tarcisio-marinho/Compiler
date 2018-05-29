@@ -235,16 +235,65 @@ void Parser::comando_do(){
 }
 
 
-void Parser::expressao_relacional(){
+std::string Parser::expressao_relacional(){
     std::string funcao = std::string("expressao relacional");
     int op;
-    Simbol *t, *expr1, *expr2;
+    std::string aux;
+    Simbol *expr1, *expr2;
 
     expr1 = expressao_aritmetica();
     op = operador_relacional();
     expr2 = expressao_aritmetica();
 
     check_types_expressao_relacional(look_ahead, expr1->tipo, expr2->tipo);
+
+    if(expr2->tipo == Gramatica::FLOAT || expr1->tipo == Gramatica::FLOAT){
+        if(expr2->tipo == Gramatica::INT){
+            print_codigo_intermediario("$S" + std::to_string(this->cont) + " = (float)" + expr2->lexema);
+            expr2->tipo = Gramatica::FLOAT;
+            this->cont++;
+            expr2->lexema = "$S" + std::to_string(this->cont);
+        }
+        if(expr1->tipo == Gramatica::INT){
+            print_codigo_intermediario("$S" + std::to_string(this->cont) + " = (float)"+ expr1->lexema);
+            expr1->tipo = Gramatica::FLOAT;
+            expr1->lexema = "$S" + std::to_string(this->cont);
+        }
+    }
+
+    if(op == Gramatica::MAIOR){
+        print_codigo_intermediario("$S" + std::to_string(this->cont) + " = " + expr1->lexema + " > " + expr2->lexema);
+        this->cont++;
+    }
+    
+    if(op == Gramatica::MAIORIGUAL){
+        print_codigo_intermediario("$S" + std::to_string(this->cont) + " = " + expr1->lexema + " >= " + expr2->lexema);
+        this->cont++;
+    }
+    
+    if(op == Gramatica::MENORIGUAL){
+        print_codigo_intermediario("$S" + std::to_string(this->cont) + " = " + expr1->lexema + " <= " + expr2->lexema);
+        this->cont++;
+    }
+    
+    if(op == Gramatica::MENOR){
+        print_codigo_intermediario("$S" + std::to_string(this->cont) + " = " + expr1->lexema + " < " + expr2->lexema);
+        this->cont++;
+    }
+
+    if(op == Gramatica::IGUAL){
+        print_codigo_intermediario("$S" + std::to_string(this->cont) + " = " + expr1->lexema + " == " + expr2->lexema);
+        this->cont++;
+    }
+
+    if(op == Gramatica::DIFERENCA){
+        print_codigo_intermediario("$S" + std::to_string(this->cont) + " = " + expr1->lexema + " != " + expr2->lexema);
+        this->cont++;
+    }
+    
+    aux = "$S" + std::to_string(this->cont-1);
+    return aux;
+    
 }
 
 
