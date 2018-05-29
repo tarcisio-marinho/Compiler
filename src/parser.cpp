@@ -518,18 +518,18 @@ void Parser::comando_basico(){
 
 void Parser::atribuicao(){
     std::string funcao = std::string("atribuicao");
-    Simbol *expr2;
-    Simbol *tempsim;
+    Simbol *expr2, *expr1;
+    std::string aux;
     
     if(look_ahead->identificador != Gramatica::ID){
         Error::token_esperado_nao_encontrado(look_ahead, "identificador", funcao);
     }
-
     
-    tempsim = search_simbol(look_ahead->lexema);
-    if(tempsim == NULL){
+    expr1 = search_simbol(look_ahead->lexema);
+    if(expr1 == NULL){
         Error::variavel_nao_declarada(look_ahead);
     }
+    aux = look_ahead->lexema;
 
     next_token();
     if(look_ahead->identificador != Gramatica::ATRIBUICAO){
@@ -538,7 +538,17 @@ void Parser::atribuicao(){
 
     next_token();
     expr2 = expressao_aritmetica();
-    check_types_atribuicao(look_ahead, tempsim->tipo, expr2->tipo);
+    check_types_atribuicao(look_ahead, expr1->tipo, expr2->tipo);
+
+    if(expr2->tipo == Gramatica::INT && expr1->tipo == Gramatica::FLOAT){
+        expr2->tipo = Gramatica::FLOAT;
+        print_codigo_intermediario("$S" + std::to_string(this->cont) +" = (float)" + expr2->lexema);
+        expr2->lexema = "$S" + std::to_string(this->cont);
+        this->cont++;
+    }
+
+    print_codigo_intermediario(aux + " = " + expr2->lexema);
+    this->cont++;
 
 
     if(look_ahead->identificador != Gramatica::PONTOVIRGULA){
