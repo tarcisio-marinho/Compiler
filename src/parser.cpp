@@ -772,5 +772,5 @@ int Parser::check_types_expressao_aritmetica(int tipo1, int tipo2, Token *t){
 
 // Gerador codigo intermediario
 void Parser::print_codigo_intermediario(std::string s){
-    std::cout << s << std::endl;
+    std::cerr << s << std::endl;
 }
