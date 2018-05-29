@@ -32,6 +32,10 @@
         "typeinfo": "cpp",
         "utility": "cpp",
         "regex": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "deque": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "fstream": "cpp"
     }
 }

@@ -299,9 +299,12 @@ Simbol* Parser::termo(){
             }
         }
 
-        t = new Simbol(look_ahead->lexema, tipo, this->escopo, look_ahead);
-        return t;
+        // t = new Simbol(look_ahead->lexema, tipo, this->escopo, look_ahead);
+        // return t;
 
+    }
+    if(op == Gramatica::DIVISAO){
+        expr1->tipo = Gramatica::FLOAT;
     }
     return expr1;
 }
