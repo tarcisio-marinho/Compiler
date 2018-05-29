@@ -19,6 +19,7 @@ public:
     int escopo;
     int cont;
     int label;
+    int cont_if, cont_while, cont_do_while;
 
     Parser(FILE *f);
     void next_token();

@@ -38,6 +38,9 @@ Parser::Parser(FILE *f){
     this->escopo = -1;
     this->cont = 0;
     this->label = 0;
+    this->cont_if = 0;
+    this->cont_while = 0;
+    this->cont_do_while = 0;
 }
 
 void Parser::parse(){
@@ -148,6 +151,7 @@ void Parser::comando(){
 
 
 void Parser::comando_if(){
+    int contador = this->cont_if;
     std::string funcao = std::string("IF");
     std::string aux;
     if(look_ahead->identificador != Gramatica::IF){
@@ -162,24 +166,24 @@ void Parser::comando_if(){
     next_token();
     aux = expressao_relacional();
     
-    print_codigo_intermediario("IF: return " + aux + " == 0, GOTO: LABEL: " + std::to_string(this->label+1));
 
     if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
         Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
     }
+
+    print_codigo_intermediario("IF (" + std::to_string(contador)+ "): " + aux + " == FALSE, GOTO: ELSE(" + std::to_string(contador) + ")");
+    this->cont_if++;
     
     next_token();
     comando();
-    this->label++;
-    print_codigo_intermediario("LABEL: " + std::to_string(this->label));
+    print_codigo_intermediario("GOTO: FIM.IF (" + std::to_string(contador)+ ")");
+    print_codigo_intermediario("ELSE("+ std::to_string(contador) + "):");
 
     if(look_ahead->identificador == Gramatica::ELSE){
-        print_codigo_intermediario("IF: return " + aux + " == 1, GOTO LABEL: " + std::to_string(this->label+1));
         next_token();
         comando();
-        this->label++;
-        print_codigo_intermediario("LABEL: " + std::to_string(this->label));
     }
+    print_codigo_intermediario("FIM.IF(" + std::to_string(contador) + "):");
 }
 
 
@@ -370,7 +374,7 @@ Simbol* Parser::termo(){
             this->cont++;
         }else{
             print_codigo_intermediario("$S" + std::to_string(this->cont) + " = " + expr1->lexema + "*" + expr2->lexema);
-            expr1->lexema = "$" + std::to_string(this->cont);
+            expr1->lexema = "$S" + std::to_string(this->cont);
             this->cont++;
         }
 
