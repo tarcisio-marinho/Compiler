@@ -201,36 +201,39 @@ void Parser::iteracao(){
 
 
 void Parser::comando_while(){
+    int contador = this->cont_while;
     std::string funcao = std::string("comando while");
     std::string aux;
+    print_codigo_intermediario("WHILE(" + std::to_string(contador) + "):");
     next_token();
+
+
     if(look_ahead->identificador != Gramatica::ABREPARENTESES){
         Error::token_esperado_nao_encontrado(look_ahead, "(", funcao);
     }
 
-    print_codigo_intermediario("LABEL: " + std::to_string(this->label));
-
     next_token();
     aux = expressao_relacional();
-
-    print_codigo_intermediario("IF: return " + aux + " ==0, GOTO: LABEL: " + std::to_string(this->label+1));
-
 
     if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
         Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
     }
 
+    print_codigo_intermediario("IF " + aux + " == FALSE, FIM.WHILE(" + std::to_string(contador) + ")");
+    this->cont_while++;
+
     next_token();
     comando();
-    print_codigo_intermediario("GOTO: LABEL" + std::to_string(this->label));
-    this->label++;
-    print_codigo_intermediario("LABEL: " + std::to_string(this->label));
+    print_codigo_intermediario("GOTO: WHILE(" +  std::to_string(contador) + "):");
+    print_codigo_intermediario("FIM.WHILE(" +  std::to_string(contador) + "):");
+    
 }
 
 
 void Parser::comando_do(){
     std::string funcao = std::string("comando do");
     std::string aux;
+    int contador = this->cont_do_while;
     print_codigo_intermediario("LABEL: " + std::to_string(this->label));
     next_token();
     comando();
@@ -278,13 +281,14 @@ std::string Parser::expressao_relacional(){
         if(expr2->tipo == Gramatica::INT){
             print_codigo_intermediario("$S" + std::to_string(this->cont) + " = (float)" + expr2->lexema);
             expr2->tipo = Gramatica::FLOAT;
-            this->cont++;
             expr2->lexema = "$S" + std::to_string(this->cont);
+            this->cont++;
         }
         if(expr1->tipo == Gramatica::INT){
             print_codigo_intermediario("$S" + std::to_string(this->cont) + " = (float)"+ expr1->lexema);
             expr1->tipo = Gramatica::FLOAT;
             expr1->lexema = "$S" + std::to_string(this->cont);
+            this->cont++;
         }
     }
 

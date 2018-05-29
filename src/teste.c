@@ -4,16 +4,9 @@ int main (){
     char char1, char2;
     int y;
 
-    if(x < 3.3){
-        x = x / 7;
+    while(x != 3){
+        x = 3;
     }
-
-    if(x < 3.3){
-        x = x *5;
-    }else{
-        x = x /3 ;
-    }
-
 
 
 
