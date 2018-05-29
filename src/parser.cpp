@@ -36,7 +36,7 @@ Parser::Parser(FILE *f){
     this->arquivo = f;
     this->scanner = new Scanner(arquivo);
     this->escopo = -1;
-    this->num_t = 0;
+    this->cont = 0;
 }
 
 void Parser::parse(){
@@ -276,6 +276,29 @@ Simbol* Parser::termo(){
         next_token();
         expr2 = fator();
         tipo = check_types_termo(expr1, expr2, op, look_ahead);
+
+        if(expr1->tipo == Gramatica::FLOAT || expr2->tipo == Gramatica::FLOAT){
+            if(expr1->tipo == Gramatica::INT){
+                print_codigo_intermediario("$S" + std::to_string(this->cont) + " = (float)" + expr1->lexema);
+                this->cont++;
+                expr1->lexema = "$S" + std::to_string(this->cont);
+            }
+            if(expr2->tipo == Gramatica::INT){
+                print_codigo_intermediario("$S" + std::to_string(this->cont) + " = (float)" + expr2->lexema);
+                this->cont++;
+                expr2->lexema = "$S" + std::to_string(this->cont);
+            }
+            if(op == Gramatica::DIVISAO){
+                print_codigo_intermediario("$S" + std::to_string(this->cont) + " =  " + expr1->lexema + "/" + expr2->lexema);
+                expr1->lexema = "$S" + std::to_string(this->cont);
+                this->cont++;
+            }else{
+                print_codigo_intermediario("$" + std::to_string(this->cont) + " = " + expr1->lexema + "*" + expr2->lexema);
+                expr1->lexema = "$" + std::to_string(this->cont);
+                this->cont++;
+            }
+        }
+
         t = new Simbol(look_ahead->lexema, tipo, this->escopo, look_ahead);
         return t;
 
@@ -615,4 +638,10 @@ int Parser::check_types_expressao_aritmetica(int tipo1, int tipo2, Token *t){
         Error::char_nao_opera_com_outros_tipos(t, tipo1, tipo2);
     }
     return Gramatica::CHAR;
+}
+
+
+// Gerador codigo intermediario
+void Parser::print_codigo_intermediario(std::string s){
+    std::cout << s << std::endl;
 }

@@ -17,7 +17,7 @@ public:
     Token * look_ahead;
     std::stack<Simbol*> simbol_table;
     int escopo;
-    int num_t;
+    int cont;
 
     Parser(FILE *f);
     void next_token();
@@ -56,6 +56,9 @@ public:
     void check_types_atribuicao(Token *s, int type1, int type2);
     int check_types_termo(Simbol* e1, Simbol* e2, int op, Token *s);
     int check_types_expressao_aritmetica(int tipo1, int tipo2, Token *t);
+
+    // Gerador codigo intermediario
+    void Parser::print_codigo_intermediario(std::string s);
 };
 
 #endif
