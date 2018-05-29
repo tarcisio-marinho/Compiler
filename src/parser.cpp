@@ -234,7 +234,10 @@ void Parser::comando_do(){
     std::string funcao = std::string("comando do");
     std::string aux;
     int contador = this->cont_do_while;
-    print_codigo_intermediario("LABEL: " + std::to_string(this->label));
+
+    this->cont_do_while++;
+    
+    print_codigo_intermediario("DO WHILE(" +  std::to_string(contador) + ")");
     next_token();
     comando();
 
@@ -250,9 +253,6 @@ void Parser::comando_do(){
     next_token();
     aux = expressao_relacional();
 
-    print_codigo_intermediario("IF: return " + aux + " == 1, GOTO: LABEL: " + std::to_string(this->label));
-    
-
     if(look_ahead->identificador != Gramatica::FECHAPARENTESES){
         Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
     }
@@ -262,6 +262,8 @@ void Parser::comando_do(){
         Error::token_esperado_nao_encontrado(look_ahead, ";", funcao);
     }
     next_token();
+
+    print_codigo_intermediario("IF " + aux + " == TRUE, GOTO: DO WHILE("  + std::to_string(contador) + ")");
 }
 
 

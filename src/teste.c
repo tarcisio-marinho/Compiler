@@ -4,9 +4,9 @@ int main (){
     char char1, char2;
     int y;
 
-    while(x != 3){
-        x = 3;
-    }
+    do{
+        x = x + 3.0;
+    }while(x > 5.3);
 
 
 
