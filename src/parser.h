@@ -18,6 +18,7 @@ public:
     std::stack<Simbol*> simbol_table;
     int escopo;
     int cont;
+    int label;
 
     Parser(FILE *f);
     void next_token();
@@ -58,7 +59,7 @@ public:
     int check_types_expressao_aritmetica(int tipo1, int tipo2, Token *t);
 
     // Gerador codigo intermediario
-    void Parser::print_codigo_intermediario(std::string s);
+    void print_codigo_intermediario(std::string s);
 };
 
 #endif
