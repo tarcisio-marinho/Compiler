@@ -6,6 +6,10 @@ int main (){
 
     x = x + 3;
 
+    if(x > 3.0){
+        x = x + 5;
+    }
+
 
     char1 = char2 * char1;
     x = y / 4;

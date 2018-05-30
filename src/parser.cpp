@@ -171,19 +171,19 @@ void Parser::comando_if(){
         Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
     }
 
-    print_codigo_intermediario("IF (" + std::to_string(contador)+ "): " + aux + " == FALSE, GOTO: ELSE(" + std::to_string(contador) + ")");
+    print_codigo_intermediario("IF (" + std::to_string(contador)+ "): " + aux + " == FALSE, \33[94mGOTO\33[97m-> ELSE(" + std::to_string(contador) + ")");
     this->cont_if++;
     
     next_token();
     comando();
-    print_codigo_intermediario("GOTO: FIM.IF (" + std::to_string(contador)+ ")");
+    print_codigo_intermediario("\33[94mGOTO\33[97m-> END.IF (" + std::to_string(contador)+ ")");
     print_codigo_intermediario("ELSE("+ std::to_string(contador) + "):");
 
     if(look_ahead->identificador == Gramatica::ELSE){
         next_token();
         comando();
     }
-    print_codigo_intermediario("FIM.IF(" + std::to_string(contador) + "):");
+    print_codigo_intermediario("END.IF(" + std::to_string(contador) + "):");
 }
 
 
@@ -219,13 +219,13 @@ void Parser::comando_while(){
         Error::token_esperado_nao_encontrado(look_ahead, ")", funcao);
     }
 
-    print_codigo_intermediario("IF " + aux + " == FALSE, FIM.WHILE(" + std::to_string(contador) + ")");
+    print_codigo_intermediario("IF " + aux + " == FALSE, END.WHILE(" + std::to_string(contador) + ")");
     this->cont_while++;
 
     next_token();
     comando();
-    print_codigo_intermediario("GOTO: WHILE(" +  std::to_string(contador) + "):");
-    print_codigo_intermediario("FIM.WHILE(" +  std::to_string(contador) + "):");
+    print_codigo_intermediario("\33[94mGOTO\33[97m-> WHILE(" +  std::to_string(contador) + "):");
+    print_codigo_intermediario("END.WHILE(" +  std::to_string(contador) + "):");
     
 }
 
@@ -263,7 +263,7 @@ void Parser::comando_do(){
     }
     next_token();
 
-    print_codigo_intermediario("IF " + aux + " == TRUE, GOTO: DO WHILE("  + std::to_string(contador) + ")");
+    print_codigo_intermediario("IF " + aux + " == TRUE, \33[94mGOTO\33[97m-> DO WHILE("  + std::to_string(contador) + ")");
 }
 
 
@@ -281,50 +281,50 @@ std::string Parser::expressao_relacional(){
 
     if(expr2->tipo == Gramatica::FLOAT || expr1->tipo == Gramatica::FLOAT){
         if(expr2->tipo == Gramatica::INT){
-            print_codigo_intermediario("$S" + std::to_string(this->cont) + " = (float)" + expr2->lexema);
+            print_codigo_intermediario("\033[1;32mTEMP_\33[97m" + std::to_string(this->cont) + " = (float_cast)" + expr2->lexema);
             expr2->tipo = Gramatica::FLOAT;
-            expr2->lexema = "$S" + std::to_string(this->cont);
+            expr2->lexema = "\033[1;32mTEMP_\33[97m" + std::to_string(this->cont);
             this->cont++;
         }
         if(expr1->tipo == Gramatica::INT){
-            print_codigo_intermediario("$S" + std::to_string(this->cont) + " = (float)"+ expr1->lexema);
+            print_codigo_intermediario("\033[1;32mTEMP_\33[97m" + std::to_string(this->cont) + " = (float_cast)"+ expr1->lexema);
             expr1->tipo = Gramatica::FLOAT;
-            expr1->lexema = "$S" + std::to_string(this->cont);
+            expr1->lexema = "\033[1;32mTEMP_\33[97m" + std::to_string(this->cont);
             this->cont++;
         }
     }
 
     if(op == Gramatica::MAIOR){
-        print_codigo_intermediario("$S" + std::to_string(this->cont) + " = " + expr1->lexema + " > " + expr2->lexema);
+        print_codigo_intermediario("\033[1;32mTEMP_\33[97m" + std::to_string(this->cont) + " = " + expr1->lexema + " > " + expr2->lexema);
         this->cont++;
     }
     
     if(op == Gramatica::MAIORIGUAL){
-        print_codigo_intermediario("$S" + std::to_string(this->cont) + " = " + expr1->lexema + " >= " + expr2->lexema);
+        print_codigo_intermediario("\033[1;32mTEMP_\33[97m" + std::to_string(this->cont) + " = " + expr1->lexema + " >= " + expr2->lexema);
         this->cont++;
     }
     
     if(op == Gramatica::MENORIGUAL){
-        print_codigo_intermediario("$S" + std::to_string(this->cont) + " = " + expr1->lexema + " <= " + expr2->lexema);
+        print_codigo_intermediario("\033[1;32mTEMP_\33[97m" + std::to_string(this->cont) + " = " + expr1->lexema + " <= " + expr2->lexema);
         this->cont++;
     }
     
     if(op == Gramatica::MENOR){
-        print_codigo_intermediario("$S" + std::to_string(this->cont) + " = " + expr1->lexema + " < " + expr2->lexema);
+        print_codigo_intermediario("\033[1;32mTEMP_\33[97m" + std::to_string(this->cont) + " = " + expr1->lexema + " < " + expr2->lexema);
         this->cont++;
     }
 
     if(op == Gramatica::IGUAL){
-        print_codigo_intermediario("$S" + std::to_string(this->cont) + " = " + expr1->lexema + " == " + expr2->lexema);
+        print_codigo_intermediario("\033[1;32mTEMP_\33[97m" + std::to_string(this->cont) + " = " + expr1->lexema + " == " + expr2->lexema);
         this->cont++;
     }
 
     if(op == Gramatica::DIFERENCA){
-        print_codigo_intermediario("$S" + std::to_string(this->cont) + " = " + expr1->lexema + " != " + expr2->lexema);
+        print_codigo_intermediario("\033[1;32mTEMP_\33[97m" + std::to_string(this->cont) + " = " + expr1->lexema + " != " + expr2->lexema);
         this->cont++;
     }
     
-    aux = "$S" + std::to_string(this->cont-1);
+    aux = "\033[1;32mTEMP_\33[97m" + std::to_string(this->cont-1);
     return aux;
     
 }
@@ -362,25 +362,25 @@ Simbol* Parser::termo(){
 
         if(expr1->tipo == Gramatica::FLOAT || expr2->tipo == Gramatica::FLOAT){
             if(expr1->tipo == Gramatica::INT){
-                print_codigo_intermediario("$S" + std::to_string(this->cont) + " = (float)" + expr1->lexema);
+                print_codigo_intermediario("\033[1;32mTEMP_\33[97m" + std::to_string(this->cont) + " = (float_cast)" + expr1->lexema);
                 this->cont++;
                 expr1->tipo = Gramatica::FLOAT;
-                expr1->lexema = "$S" + std::to_string(this->cont);
+                expr1->lexema = "\033[1;32mTEMP_\33[97m" + std::to_string(this->cont);
             }
             if(expr2->tipo == Gramatica::INT){
-                print_codigo_intermediario("$S" + std::to_string(this->cont) + " = (float)" + expr2->lexema);
+                print_codigo_intermediario("\033[1;32mTEMP_\33[97m" + std::to_string(this->cont) + " = (float_cast)" + expr2->lexema);
                 expr2->tipo = Gramatica::FLOAT;
                 this->cont++;
-                expr2->lexema = "$S" + std::to_string(this->cont);
+                expr2->lexema = "\033[1;32mTEMP_\33[97m" + std::to_string(this->cont);
             }
         }
         if(op == Gramatica::DIVISAO){
-            print_codigo_intermediario("$S" + std::to_string(this->cont) + " =  " + expr1->lexema + "/" + expr2->lexema);
-            expr1->lexema = "$S" + std::to_string(this->cont);
+            print_codigo_intermediario("\033[1;32mTEMP_\33[97m" + std::to_string(this->cont) + " =  " + expr1->lexema + " / " + expr2->lexema);
+            expr1->lexema = "\033[1;32mTEMP_\33[97m" + std::to_string(this->cont);
             this->cont++;
         }else{
-            print_codigo_intermediario("$S" + std::to_string(this->cont) + " = " + expr1->lexema + "*" + expr2->lexema);
-            expr1->lexema = "$S" + std::to_string(this->cont);
+            print_codigo_intermediario("\033[1;32mTEMP_\33[97m" + std::to_string(this->cont) + " = " + expr1->lexema + " * " + expr2->lexema);
+            expr1->lexema = "\033[1;32mTEMP_\33[97m" + std::to_string(this->cont);
             this->cont++;
         }
 
@@ -464,26 +464,26 @@ Simbol* Parser::expressao_aritmetica(){
 
         if(expr1->tipo == Gramatica::FLOAT || expr2->tipo == Gramatica::FLOAT){
             if(expr1->tipo == Gramatica::INT){
-                print_codigo_intermediario("$S" + std::to_string(this->cont) + " = (float)" + expr1->lexema);
+                print_codigo_intermediario("\033[1;32mTEMP_\33[97m" + std::to_string(this->cont) + " = (float_cast)" + expr1->lexema);
                 expr1->tipo = Gramatica::FLOAT;
-                expr1->lexema = "$S" + std::to_string(this->cont);
+                expr1->lexema = "\033[1;32mTEMP_\33[97m" + std::to_string(this->cont);
                 this->cont++;
             }
             if(expr2->tipo == Gramatica::INT){
-                print_codigo_intermediario("$S" + std::to_string(this->cont) + " = (float)" + expr2->lexema);
+                print_codigo_intermediario("\033[1;32mTEMP_\33[97m" + std::to_string(this->cont) + " = (float_cast)" + expr2->lexema);
                 expr2->tipo = Gramatica::FLOAT;
-                expr2->lexema = "$S" + std::to_string(this->cont);
+                expr2->lexema = "\033[1;32mTEMP_\33[97m" + std::to_string(this->cont);
                 this->cont++;
             }
         }
 
         if(op == Gramatica::SOMA){
-            print_codigo_intermediario("$S" + std::to_string(this->cont) + " = " + expr1->lexema + " + " + expr2->lexema);
-            expr1->lexema = "$S" + std::to_string(this->cont);
+            print_codigo_intermediario("\033[1;32mTEMP_\33[97m" + std::to_string(this->cont) + " = " + expr1->lexema + " + " + expr2->lexema);
+            expr1->lexema = "\033[1;32mTEMP_\33[97m" + std::to_string(this->cont);
             this->cont++;
         }else{
-            print_codigo_intermediario("$S" + std::to_string(this->cont) + " = " + expr1->lexema + " - " + expr2->lexema);
-            expr1->lexema = "$S" + std::to_string(this->cont);
+            print_codigo_intermediario("\033[1;32mTEMP_\33[97m" + std::to_string(this->cont) + " = " + expr1->lexema + " - " + expr2->lexema);
+            expr1->lexema = "\033[1;32mTEMP_\33[97m" + std::to_string(this->cont);
             this->cont++;
         }
 
@@ -534,8 +534,8 @@ void Parser::atribuicao(){
 
     if(expr2->tipo == Gramatica::INT && expr1->tipo == Gramatica::FLOAT){
         expr2->tipo = Gramatica::FLOAT;
-        print_codigo_intermediario("$S" + std::to_string(this->cont) +" = (float)" + expr2->lexema);
-        expr2->lexema = "$S" + std::to_string(this->cont);
+        print_codigo_intermediario("\033[1;32mTEMP_\33[97m" + std::to_string(this->cont) +" = (float_cast)" + expr2->lexema);
+        expr2->lexema = "\033[1;32mTEMP_\33[97m" + std::to_string(this->cont);
         this->cont++;
     }
 
