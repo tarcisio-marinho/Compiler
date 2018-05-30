@@ -581,7 +581,7 @@ void Parser::atribuicao(){
     }
 
     print_codigo_intermediario(aux + " = " + expr2->lexema);
-    this->cont++;
+    
 
 
     if(look_ahead->identificador != Gramatica::PONTOVIRGULA){

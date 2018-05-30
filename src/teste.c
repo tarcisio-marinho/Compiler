@@ -5,8 +5,8 @@ int main (){
     int y;
 
     do{
-        x = x + 3.0;
-    }while(x > 5.3);
+        x = x *3;
+    }while(x > 3);
 
 
 
