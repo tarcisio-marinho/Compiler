@@ -4,10 +4,7 @@ int main (){
     char char1, char2;
     int y;
 
-    do{
-        x = x *3;
-    }while(x > 3);
-
+    x = x + 3;
 
 
     char1 = char2 * char1;

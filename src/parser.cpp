@@ -448,12 +448,18 @@ Simbol* Parser::fator(){
 
 Simbol* Parser::expressao_aritmetica(){
     Simbol *expr1, *expr2, *t;
-    int tipo;
+    int tipo, op;
 
     expr1 = termo();
-    expr2 = expressao_aritmetica_recursiva();
-    
-    if(expr2 != NULL){
+
+
+    while(look_ahead->identificador == Gramatica::SOMA || look_ahead->identificador == Gramatica::SUBTRACAO){
+        op = look_ahead->identificador;
+
+        next_token();
+
+        expr2 = termo();
+
         tipo = check_types_expressao_aritmetica(expr1->tipo, expr2->tipo, look_ahead);
 
         if(expr1->tipo == Gramatica::FLOAT || expr2->tipo == Gramatica::FLOAT){
@@ -471,26 +477,6 @@ Simbol* Parser::expressao_aritmetica(){
             }
         }
 
-        // t = new Simbol(look_ahead->lexema, tipo, this->escopo, look_ahead);
-        // return t;
-    }else{
-        return expr1;
-    }
-}
-
-
-Simbol* Parser::expressao_aritmetica_recursiva(){
-
-    Simbol *expr1, *expr2, *t;
-    int tipo, op;
-
-    if(look_ahead->identificador == Gramatica::SOMA ||
-        look_ahead->identificador == Gramatica::SUBTRACAO){
-        op = look_ahead->identificador;
-        next_token();
-        expr1 = termo();
-        expr2 = expressao_aritmetica_recursiva();
-        
         if(op == Gramatica::SOMA){
             print_codigo_intermediario("$S" + std::to_string(this->cont) + " = " + expr1->lexema + " + " + expr2->lexema);
             expr1->lexema = "$S" + std::to_string(this->cont);
@@ -501,36 +487,9 @@ Simbol* Parser::expressao_aritmetica_recursiva(){
             this->cont++;
         }
 
-    }else{
-        return NULL;
+
     }
-
-
-    if(expr2 != NULL){
-        tipo = check_types_expressao_aritmetica(expr1->tipo, expr2->tipo, look_ahead);
-        
-        if(expr1->tipo == Gramatica::FLOAT || expr2->tipo == Gramatica::FLOAT){
-            if(expr1->tipo == Gramatica::INT){
-                print_codigo_intermediario("$S" + std::to_string(this->cont) + " = (float)" + expr1->lexema);
-                expr1->tipo = Gramatica::FLOAT;
-                this->cont++;
-                expr1->lexema = "$S" + std::to_string(this->cont);
-            }
-            if(expr2->tipo == Gramatica::INT){
-                print_codigo_intermediario("$S" + std::to_string(this->cont) + " = (float)" + expr2->lexema);
-                expr2->tipo = Gramatica::FLOAT;
-                this->cont++;
-                expr2->lexema = "$S" + std::to_string(this->cont);
-            }
-        }
-
-        // t = new Simbol(look_ahead->lexema, tipo, this->escopo, look_ahead);
-        // return t;
-
-    }else{
-        return expr1;
-    }
-
+    return expr1;
 }
 
 
