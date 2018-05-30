@@ -466,14 +466,14 @@ Simbol* Parser::expressao_aritmetica(){
             if(expr1->tipo == Gramatica::INT){
                 print_codigo_intermediario("$S" + std::to_string(this->cont) + " = (float)" + expr1->lexema);
                 expr1->tipo = Gramatica::FLOAT;
-                this->cont++;
                 expr1->lexema = "$S" + std::to_string(this->cont);
+                this->cont++;
             }
             if(expr2->tipo == Gramatica::INT){
                 print_codigo_intermediario("$S" + std::to_string(this->cont) + " = (float)" + expr2->lexema);
                 expr2->tipo = Gramatica::FLOAT;
-                this->cont++;
                 expr2->lexema = "$S" + std::to_string(this->cont);
+                this->cont++;
             }
         }
 
